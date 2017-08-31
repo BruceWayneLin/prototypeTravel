@@ -1,0 +1,660 @@
+/* You can add global styles to this file, and also import other style files */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  right: 0;
+  background-color: white; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.container-fluid.header-container {
+  height: 75px;
+  padding-top: 10px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+@media screen and (max-width: 780px) {
+  .nav.navbar-nav.navbar-right {
+    display: none;
+  }
+}
+
+.navbar {
+  margin-bottom: 0px!important;
+}
+
+.carousel-inner img {
+  width:100%;
+}
+
+.right.carousel-control.carousel-control-next {
+  background-image:none;
+  cursor:pointer;
+}
+
+.left.carousel-control.carousel-control-prev {
+  background-image:none;
+  cursor:pointer;
+}
+
+.app-index h2 {
+  text-transform: uppercase;
+  font-size: 25px;
+  color: #e84466;
+  padding-left:0px;
+  padding-right:0px;
+  font-weight: 400;
+  margin-bottom: 50px;
+  font-style: normal;
+  line-height: 1.2;
+  text-rendering: optimizeLegibility;
+  font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
+}
+
+.app-index .whereDgo {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e84466;
+}
+
+.place h2 {
+  color: black;
+}
+
+.place {
+  padding-top: 50px;
+}
+
+select.form-control, button.form-control, input.form-control {
+  -webkit-appearance: none;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  height: 50px;
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 18px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#land {
+  margin: 15px auto;
+}
+
+#country {
+  margin: 15px auto;
+}
+
+.oneCon {
+  border-bottom: 1px solid #e84466;
+  padding-bottom: 80px;
+}
+
+.container .normalH2 {
+  margin-top: 20px;
+  text-transform: uppercase;
+  font-size: 24px;
+  color: #e84466;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.2;
+  text-rendering: optimizeLegibility;
+  color: #e84466;
+  font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
+  font-weight: 400;
+  margin-bottom: 2px;
+}
+
+.body * {
+  font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif!important;
+}
+
+.fluid-bread {
+  padding-top:30px;
+  padding-bottom:30px;
+}
+
+.monthClass {
+  clear:both;
+  height: 30px;
+}
+
+.weekDayText {
+  color: #808080;
+  font-size: 18px;
+}
+
+tr.weekDayTr {
+  border-top: 60px solid;
+  border-bottom: 10px solid;
+  border-color: transparent;
+}
+
+#calendarTable button {
+  color: #000000;
+  border: 1px solid #ccc;
+  padding-top: 30px;
+  background-color: white;
+  padding-bottom: 30px;
+  font-size: 24px;
+  height: 100px;
+  line-height: 1;
+  cursor: pointer;
+  width: 86%;
+  margin-bottom: 20px;
+  font-size: 40px;
+}
+
+#calendarTable table td, th{
+  border:none!important;
+}
+
+.calendarTitle {
+  position: relative;
+  width:100%;
+  text-align: center;
+  font-size: 18px;
+  color: #808080;
+  top: 45px;
+  left: 305%;
+}
+
+.lastButtonAndGoInsured {
+  background: #e84466;
+  display: inline-block;
+  padding: 11px 16px;
+  border: 0;
+  color: #FFFFFF;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-weight: normal;
+  width: 80%;
+  max-width: 100%;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+  margin-top: 25px;
+  margin-bottom: 70px;
+}
+
+.packageContent {
+  border: 1px solid #ccc;
+  margin: 0px auto;
+  margin-bottom: 10px;
+}
+
+.packageContent ul li span {
+  font-size: 16px;
+}
+
+.packageContent .packageTit {
+  padding-top: 15px;
+  padding-bottom: 30px;
+}
+
+button:disabled {
+  font-size: 40px;
+  color: #000000;
+  border: 1px solid #ccc;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  height: 100px;
+  position: relative;
+  line-height: 1;
+  cursor: pointer;
+  color: #eeeeee;
+  border-color: #eeeeee;
+}
+
+body #calendarTable .table td {
+  width: 140px;
+}
+
+.memberTitle .whereDgo{
+  border: none;
+}
+
+.titleForm h2 {
+  text-transform: uppercase;
+  font-size: 25px;
+  color: #e84466;
+  margin-bottom: 50px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.2;
+  text-rendering: optimizeLegibility;
+  font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
+  text-align: left;
+  border-bottom: 1px solid #e84466;
+  padding-bottom: 20px;
+}
+
+h2.formTitTxt{
+  margin: 0;
+  margin-bottom: 0.5em;
+  color: #000000;
+  font-size: 24px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.2;
+  text-rendering: optimizeLegibility;
+  text-transform: uppercase;
+}
+
+.memberFormInput.form-control.input-lg {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 20px;
+  padding: 12px 15px;
+  font-size: 18px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.paddingExtra {
+  padding-bottom: 35px;
+}
+
+.txtSexuality {
+  font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
+  color: #808080;
+  font-size: 18px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.birthContain select.form-control {
+  width: 100%!important;
+}
+
+.txtBirth {
+  position: absolute;
+  left: 0px;
+  padding-top: 20px;
+  font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
+  color: #808080;
+  font-size: 18px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.birthContain .col-xs-3 {
+  padding-left: 0px;
+}
+
+.birthContain {
+  margin-top:15px;
+}
+
+.personalContent {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.insuredTit {
+  padding-left: 20px;
+  padding-right: 15px;
+}
+
+.insuredBirthEx {
+  padding-right: 0px;
+  padding-legt: 0px;
+}
+
+.insuredPersonalInfo {
+  padding-bottom: 50px;
+}
+
+.insuredPid{
+  margin-bottom: 10px;
+}
+
+#insuredOneCard{
+  border: #ccc dotted;
+  padding: 20px;
+}
+
+.plusBtn {
+  padding: 15px;
+}
+
+.fa-plus {
+  color: white;
+}
+
+.plutBtn {
+  background-color: #e84466;
+  color: white;
+}
+
+.rules h2 {
+  margin: 0;
+  margin-bottom: 10px;
+  color: #000000;
+  font-size: 24px;
+  font-style: normal;
+  line-height: 1;
+  text-rendering: optimizeSpeed;
+  text-transform: uppercase;
+  font-weight: normal;
+  font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
+}
+
+.agreement {
+  color: #808080;
+  min-height: 21px;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.square {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0 !important;
+  width: 20px;
+  height: 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.roundDiv {
+  text-align: left;
+  margin:20px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  padding: 30px;
+  border: 1px solid #cccccc;
+}
+
+.goingCheckInfo {
+  width: 60%;
+}
+
+.goingCheckInfo:disabled {
+  width: 60%;
+  background: #C8C8C8;
+  opacity: 0.6;
+  cursor: not-allowed;
+  color: #000000;
+  border: 1px solid #ccc;
+  padding-bottom: 30px;
+  cursor: pointer;
+  color: #eeeeee;
+  line-height:1px;
+  height: 40px;
+  font-size: 22px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  border-color: #eeeeee;
+  margin-bottom: 50px;
+}
+
+.priceHead{
+  text-align: left;
+}
+
+.priceHead h3 {
+  color: #e84466;
+  font-size: 24px;
+  text-align: right;
+  text-align: left;
+
+}
+
+.priceHead h4 {
+  text-align: right;
+}
+
+.deleteBtn {
+  background-color: white;
+}
+
+button:active {
+  border-color: #e84466;
+}
+
+.circleDiv {
+  background-color: #ccc;
+  border-radius: 30px;
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  text-align: center;
+  width: 45px;;
+}
+
+.circleDiv p {
+  font-size: 30px;
+  color: white;
+}
+
+.deleteBtn {
+  border-radius: 30px;
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  position: relative;
+  left: 27px;
+  border: 1px solid #e84466;
+}
+
+.deleteBtn i {
+  color: #e84466;
+}
+
+.insuredTit .col-xs-2 {
+  padding: 0px;
+}
+
+#insuredOneCard.col-xs-6 {
+  width:48% !important;
+  margin-right:5px;
+}
+
+.ananDiv {
+  margin-top: 25px;
+}
+
+
+.insuredPriceDivH4 h4 {
+  color: #e84466;
+  font-size: 20px;
+}
+
+.insuredPriceDivH4 h4 span{
+  color: #8c8c8c;
+  font-size: 20px;
+}
+
+*:focus {
+  outline: none!important;
+}
+
+.form-control:focus {
+  border-shadow: none!important;
+  box-shadow: none!important;
+}
+
+#calendarTable #moreDaysBtn {
+  background-color: #e84466;
+  color: white;
+  height: 20px;
+  font-size: 18px;
+  padding-top: 20px;
+  padding-bottom: 36px;
+  margin: 20px auto;
+}
+
+#purposePurLabel {
+  cursor: pointer;
+}
+
+.fa-search-plus, .fa-search-minus, .purposeBtn, feltNotEnoughBtn, select{
+  cursor: pointer;
+}
+
+#accordionDiv div.panel.panel-default {
+  background-color: white!important;
+  border: none!important;
+  padding-left: 50px;
+  box-shadow: none!important;
+}
+
+#accordionDiv .panel-heading {
+  background-color: white!important;
+  border: 1px solid #cccccc;
+  color: #808080;
+  text-align: left;
+  cursor:pointer;
+  font-weight: 200;
+  margin: auto 5%;
+}
+
+#accordionDiv .panel-body {
+  border-top: none;
+}
+
+.panel-body .fa.fa-arrow-down {
+  position:absolute;
+  top: 10px;
+  left: 110px;
+  z-index: 20;
+}
+
+.panel-title a {
+  font-weight: normal;
+  font-size: 17px;
+  font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
+}
+
+.panel.panel-default .panel-title {
+  color: black;
+}
+
+#titleWithoutPadding .col-xs-10 span, #titleWithoutPadding .col-xs-2 span {
+  font-weight: 200!important;
+  font-size: 15px;
+}
+
+#titleWithoutPadding .col-xs-10, #titleWithoutPadding .col-xs-2 {
+  margin: 5px auto!important;
+}
+
+.panel-group {
+  position: relative;
+  top: -15px;
+}
+
+header {
+  width: 104%!important;
+}
+
+@media screen and (max-width: 500px){
+  #accordionDiv div.panel.panel-default {
+    padding-left: 0px;
+  }
+  #titleWithoutPadding .col-xs-2 {
+    padding: 0px;
+  }
+}
+
+div.owl-dots {
+  position: relative;
+  top: -50px;
+}
+
+.owl-theme .owl-nav .owl-next {
+  background: url('/assets/images/arrowIcons/arrowRight.png')!important;
+  top: 40%;
+  right: 3%;
+  position: absolute;
+  background-size: cover;
+  background-repeat: repeat;
+  display: block;
+  width: 60px;
+  height: 104px;
+  color: transparent!important;
+  background-repeat: no-repeat!important;
+}
+
+.owl-theme .owl-nav .owl-prev {
+  background: url('/assets/images/arrowIcons/arrowLeft.png')!important;
+  top: 40%;
+  left: 3%;
+  position: absolute;
+  background-size: cover;
+  background-repeat: repeat;
+  display: block;
+  width: 60px;
+  height: 104px;
+  color: transparent!important;
+  background-repeat: no-repeat!important;
+}

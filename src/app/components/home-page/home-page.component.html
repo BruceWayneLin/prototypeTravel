@@ -1,0 +1,396 @@
+<!-- carousel -->
+<owl-carousel [options]="{loop: true, nav: true, items: 1, dots: true, navigation: true, touchDrag: true}" [carouselClasses]="['owl-theme', 'sliding']">
+<div class="item" *ngFor="let image of images;let i = index">
+  <img class="img-responsive" src="{{image}}" alt="">
+</div>
+</owl-carousel>
+<div class="row text-center">
+  <div class="immediatelyGo" (click)="clickWannaInsuredBtn()">
+    <button class="form-control">
+      立即投保
+    </button>
+  </div>
+</div>
+
+<!-- where'd like to go -->
+<div class="row" id="animateFlag">
+  <div class="app-index container" style="padding-left:0px; padding-right:0px;">
+    <div class="whereDgo col-lg-12 text-center">
+      <h2 style="margin-top:50px; margin-bottom:20px;">這次旅行去哪呢 ?</h2>
+    </div>
+  </div>
+</div>
+
+<!-- place -->
+<div class="row">
+  <div class="container oneCon">
+    <div class="place app-index col-lg-12 text-center">
+      <h2>地點</h2>
+      <ng-container *ngIf="isDoneSelectedPlaces">
+          <div class="col-lg-12">
+            <span class="spanOfSelectedCountry">{{selectedCountries.name}}-{{selectedCountryStr}}</span>
+            <button class="form-control modifiedDays" (click)="modifiedPlaces()">更改地點</button>
+          </div>
+      </ng-container>
+      <ng-container *ngIf="!isDoneSelectedPlaces">
+        <div class="col-sm-12 col-xs-12 text-center myFavCon">
+          <span>{{favCountry['name']}}:</span>
+          <ng-container *ngFor="let item of favCountry['countryList']; let z = index;">
+            <a><span (click)="tryGetFavor(item)">{{item.name}}</span></a>
+          </ng-container>
+        </div>
+        <div class="col-lg-12">
+          <div class="col-sm-6 col-xs-12 text-center">
+            <select [(ngModel)]="selectedCountriesId" #selectedItem (change)="changeCountries(selectedItem.value)" name="land" id="land" class="customSelectUi topSelect form-control pull-right">
+              <ng-container *ngFor="let item of countries; let i = index;">
+                <option value="{{item['groupId']}}">
+                  {{item.name}}
+                </option>
+              </ng-container>
+            </select>
+          </div>
+          <div class="col-sm-6 col-xs-12">
+            <select [(ngModel)]="selectedCountry" (change)="toggleDoneSelect()" name="country" id="country" class="topSelect form-control pull-left">
+              <option value="">國家</option>
+              <ng-container *ngFor="let item of countries | filter: selectedCountriesId; let i = index;">
+                <option value="{{item.code}}" >
+                  {{item.name}}
+                </option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- purpose -->
+<div class="row">
+  <div class="container ">
+    <div class="place app-index col-lg-12 text-center">
+      <h2>目的</h2>
+    </div>
+  </div>
+  <div class="container oneCon">
+    <ng-container *ngIf="doneSelPurpose">
+      <div class="col-lg-12 text-center">
+        <span class="spanOfSelectedCountry">{{purposeGo}}</span>
+        <button class="form-control modifiedDays" (click)="changePurpose()">更改目的</button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!doneSelPurpose">
+      <div class="col-lg-12">
+        <div class="col-xs-12 col-sm-2"></div>
+        <div class="col-xs-12 col-sm-8">
+          <div class="col-xs-3 purposeLabelCol3 text-center" *ngFor="let purpose of purposeList; let i = index;">
+            <label class="purposeLabel text-center">
+              <input type="radio" id="purposePurLabel" [(ngModel)]="purposeGo" name="purposePurLabel" class="form-control purposeBtn{{+ i}}" (click)="toTogglePurposeBtn('purposeBtn'+i, purpose)" value="{{purpose.name}}"  />
+              <span><i class="checkBtn fa fa-check" aria-hidden="true"></i> {{purpose.name}}</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-xs-2"></div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!doneSelPurpose">
+      <div class="container">
+        <div class="col-xs-12 text-center">
+          <h2 class="normalH2" style="margin-bottom: 15px;">申根保險需求、6個月以上遊學專案</h2>
+          <h3 class="normalH3">請直撥免費客服專線 0800-234-088</h3>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container">
+    <div class="place app-index col-lg-12 text-center">
+      <h2 id="backToPoint" class="selectStartBakH2">{{textOfSelectingDays}}</h2>
+    </div>
+  </div>
+</div>
+
+<!-- calendar start -->
+<div id="calendarTableDiv" class="container">
+  <ng-container *ngIf="tableShowHidden">
+    <div id="tableEndDivRow" class="row">
+      <div class="container">
+        <div class="col-sm-12 text-center">
+          <h3>{{startTravelDay}} ~ {{endTravelDay}}</h3>
+          <h1 class="diffDayH1"><span>總共</span>{{diffDays}}<span>天</span></h1>
+          <button class="form-control modifiedDays" (click)="toModifiedDays()">更改日期</button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!tableShowHidden">
+    <div class="row">
+      <div class="col-lg-12">
+        <table id="calendarTable" class="table">
+          <thead>
+          <h3 class="text-center calendarFirstH3">{{ firstMon | amLocal | amDateFormat: 'YYYY' }}年{{ firstMon | amLocal | amDateFormat: 'MM' }}月</h3>
+          <tr class="weekDayTr">
+            <th class="weekDayText text-center" *ngFor="let number of [1,2,3,4,5,6,7]; let x = index;">
+              {{firstMon | amLocale: 'zh-TW' | amAdd:x : 'days' | amDateFormat: 'dddd'}}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let item of createRange(getDayFromBkend); let i = index;">
+              <ng-container *ngIf="((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'DD') === '01')">
+                <h3 class="text-center calendarSecH3">{{ firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY' }}年{{ firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'MM' }}月</h3>
+              </ng-container>
+              <ng-container class="weekDayTr" *ngIf="((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'DD') === '01')">
+                <td class="weekDayText text-center" *ngFor="let number of [1,2,3,4,5,6,7]; let x = index;">
+                  {{firstMon | amLocale: 'zh-TW' | amAdd:x : 'days' | amDateFormat: 'dddd'}}
+                </td>
+              </ng-container>
+              <!--<tr *ngIf="goTo((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'dddd'))">-->
+              <!--</tr>-->
+              <ng-container *ngIf="((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'DD') === '01')">
+                <td *ngFor="let number of getDayArr((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'), (firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD')); ">
+                </td>
+              </ng-container>
+              <td class="text-center">
+                <button #btnStartDay [disabled]="buttonToDisabled(btnStartDay.value, disabledDays)" id="{{'calendarDayButton'+i}}" (click)="onClickMe($event, 'calendarDayButton'+ i, i)" value="{{firstMon | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'}}">
+                <h4><i class="checkBtn fa fa-check hidden" aria-hidden="true"></i></h4>
+                  {{firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'DD'}}
+                <h4><span class="checkBtnTxt hidden">出發日期</span></h4>
+                </button>
+              </td>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-lg-12 text-center">
+        <button *ngIf="toShowMoreDays" (click)="toShowMoreDaysFun()" id="moreDaysBtn" class="moreDays btn btn-sm form-control">
+          更多日期
+        </button>
+      </div>
+      <div class="col-lg-12 text-center" *ngIf="!selectTravelDayIsDone">
+        <h2 class="normalH2">{{textOfOverDays}}</h2>
+        <h4>請來電免費客服專線0800-234-088</h4>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<!-- end of calendar -->
+<div class="row" >
+  <div class="container oneCon" style="padding-bottom: 50px;">
+  </div>
+</div>
+
+<div class="row">
+  <div class="container">
+    <div class="place app-index col-lg-12 text-center">
+      <h2 class="selPkgH2">{{selPkgH2}}</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container">
+    <div *ngIf="!pkgCustomGo" class="col-xs-12 text-center">
+      <h4 class="featureDescH3">{{featureDesc}}</h4>
+    </div>
+    <div class="col-xs-1"></div>
+    <div id="btnOfPackages" class="col-xs-10 text-center">
+      <ng-container *ngIf="!pkgCustomGo">
+        <div class="col-xs-4" *ngFor="let package of packageList; let i = index;">
+          <label class="specialPkgLabel">
+          <input name="packageButton" [checked]="package['isDefaultPackage']" class="form-control" type="radio" ngClass="{{'packageButton'+ i}}" (click)="toGetPackageContent(package, 'remove'+ i)" class="form-control purposeBtn" value="{{package.packageButtonName}}"/>
+            <span><i class="fa fa-check"></i> {{package.packageButtonName}}</span>
+            <div id="{{'remove'+ i}}" class="longTri" ngClass="{{package['isDefaultPackage'] == true? '' : 'hidden'}}"><img class="img-responsive" src="assets/images/pkg/triangle.png" alt=""></div>
+          </label>
+        </div>
+      </ng-container>
+    </div>
+    <div class="col-xs-1"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="container packageContent">
+    <ng-container *ngIf="!pkgCustomGo">
+      <div class="packageTit place app-index col-lg-12 text-center">
+      <div class="row">
+        <div class="col-xs-3 text-center">
+          <img [ngClass]="{'toTop':showPkgDestail}" src="{{logoImgSrc}}" class="logo img-responsive pull-left" alt="">
+        </div>
+        <div class="col-xs-6 text-center">
+          <h2>{{selectedPackageName}}</h2>
+        </div>
+        <div class="col-xs-3 text-center">
+          <button class="form-control" (click)="toShowPkgDetail()">
+            詳細說明
+            <i class="fa " [ngClass]="{'fa-angle-down': showPkgDestail, 'fa-angle-up': !showPkgDestail}" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <ng-container *ngIf="!showPkgDestail">
+        <div class="secondaryPackageCon">
+          <div id="secondCol2" class="col-xs-2 text-center" *ngFor="let item of secondaryItems; let i = index;">
+            <img src="{{'assets/images/pkg/' + item['insItemName'] + '.png'}}" alt="" class="img-responsive img-center">
+            <h3 class="imgSrcH3Item">{{item['insItemName']}}
+            </h3>
+            <div class="col-xs-12" style="padding:0px;" *ngFor="let obj of item['shortDetailList']; let x = index;">
+              <ul class="insItemUl text-center">
+                <li>{{obj['desc']}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="showPkgDestail">
+        <div id="pkgDetailSecond" class="secondaryPackageCon">
+          <ng-container *ngFor="let pItem of pkgPrimary;  let z = index;">
+            <div class="detailPkgOne">
+              <span>{{pItem['insItemName'] == null ? '' : pItem['insItemName']}}</span>
+            </div>
+            <ng-container *ngFor="let pDetail of pItem['detailTableRowList'];  let y = index;">
+              <div class="detailPkgTwo">{{pDetail['detailName']}}</div>
+              <div class="detailPkgThree pull-right">{{pDetail['detailValue']}}</div>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngFor="let item of secondaryItems;  let i = index;">
+            <div class="detailPkgOne">
+              <span>{{item['insItemName'] == null ? '' : item['insItemName']}}</span>
+            </div>
+            <ng-container *ngFor="let detail of item['detailTableRowList'];  let x = index;">
+              <div class="detailPkgTwo">{{detail['detailName'] == null ? '' : detail['detailName']}}</div>
+              <div class="detailPkgThree pull-right">{{detail['detailValue'] == null ? '' : detail['detailValue']}}</div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    </ng-container>
+
+    <ng-container *ngIf="pkgCustomGo">
+      <div class="packageTit place app-index col-lg-12 text-center" #eleTest [ngClass]="{'noBottom': paddingBottonZero}">
+        <div class="row" id="rowOfBtn">
+          <div class="col-xs-2">
+            <img src="assets/images/pkg/死亡殘廢.png" alt="" class="img-responsive img-center">
+          </div>
+          <div class="col-xs-2" id="paddingSpe" style="padding-right:0px;" #getUpClz>
+            <h2>死亡殘廢</h2>
+            <a (click)="toShowCusDetailContent()"><span class="shanshiContent">詳細內容</span></a>
+            <i (click)="toShowCusDetailContent()" class="fa fa-angle-up"></i>
+          </div>
+          <div class="col-xs-2" *ngFor="let package of cusPackageList; let i = index;">
+          <label class="specialPkgLabel" ngClass="{{pkgCustomGo == true? 'toCusBtn' : ''}}">
+          <input name="cusPkg" [checked]="package['isDefaultPackage']" class="form-control" type="radio" ngClass="{{'packageButton'+ i}}" (click)="toGetCustomPackageContent(package)" class="form-control purposeBtn" value="{{package.packageButtonName}}"/>
+          <span><i class="fa fa-check"></i> {{package.packageButtonName}}</span>
+          </label>
+          </div>
+        </div>
+        <ng-container>
+          <div id="mainLongDetailDiv" class="mainLongDetail" [hidden]="!CusDetailContent">
+            <div style="margin-right: 15px;" class="pull-right" (click)="toCloseAll()">
+              <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+            </div>
+            <ng-container *ngFor="let package of cusPrimaryItem; let i = index;">
+              <ul>
+                <ng-container *ngFor="let list of package['longDetailList']; let i = index;">
+                  <li>{{list['desc']}}</li>
+                </ng-container>
+              </ul>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <ng-container *ngFor="let seconItem of cusSecondItemNa; let x = index;" #arrowUp>
+          <div class="{{'row rowOfBtn'+x}}" id="rowOfBtn">
+            <div class="col-xs-2">
+              <img src="{{'assets/images/pkg/' + seconItem['insItemName'] + '.png'}}" alt="" class="img-responsive img-center">
+            </div>
+            <div class="col-xs-2 text-center" id="paddingSpe" style="padding-right:0px;">
+              <h2>{{seconItem['insItemName']}}</h2>
+              <a #aGotClick (click)="toGetShowContentOfPkg('ele'+x, x, aGotClick)">
+                <span class="shanshiContent">詳細內容</span>
+                <i class="fa fa-angle-up"></i>
+              </a>
+            </div>
+              <div id="cusAmtBtn" class="col-xs-1" >
+                <ng-container *ngIf="seconItem['textWhenNotPickList'].length !== 0">
+                  <label (click)="doNotNeed(x)"  class="specialPkgLabel" ngClass="{{pkgCustomGo == true? 'toCusBtn' : ''}}">
+                    <input type="radio" name="{{'btnAmt' + x}}" id="cusBtn" class="form-control" class="form-control purposeBtn btn btn-sm" >
+                    <span class="amtName" ><i class="checkBtn fa fa-check"></i> 不需要 </span>
+                  </label>
+                </ng-container>
+              </div>
+            <div id="cutAmtBtn" class="col-xs-7" [ngClass]="{'NoPaddingLeft':returnIfNoNeedIsNeed(seconItem['textWhenNotPickList'])}">
+              <ng-container  *ngFor="let item of seconItem['amountList']">
+                <div class="col-xs-3">
+                  <label (click)="amountBtnClick(x)" class="specialPkgLabel" ngClass="{{pkgCustomGo == true? 'toCusBtn' : ''}}">
+                    <input type="radio" name="{{'btnAmt' + x}}" id="cusBtn" class="form-control" class="form-control purposeBtn btn btn-sm" >
+                    <span class="amtName"><i class="checkBtn fa fa-check"></i>{{item['amountName']}} </span>
+                  </label>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="row toShowContentAccordion" id="{{'ele' + x}}" [hidden]="true"  #noNeedArea>
+            <div class="mainLongDetail" class="col-xs-12 text-left">
+                <div class="pull-right" (click)="toCloseAll()">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </div>
+                <ng-container>
+                  <ng-container *ngFor="let package of cusPrimaryItem; let i = index;">
+                    <p class="{{'needClassForWord' + x}}"  *ngFor="let pLong of package['longDetailList']" >
+                      {{pLong.desc}}
+                    </p>
+                  </ng-container>
+                </ng-container>
+                <ng-container>
+                  <p class="{{'noNeedClassForWord' + x}}" *ngFor="let p of seconItem['textWhenNotPickList']">
+                    {{p}}
+                  </p>
+                </ng-container>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+  </div>
+</div>
+
+
+  <!--<ng-container *ngIf="showPkgDestail" >-->
+    <!--<div class="pkgLong">-->
+      <!--<div class="col-xs-12 talkBubble"></div>-->
+      <!--<div class="col-xs-12">-->
+        <!--<ul>-->
+          <!--<li *ngFor="let item of longDesc; let i = index;">{{item['desc']}}</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</ng-container>-->
+<!--</div>-->
+
+<div class="container">
+  <div class="col-lg-12 feltNotEnContain">
+    <div class="col-sm-6 text-center"></div>
+    <div id="feltNotEnoughCol" class="col-sm-6"><span *ngIf="!pkgCustomGo" class="col-xs-6 feltNotEnough">覺得保障不夠？</span><button class="feltNotEnoughBtn col-xs-6 form-control pull-right" (click)="pkgCustomToggle()">{{pkgCustomTxt}}</button></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container">
+    <div class="col-xs-12 text-center">
+      <h2 class="finalPrice">NT$ 0</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container">
+    <div class="col-xs-12 text-center">
+      <button routerLink="fakeTemp" class="lastButtonAndGoInsured">我要投保</button>
+    </div>
+  </div>
+</div>

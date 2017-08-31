@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ProtoTravel</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+<script>
+  $(document).ready(function () {
+    $(document).on('click', '#xBtn' ,function (){
+      $('#insuredInfoAppend').find('#insuredOneCard').remove();
+      var test = $('.priceHead > h3').text();
+      var test2 = parseInt(test);
+    })
+    $(document).on('scroll', function () {
+      if($(window).scrollTop() > 212){
+//        $('header').css({
+//          'position': 'fixed',
+//          'width': '102%',
+//          'top': '0px',
+//          'z-index': '100'
+//        });
+//      } else {
+//        $('header').css({
+//          'position': 'inherit',
+//          'width': '102%',
+//          'z-index': '20'
+//        });
+      }
+    });
+    $(document).on('click', '.customSelectUi', function(){
+        var testBtn = $('ul.customSelectUi').children('li').hasClass('hidden');
+        console.log(testBtn);
+    })
+  });
+</script>
+
