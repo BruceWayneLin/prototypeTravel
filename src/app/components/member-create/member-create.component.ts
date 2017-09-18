@@ -13,40 +13,64 @@ declare var $ :any;
   styleUrls: ['./member-create.component.css']
 })
 export class MemberCreateComponent implements OnInit {
-  insuredTotal: number = 500;
-  originalInsured: number = 500;
   buttonOne: boolean = false;
   buttonTwo: boolean = false;
   buttonThree: boolean = false;
+  insuredFinalPrice: any;
+
+  checkEmailDis: boolean = false;
+  checkLastNameDis: boolean = false;
+  checkFirstNameDis: boolean = false;
+  checkPidDis: boolean = false;
+  checkBDay: boolean = false;
+
   owlAnanOne: boolean = true;
   owlAnanTwo: boolean = true;
   owlAnanThree: boolean = true;
   owlAnanFour: boolean = true;
   owlAnanFifth: boolean = true;
 
-  numberOfInusred:number = 1;
-  gender: string = '男';
   birthdayYears: any[] = [];
   birthdayMonths: any[] = [];
   birthdayDays: any[] = [];
   cityList: any[] = [];
-  selectedCity: any = {};
-  toGoWithYourFds: boolean = false;
+  relationship: any[] = [];
+  selectedCity: any = '';
+  noGoWithYourFds: boolean = false;
   toGoWithYourFdsClick: boolean = false;
-  email:any = 'abc@gmail.com';
-  lastName:string = '林';
-  firstName:string = '先生';
-  pid:string = 'a123456789';
-  pBirthYear:string = '2017';
-  pBirthMonth:string = '1';
-  pBirthDay:string = '12';
-  Mobile:string = '0912341234';
+  email:any = '';
+  lastName:string = '';
+  firstName:string = '';
+  pid:string = '';
+  pBirthYear:string = '';
+  pBirthMonth:string = '';
+  pBirthDay:string = '';
+  Mobile:string = '';
   selectedDistrict:any = '';
-  areaZipCode:any = '100';
-  addr: string = '凱選路中正街一號';
+  areaZipCode:any = '';
+  addr: string = '';
+  areaList: any = [];
+  filteredArea: any = [];
 
+  applicantSelectListYear: any[] = [];
+  applicantAgeMax: number;
+  applicantAgeMin: number;
+  insuredLimitedAge: number;
+
+  applicantAloneLastName:string = '';
+  applicantAloneFirstName:string = '';
+  applicantAlonePid:string = '';
+  applicantAloneBirthYear: string = '';
+  applicantAloneBirthMonth: string = '';
+  applicantAloneBirthDay: string = '';
+  personalInfoSelect: any = '本人';
+  applicantAloneLockInput: boolean = false;
+  applicantAloneMinAge: any = 0;
 
   @ViewChild('emailElm') EmailEl:ElementRef;
+  @ViewChild('lastNameEl') lastNameEl:ElementRef;
+  @ViewChild('firstNameEl') firstNameEl:ElementRef;
+  @ViewChild('birthdayCityEl') birthdayCityEl:ElementRef;
 
   constructor(
     private viewContainerRef: ViewContainerRef,
@@ -58,129 +82,223 @@ export class MemberCreateComponent implements OnInit {
      this.buttonOne = this.shareService.buttonOne;
      this.buttonTwo = this.shareService.buttonTwo;
      this.buttonThree = this.shareService.buttonThree;
+
+     this.owlAnanOne = this.dataService.owlAnanOne;
+     this.owlAnanTwo = this.dataService.owlAnanTwo;
+     this.owlAnanThree = this.dataService.owlAnanThree;
+     this.owlAnanFour = this.dataService.owlAnanFour;
+     this.owlAnanFifth = this.dataService.owlAnanFifth;
   }
 
   emailChange(email){
-      console.log();
   }
 
-  toLoadArea(city) {
+  changedData(){
+    this.dataService.clearData = false;
+  }
+
+  personalSelectChange(){
+    if(this.personalInfoSelect !== '本人') {
+      this.applicantAloneLockInput = false;
+      this.applicantAloneLastName = '';
+      this.applicantAloneFirstName = '';
+      this.applicantAlonePid = '';
+      this.applicantAloneBirthYear = '';
+      this.applicantAloneBirthMonth = '';
+      this.applicantAloneBirthDay = '';
+    } else {
+      this.applicantAloneLockInput = true;
+      this.applicantAloneLastName = this.lastName;
+      this.applicantAloneFirstName = this.firstName;
+      this.applicantAlonePid = this.pid;
+      this.applicantAloneBirthYear = this.pBirthYear;
+      this.applicantAloneBirthMonth = this.pBirthMonth;
+      this.applicantAloneBirthDay = this.pBirthDay;
+    }
+  }
+
+  addrCheck(addr){
+    if(!addr){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkBirthday(year, month, day){
+    if(!year && !month && !day) {
+      return true;
+    }
+  }
+
+  checkCityArea(city, area) {
+    if(!city || !area) {
+      return true;
+    }
+  }
+
+  pidCheck(userid:string){
+    if(userid){
+      var tab = 'ABCDEFGHJKLMNPQRSTUVXYWZIO',
+          A1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3],
+          A2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5],
+          Mx = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1];
+      if (userid.length != 10) return true;
+      var i = tab.indexOf(userid.toUpperCase().charAt(0));
+      if (i == -1) return true;
+      var sum = A1[i] + A2[i] * 9;
+      for (i = 1; i < 10; i++) {
+        var v = parseInt(userid.charAt(i));
+        if (isNaN(v)) return true;
+        sum = sum + v * Mx[i];
+      }
+      if (sum % 10 != 0) return true;
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  toZipCode(value) {
+    this.areaZipCode = value.model;
+  }
+
+  toLoadArea() {
     console.log(this.selectedCity);
+    let emptyArray = [];
+    this.selectedDistrict = 0;
+    this.areaZipCode = '';
+    this.areaList.filter(item => item.cityId == this.selectedCity).map((data)=>{
+      emptyArray.push(data);
+    })
+    this.filteredArea = emptyArray;
   }
 
   GoingWithFds() {
-    this.toGoWithYourFdsClick = true;
-    this.toGoWithYourFds = true;
-    this.insuredTotal += 500;
-    if(($('#insuredInfoAppend').children('#insuredOneCard').length) == 0){
-      this.owlAnanOne = false;
-    }
+    this.toGoWithYourFdsClick = false;
+    this.noGoWithYourFds = true;
+    this.owlAnanOne = false;
+    this.dataService.owlAnanOne = false;
+    $('html body').animate({'scrollTop': $('#addInsuredAdd').offset().top - 130 });
   }
   noGoingWithFds() {
     this.toGoWithYourFdsClick = true;
-    this.toGoWithYourFds = false;
+    this.noGoWithYourFds = false;
+    this.personalSelectChange();
   }
 
   ngOnInit() {
-    this.birthdayYears = this.birthYears();
     this.birthdayMonths = this.birthMonths();
     this.birthdayDays = this.birthDays(new Date().getFullYear(), new Date().getMonth()+1);
     this.dataService.getIniData().subscribe((data) => {
       this.cityList = data.cityList;
-      data.areaList.filter(value => value.cityId == 1).map(value =>
-        value
-      );
+      this.areaList = data.areaList;
     });
-    if(this.buttonOne){
-      $('input').val('');
-      $('select').val('');
-      this.gender = '';
-    }
-  }
-
-  ngAfterViewInit() {
-  }
-
-  ngAfterContentInit() {
-  }
-
-  countTotal() {
-    this.insuredTotal += 500;
+    this.dataService.toGetInsuredInfo(localStorage.getItem('id')).subscribe((item) => {
+      if(item){
+        console.log(item);
+        this.applicantAgeMax = item.companySetting['applicantAgeMax'];
+        this.applicantAgeMin =  item.companySetting['applicantAgeMin'];
+        this.insuredLimitedAge = item.companySetting['insuredAgeMax'] - item.companySetting['insuredAgeMin'];
+        this.applicantAloneMinAge = item.companySetting['insuredAgeMin'];
+        this.applicantSelectBirth();
+        this.birthYears();
+        this.relationship = item.relationList;
+        this.email = item.applicant.email;
+        this.email.length == 0 ? this.checkEmailDis = false : this.checkEmailDis = true;
+        this.lastName = item.applicant.lastName;
+        this.lastName.length == 0 ? this.checkLastNameDis = false : this.checkLastNameDis = true;
+        this.firstName = item.applicant.firstName;
+        this.firstName.length == 0 ? this.checkFirstNameDis = false : this.checkFirstNameDis = true;
+        this.pid = item.applicant.pid;
+        this.pid.length == 0 ? this.checkPidDis = false : this.checkPidDis = true;
+        item.applicant.birthday.length == 0 ? this.checkBDay = false : this.checkBDay = true;
+        this.pBirthYear = item.applicant.birthday.slice(0, 4);
+        this.pBirthMonth = item.applicant.birthday.slice(5, 7);
+        if(this.pBirthMonth.slice(0, 1) == '0'){
+          this.pBirthMonth = this.pBirthMonth.slice(1, 2);
+        }
+        this.pBirthDay = item.applicant.birthday.slice(8, 10);
+        if(this.pBirthDay.slice(0, 1) == '0'){
+          this.pBirthDay = this.pBirthDay.slice(1, 2);
+        }
+        this.Mobile = item.applicant.mobile;
+        this.selectedCity = item.applicant.addressCityId;
+        this.selectedDistrict = item.applicant.addressAreaId;
+        this.addr = item.applicant.address;
+      }
+    });
   }
 
   deleteThisOne() {
-    if(this.insuredTotal == 500){
-
-    }else {
-      this.insuredTotal -= 500;
-    }
-
-    if(($('#insuredInfoAppend').children('#insuredOneCard').length - 1) == 1){
-    } else {
-      $('#insuredInfoAppend').find('#insuredOneCard').remove();
-      $('.appendDollArea').find('.ananDiv').eq('1').remove();
-      if($('.appendDollArea').find('.ananDiv').length == 1){
-        $('.appendDollArea').find('.ananDiv').remove();
-      }
-    }
   }
 
   deleteThisMinus() {
-    if(this.insuredTotal == 500){
-
-    }else {
-      this.insuredTotal -= 500;
-    }
-    var lengthOfOwls = $('#insuredInfoAppend').children('#insuredOneCard').length - 2;
+    var lengthOfOwls = $('#insuredInfoAppend').children('#insuredOneCard').length;
     switch (lengthOfOwls) {
-      case 0:
+      case 2:
+        this.dataService.owlAnanOne = true;
         this.owlAnanOne = true;
         break;
-      case 1:
+      case 3:
+        this.dataService.owlAnanTwo = true;
         this.owlAnanTwo = true;
         break;
-      case 2:
+      case 4:
+        this.dataService.owlAnanThree = true;
         this.owlAnanThree = true;
         break;
-      case 3:
+      case 5:
+        this.dataService.owlAnanFour = true;
         this.owlAnanFour = true;
         break;
-      case 4:
+      case 6:
+        this.dataService.owlAnanFifth = true;
         this.owlAnanFifth = true;
         break;
       default:
-    }
-
-    if(($('#insuredInfoAppend').children('#insuredOneCard').length - 1) == 0){
+    };
+    if(($('#insuredInfoAppend').children('#insuredOneCard').length) == 1){
+      alert('最少必須一人');
     } else {
-      $('#insuredInfoAppend').last('#insuredOneCard').children().last().remove();
-      $('.appendDollArea').find('.ananDiv').eq('1').remove();
-      if($('.appendDollArea').find('.ananDiv').length == 1){
-        $('.appendDollArea').find('.ananDiv').remove();
+    };
+  }
+
+  applicantSelectBirth() {
+    var date = new Date();
+    let endAge = this.applicantAgeMax - this.applicantAgeMin;
+    let limitAge = date.getFullYear() - this.applicantAgeMin;
+    var returnVal = [];
+    returnVal.push(limitAge);
+    for (var i = 0; i <= endAge; i++) {
+      if(i < endAge){
+        limitAge--;
+        returnVal.push(limitAge);
+      } else {
+        this.applicantSelectListYear = returnVal;
       }
     }
   }
 
   birthYears() {
     var date = new Date();
-    var limitAge = 0;
-    limitAge = date.getFullYear();
+    let limitAge = date.getFullYear() - this.applicantAloneMinAge;
     var returnVal = [];
     returnVal.push(limitAge);
-    for (var i = limitAge; i > 1; i--) {
-      if(limitAge >= 1910){
+    for (var i = 0; i <= this.insuredLimitedAge; i++) {
+      if(i < this.insuredLimitedAge){
         limitAge--;
         returnVal.push(limitAge);
       } else {
-        return returnVal;
+        this.birthdayYears = returnVal;
       }
     }
   }
 
   birthMonths() {
     var months = [];
-    for (var i = 1; i <= 12; i++) {
-      months.push(i);
+    for (let i = 1; i <= 12; i++) {
+        months.push(i);
     }
     return months;
   }
@@ -216,102 +334,43 @@ export class MemberCreateComponent implements OnInit {
   }
 
   createInsuredCard() {
-    console.log(($('#insuredInfoAppend').children('#insuredOneCard').length));
-    var lengthOfOwls = $('#insuredInfoAppend').children('#insuredOneCard').length - 1;
+    var lengthOfOwls = $('#insuredInfoAppend').children('#insuredOneCard').length;
     switch (lengthOfOwls) {
-      case 0:
+      case 1:
+        this.dataService.owlAnanOne = false;
         this.owlAnanOne = false;
       break;
-      case 1:
+      case 2:
+        this.dataService.owlAnanTwo = false;
         this.owlAnanTwo = false;
       break;
-      case 2:
+      case 3:
+        this.dataService.owlAnanThree = false;
         this.owlAnanThree = false;
       break;
-      case 3:
+      case 4:
+        this.dataService.owlAnanFour = false;
         this.owlAnanFour = false;
       break;
-      case 4:
+      case 5:
+        this.dataService.owlAnanFifth = false;
         this.owlAnanFifth = false;
       break;
       default:
     }
-    // if(($('#insuredInfoAppend').children('#insuredOneCard').length) == 1){
-    //   this.numberOfInusred = 1;
-    //   this.numberOfInusred++;
-    //
-    // } else {
-    //   this.numberOfInusred++;
-    // }
-    this.numberOfInusred = $('#insuredInfoAppend').children('#insuredOneCard').length + 1;
     if(($('#insuredInfoAppend').children('#insuredOneCard').length) <= 5){
-      this.insuredTotal += 500;
-
-      var html = '';
-      html += '<div id="insuredOneCard" class="col-lg-6">';
-      html += '<div class="insuredTit col-lg-12 text-left">';
-      html += '<div class="col-xs-2">';
-      html += '<div class="circleDiv">';
-      html += '<p>' + this.numberOfInusred + '</p>';
-      html += '</div>';
-      html += '</div>';
-      html += '<div class="col-xs-10">';
-      html += '<button id="xBtn" (click)="deleteThisOne()" class="deleteBtn pull-right"><i class="fa fa-close"></i></button>';
-      html += '<h2 class="formTitTxt">個人資料</h2>';
-      html += '</div>';
-      html += '</div>';
-      html += '<div class="col-xs-6">';
-      html += '<select name="" id="" class="form-control btn-sm">';
-      html += '<option value="">請選擇</option>';
-      html += '<option value="">本人</option>';
-      html += '<option value="">配偶</option>';
-      html += '<option value="">子女</option>';
-      html += '</select>';
-      html += '</div>';
-      html += '<div class="col-xs-6"></div>';
-      html += '<div class="col-lg-12 text-center">';
-      html += '<div class="col-xs-6" style="padding-left:0px;">';
-      html += '<input class="memberFormInput form-control" type="text" placeholder="姓">';
-      html += '</div>';
-      html += '<div class="col-xs-6" style="padding-right:0px;">';
-      html += '<input class="pull-left memberFormInput form-control" type="text" placeholder="名">';
-      html += '</div>';
-      html += '</div>';
-      html += '<div class="col-lg-12 text-center">';
-      html += '<input class="insuredPid memberFormInput form-control input-lg" type="text" placeholder="身分證字號*">';
-      html += '</div>';
-      html += '<div class="insuredBirthEx col-lg-12 text-center">';
-      html += '<div>';
-      html += '<div class="col-xs-1">';
-      html += '<span class="txtBirth" style="padding-top:15px;">生日：</span>';
-      html += '</div>';
-      html += '<div class="col-xs-5">';
-      html += '<select name="" id="" class="form-control">';
-      html += '<option value="">年</option>';
-      html += '</select>';
-      html += '</div>';
-      html += '<div class="col-xs-3">';
-      html += '<select name="" id="" class="form-control">';
-      html += '<option value="">月</option>';
-      html += '</select>';
-      html += '</div>';
-      html += '<div class="col-xs-3">';
-      html += '<select name="" id="" class="form-control">';
-      html += '<option value="">日</option>';
-      html += '</select>';
-      html += '</div>';
-      html += '</div>';
-      html += '</div>';
-      html += '<div class="col-xs-12 text-right insuredPriceDivH4">';
-      html += '<h4 class="text-right"><span>保費:</span> NT$' +  this.originalInsured + '</h4>';
-      html += '</div>';
-      html += '</div>';
-
-      // $('.appendDollArea').append(dollHtml);
-      $('#insuredInfoAppend').append(html);
     } else {
       alert('您最多只能五位加保人');
     }
+  }
+
+  finalPrice(){
+
+    if (this.dataService.insuredTotal.currentValue !== this.dataService.insuredTotal.previousValue) {
+        setTimeout(() => this.dataService.insuredTotal.emit(this.dataService.insuredTotal), this.dataService.insuredTotal.previousValue)
+    }
+
+    return this.dataService.insuredTotal;
   }
 
 }

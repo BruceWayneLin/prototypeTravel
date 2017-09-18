@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>ProtoTravel</title>
+  <title>立刻投保 | Care Line英國凱萊 旅遊平安險</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -11,8 +11,9 @@
   <app-root></app-root>
 </body>
 </html>
+
 <script>
-  $(document).ready(function () {
+$(document).ready(function () {
     $(document).on('click', '#xBtn' ,function (){
       $('#insuredInfoAppend').find('#insuredOneCard').remove();
       var test = $('.priceHead > h3').text();
@@ -20,18 +21,6 @@
     })
     $(document).on('scroll', function () {
       if($(window).scrollTop() > 212){
-//        $('header').css({
-//          'position': 'fixed',
-//          'width': '102%',
-//          'top': '0px',
-//          'z-index': '100'
-//        });
-//      } else {
-//        $('header').css({
-//          'position': 'inherit',
-//          'width': '102%',
-//          'z-index': '20'
-//        });
       }
     });
     $(document).on('click', '.customSelectUi', function(){

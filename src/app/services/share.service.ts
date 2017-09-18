@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-
 @Injectable()
+
 export class ShareService {
   buttonOne: boolean = false;
   buttonTwo: boolean = false;
   buttonThree: boolean = false;
-  constructor() {
+
+  constructor(
+  ) {
   }
 
   buttonOneClick() {

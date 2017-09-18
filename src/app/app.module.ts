@@ -10,6 +10,7 @@ import { filterPipe } from './filter';
 import { MomentModule } from 'angular2-moment';
 import { AccordionModule } from 'ngx-accordion';
 import { OwlModule } from 'ngx-owl-carousel';
+import { Select2Module } from 'ng2-select2';
 // import { BreadcrumbsModule } from "ng2-breadcrumbs";
 
 import { MemberCreateComponent } from './components/member-create/member-create.component';
@@ -21,6 +22,7 @@ import { InMockDbService } from './mock-packageList';
 import { TempFakeComponent } from './components/temp-fake/temp-fake.component';
 import { ShareService } from "./services/share.service";
 import { ThanksComponent } from './components/thanks/thanks.component';
+import { AddMemberComponent } from './components/add-member/add-member.component';
 
 export const routes : Routes = [
   {
@@ -69,11 +71,13 @@ export const routes : Routes = [
     ConfirmInfoComponent,
     TempFakeComponent,
     ThanksComponent,
+    AddMemberComponent,
   ],
   imports: [
     CarouselModule,
     BrowserModule,
     // BreadcrumbsModule,
+    Select2Module,
     RouterModule.forRoot(routes),
     FormsModule,
     MomentModule,

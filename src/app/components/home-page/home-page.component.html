@@ -1,7 +1,9 @@
 <!-- carousel -->
 <owl-carousel [options]="{loop: true, nav: true, items: 1, dots: true, navigation: true, touchDrag: true}" [carouselClasses]="['owl-theme', 'sliding']">
 <div class="item" *ngFor="let image of images;let i = index">
-  <img class="img-responsive" src="{{image}}" alt="">
+  <a href="{{image.linkUrl}}" title="{{image.hoverText}}">
+  <img class="img-responsive" src="{{image.imageUrl}}" alt="{{image.hoverText}}">
+  </a>
 </div>
 </owl-carousel>
 <div class="row text-center">
@@ -40,24 +42,25 @@
           </ng-container>
         </div>
         <div class="col-lg-12">
-          <div class="col-sm-6 col-xs-12 text-center">
-            <select [(ngModel)]="selectedCountriesId" #selectedItem (change)="changeCountries(selectedItem.value)" name="land" id="land" class="customSelectUi topSelect form-control pull-right">
-              <ng-container *ngFor="let item of countries; let i = index;">
-                <option value="{{item['groupId']}}">
-                  {{item.name}}
-                </option>
-              </ng-container>
-            </select>
-          </div>
-          <div class="col-sm-6 col-xs-12">
-            <select [(ngModel)]="selectedCountry" (change)="toggleDoneSelect()" name="country" id="country" class="topSelect form-control pull-left">
-              <option value="">國家</option>
-              <ng-container *ngFor="let item of countries | filter: selectedCountriesId; let i = index;">
-                <option value="{{item.code}}" >
-                  {{item.name}}
-                </option>
-              </ng-container>
-            </select>
+          <div class="col-xs-12 text-center" style="padding-top: 20px;">
+            <div style="">
+              <select style="display:inline-block;" [(ngModel)]="selectedCountriesId" #selectedItem (change)="changeCountries(selectedItem.value)" name="land" id="land" class="customSelectUi topSelect form-control">
+                <ng-container *ngFor="let item of countries; let i = index;">
+                  <option value="{{item['groupId']}}">
+                    {{item.name}}
+                  </option>
+                </ng-container>
+              </select>
+
+              <select style="display:inline-block;" [(ngModel)]="selectedCountry" (change)="toggleDoneSelect()" name="country" id="country" class="topSelect form-control">
+                <option value="">國家</option>
+                <ng-container *ngFor="let item of countries | filter: selectedCountriesId; let i = index;">
+                  <option value="{{item.code}}" >
+                    {{item.name}}
+                  </option>
+                </ng-container>
+              </select>
+            </div>
           </div>
         </div>
       </ng-container>
@@ -154,10 +157,11 @@
                 </td>
               </ng-container>
               <td class="text-center">
-                <button #btnStartDay [disabled]="buttonToDisabled(btnStartDay.value, disabledDays)" id="{{'calendarDayButton'+i}}" (click)="onClickMe($event, 'calendarDayButton'+ i, i)" value="{{firstMon | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'}}">
+                <button #btnStartDay [disabled]="buttonToDisabled(btnStartDay.value) || buttonToDisabledTwo(btnStartDay.value)" id="{{'calendarDayButton'+i}}" (click)="onClickMe($event, 'calendarDayButton'+ i, i)" value="{{firstMon | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'}}">
                 <h4><i class="checkBtn fa fa-check hidden" aria-hidden="true"></i></h4>
                   {{firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'DD'}}
                 <h4><span class="checkBtnTxt hidden">出發日期</span></h4>
+                <h4 *ngIf="buttonToDisabledTwo(btnStartDay.value)"><span class="typhoonDay">颱風日</span></h4>
                 </button>
               </td>
           </ng-container>
@@ -224,7 +228,7 @@
         <div class="col-xs-3 text-center">
           <button class="form-control" (click)="toShowPkgDetail()">
             詳細說明
-            <i class="fa " [ngClass]="{'fa-angle-down': showPkgDestail, 'fa-angle-up': !showPkgDestail}" aria-hidden="true"></i>
+            <i class="fa " [ngClass]="{'fa-angle-up': showPkgDestail, 'fa-angle-down': !showPkgDestail}" aria-hidden="true"></i>
           </button>
         </div>
       </div>
@@ -278,12 +282,12 @@
           <div class="col-xs-2" id="paddingSpe" style="padding-right:0px;" #getUpClz>
             <h2>死亡殘廢</h2>
             <a (click)="toShowCusDetailContent()"><span class="shanshiContent">詳細內容</span></a>
-            <i (click)="toShowCusDetailContent()" class="fa fa-angle-up"></i>
+            <i (click)="toShowCusDetailContent()" class="fa fa-angle-down"></i>
           </div>
           <div class="col-xs-2" *ngFor="let package of cusPackageList; let i = index;">
           <label class="specialPkgLabel" ngClass="{{pkgCustomGo == true? 'toCusBtn' : ''}}">
           <input name="cusPkg" [checked]="package['isDefaultPackage']" class="form-control" type="radio" ngClass="{{'packageButton'+ i}}" (click)="toGetCustomPackageContent(package)" class="form-control purposeBtn" value="{{package.packageButtonName}}"/>
-          <span><i class="fa fa-check"></i> {{package.packageButtonName}}</span>
+          <span><i class="fa fa-check"></i>{{package.packageButtonName}}</span>
           </label>
           </div>
         </div>
@@ -311,13 +315,13 @@
               <h2>{{seconItem['insItemName']}}</h2>
               <a #aGotClick (click)="toGetShowContentOfPkg('ele'+x, x, aGotClick)">
                 <span class="shanshiContent">詳細內容</span>
-                <i class="fa fa-angle-up"></i>
+                <i class="fa fa-angle-down"></i>
               </a>
             </div>
               <div id="cusAmtBtn" class="col-xs-1" >
                 <ng-container *ngIf="seconItem['textWhenNotPickList'].length !== 0">
-                  <label (click)="doNotNeed(x)"  class="specialPkgLabel" ngClass="{{pkgCustomGo == true? 'toCusBtn' : ''}}">
-                    <input type="radio" name="{{'btnAmt' + x}}" id="cusBtn" class="form-control" class="form-control purposeBtn btn btn-sm" >
+                  <label (click)="doNotNeed(x, seconItem['insItemCode'])"  class="specialPkgLabel" ngClass="{{pkgCustomGo == true? 'toCusBtn' : ''}}">
+                    <input type="radio" [checked]="determineHideOrShow(seconItem['amountList'])" name="{{'btnAmt' + x}}" id="cusBtn" class="form-control purposeBtn btn btn-sm" >
                     <span class="amtName" ><i class="checkBtn fa fa-check"></i> 不需要 </span>
                   </label>
                 </ng-container>
@@ -325,8 +329,8 @@
             <div id="cutAmtBtn" class="col-xs-7" [ngClass]="{'NoPaddingLeft':returnIfNoNeedIsNeed(seconItem['textWhenNotPickList'])}">
               <ng-container  *ngFor="let item of seconItem['amountList']">
                 <div class="col-xs-3">
-                  <label (click)="amountBtnClick(x)" class="specialPkgLabel" ngClass="{{pkgCustomGo == true? 'toCusBtn' : ''}}">
-                    <input type="radio" name="{{'btnAmt' + x}}" id="cusBtn" class="form-control" class="form-control purposeBtn btn btn-sm" >
+                  <label (click)="amountBtnClick(x, item, seconItem['insItemCode'])" class="specialPkgLabel" ngClass="{{pkgCustomGo == true? 'toCusBtn' : ''}}">
+                    <input [checked]="item['isDefaultOption']" type="radio" name="{{'btnAmt' + x}}" id="cusBtn" class="form-control" class="form-control purposeBtn btn btn-sm" >
                     <span class="amtName"><i class="checkBtn fa fa-check"></i>{{item['amountName']}} </span>
                   </label>
                 </div>
@@ -338,18 +342,33 @@
                 <div class="pull-right" (click)="toCloseAll()">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </div>
-                <ng-container>
-                  <ng-container *ngFor="let package of cusPrimaryItem; let i = index;">
-                    <p class="{{'needClassForWord' + x}}"  *ngFor="let pLong of package['longDetailList']" >
-                      {{pLong.desc}}
+              <div class="{{'amtBtnClickToShow' + x}}">
+               <ng-container >
+                <ng-container *ngFor="let list of seconItem['amountList']">
+                  <ng-container *ngIf="list['isDefaultOption']">
+                    <p *ngFor="let p of list['longDetailList']">
+                        {{p.desc}}
                     </p>
                   </ng-container>
                 </ng-container>
-                <ng-container>
-                  <p class="{{'noNeedClassForWord' + x}}" *ngFor="let p of seconItem['textWhenNotPickList']">
-                    {{p}}
-                  </p>
+               </ng-container>
+              </div>
+                <div class="{{'divAmtLong needClassForWord' + x}}">
+                <!--<ng-container  *ngFor="let item of amountLongList">-->
+                  <!--<p >-->
+                    <!--{{item.desc}}-->
+                  <!--</p>-->
+                <!--</ng-container>-->
+                </div>
+
+              <!--*ngIf="(determineHideOrShow(seconItem['amountList']))"-->
+              <div class="{{'noNeedClassForWord' + x}}" *ngIf="determineHideOrShow(seconItem['amountList']) || doNotNeedToShow">
+                <ng-container *ngFor="let p of seconItem['textWhenNotPickList'];let i = index;">
+                    <p>
+                      {{p}}
+                    </p>
                 </ng-container>
+              </div>
             </div>
           </div>
         </ng-container>
@@ -359,30 +378,14 @@
   </div>
 </div>
 
-
-  <!--<ng-container *ngIf="showPkgDestail" >-->
-    <!--<div class="pkgLong">-->
-      <!--<div class="col-xs-12 talkBubble"></div>-->
-      <!--<div class="col-xs-12">-->
-        <!--<ul>-->
-          <!--<li *ngFor="let item of longDesc; let i = index;">{{item['desc']}}</li>-->
-        <!--</ul>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</ng-container>-->
-<!--</div>-->
-
-<div class="container">
-  <div class="col-lg-12 feltNotEnContain">
-    <div class="col-sm-6 text-center"></div>
-    <div id="feltNotEnoughCol" class="col-sm-6"><span *ngIf="!pkgCustomGo" class="col-xs-6 feltNotEnough">覺得保障不夠？</span><button class="feltNotEnoughBtn col-xs-6 form-control pull-right" (click)="pkgCustomToggle()">{{pkgCustomTxt}}</button></div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="container">
-    <div class="col-xs-12 text-center">
-      <h2 class="finalPrice">NT$ 0</h2>
+<div class="row" id="feltNotEnoRow">
+  <div>
+    <div class="col-xs-12">
+      <div class="col-sm-6 text-center"></div>
+      <div id="feltNotEnoughCol" class="col-xs-6">
+        <span *ngIf="!pkgCustomGo" class="feltNotEnough">覺得保障不夠？</span>
+        <button class="feltNotEnoughBtn form-control pull-right" (click)="pkgCustomToggle()">{{pkgCustomTxt}}</button>
+      </div>
     </div>
   </div>
 </div>
@@ -390,7 +393,15 @@
 <div class="row">
   <div class="container">
     <div class="col-xs-12 text-center">
-      <button routerLink="fakeTemp" class="lastButtonAndGoInsured">我要投保</button>
+      <h2 class="finalPrice">NT$ {{finalPrice}}</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container">
+    <div class="col-xs-12 text-center">
+      <button routerLink="memberCreate" class="lastButtonAndGoInsured" (click)="iDLikeToGoInsuredBtn()" >我要投保</button>
     </div>
   </div>
 </div>

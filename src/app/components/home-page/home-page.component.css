@@ -81,12 +81,13 @@
 .feltNotEnough {
   color: #e84466;
   top: 15px;
-  left: 80px;
+  left: 13%;
+  position: relative;
   font-size: 20px;
 }
 
 .feltNotEnoughBtn {
-  width: 200px;
+  width: 50%;
 }
 
 .customPkg {
@@ -515,10 +516,11 @@ td.weekDayText {
 .finalPrice {
   margin: -25px;
   font-size: 30px;
+  margin-bottom: 25px;
   color: #e84466;
   font-weight: 400;
   position: relative;
-  top: -15px;
+  top: 25px;
   z-index: -1;
   font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
 }
@@ -610,11 +612,12 @@ owl-carousel img {
   top: -135px;
   z-index: 1;
   font-weight: bold;
-  color: #808080;
+  color: #e84466;
   border: 2px solid white;
 }
 
-.immediatelyGo {
+.immediatelyGo button {
+  border: 1px solid #e84466;
 }
 
 .fa-angle-down, .fa-angle-up {
@@ -781,7 +784,7 @@ owl-carousel img {
 }
 
 .NoPaddingLeft {
-  left: 32%!important;
+  left: 31%!important;
   padding-left: 10px;
   padding-right: 15px;
 }
@@ -795,7 +798,7 @@ header {
 }
 
 .fa-chevron-circle-up {
-  color: #e84466;
+  color: #01a29a;
   font-size: 18px;
   font-weight: 800;
   cursor: pointer;
@@ -803,4 +806,49 @@ header {
 
 .packageTit.place.app-index.col-lg-12.text-center .row.toShowContentAccordion:last-child {
   margin-bottom: 0px;
+}
+
+.col-xs-7.NoPaddingLeft input{
+  width: 110px!important;
+  height: 50px;
+  margin-right: 10px;
+}
+
+#cutAmtBtn.col-xs-7.NoPaddingLeft {
+  width: 70%!important;
+}
+
+.col-xs-7.NoPaddingLeft .col-xs-3:first-child {
+  /*padding-right: 20px!Important;*/
+}
+
+#cutAmtBtn.col-xs-7.NoPaddingLeft .col-xs-3 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(2){
+  padding-right: 10px;
+}
+
+#cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(3){
+  margin-left: 7px!important;
+  margin-right: 0px!important;
+}
+
+#cutAmtBtn.col-xs-7.NoPaddingLeft .specialPkgLabel.toCusBtn  span {
+  left: 35px!important;
+}
+
+#feltNotEnoRow {
+  width: 930px;
+  margin: 0px auto;
+}
+
+.typhoonDay {
+  display: block;
+  position: relative;
+  left: 22px;
+  top: -5px;
+  color: #e84466;
 }

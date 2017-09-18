@@ -1,3 +1,10 @@
+html, body {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden!important;
+}
+
 /* You can add global styles to this file, and also import other style files */
 .sidenav {
   height: 100%; /* 100% Full-height */
@@ -376,7 +383,8 @@ h2.formTitTxt{
 
 #insuredOneCard{
   border: #ccc dotted;
-  padding: 20px;
+  padding: 10px;
+  padding-top: 15px;
 }
 
 .plusBtn {
@@ -489,7 +497,10 @@ button:active {
   -moz-border-radius: 30px;
   -webkit-border-radius: 30px;
   text-align: center;
-  width: 45px;;
+  width: 45px;
+  position: relative;
+  left: -15px;
+  top: 10px;
 }
 
 .circleDiv p {
@@ -657,4 +668,72 @@ div.owl-dots {
   height: 104px;
   color: transparent!important;
   background-repeat: no-repeat!important;
+}
+
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.select2-container {
+  color: #e84466!important;
+  border-color: #e84466!important;
+}
+
+.select2-results {
+  border: 1px solid #e84466!important;
+}
+
+.select2-results__options::-webkit-scrollbar {
+  background-color: white!important;
+  width: 2px;
+}
+
+.select2-results__options::-webkit-scrollbar-track {
+  background-color: white;
+} /* the new scrollbar will have a flat appearance with the set background color */
+
+.select2-selection.select2-selection--single {
+  height: 50px;
+  padding-top: 11px;
+  font-size: 18px;
+  border-radius: 50px;
+  margin-top: 7px;
+}
+
+.select2-results__options::-webkit-scrollbar-thumb {
+  background-color: #e84466;
+  width: 2px;
+  border-radius: 50px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+} /* this will style the thumb, ignoring the track */
+
+/*.select2-results__options::-webkit-scrollbar-button {*/
+  /*background-color: #7c2929;*/
+/*} !* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) *!*/
+
+/*.select2-results__options::-webkit-scrollbar-corner {*/
+  /*background-color: black;*/
+/*} !* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled *!*/
+
+.select2-search.select2-search--dropdown {
+  display: none;
+}
+
+.select2-selection__arrow {
+  top: 18px!important;
+}
+
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+}
+
+.select2-container--default.select2-container--open.select2-container--above .select2-selection--single, .select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
+  -moz-border-radius: 50px!important;
+  -webkit-border-radius: 50px!important;
+  border-radius: 50px!important;
 }

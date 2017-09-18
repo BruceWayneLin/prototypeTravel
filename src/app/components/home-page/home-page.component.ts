@@ -1,7 +1,7 @@
 import {Component, OnInit, AfterViewInit, ElementRef, ViewChild, ViewChildren}  from '@angular/core';
 import { ActivatedRoute, RouterModule, Routes } from "@angular/router";
 import { DataServiceService } from '../../services/data-service.service';
-// import { OwlCarousel } from 'ngx-owl-carousel';
+import { OwlCarousel } from 'ngx-owl-carousel';
 
 declare var jquery:any;
 declare var $ :any;
@@ -21,6 +21,8 @@ export class HomePageComponent implements OnInit {
   selectedCountryStr: string = '';
   selectedCountries: any = this.countries[0];
   countriesOfCounties: Array<any> = [];
+  transportation: string = '飛機';
+  defaultCustomerPkg: any;
   purposeList: Array<any> = [];
   selectedPackage: {};
   selectedPackageName: string = '';
@@ -55,76 +57,111 @@ export class HomePageComponent implements OnInit {
   tableShowHidden: boolean = false;
   startDayLimit:number = 0;
   diffDays:number = 0;
+  amountLongList: Array<any> = [];
   purposeGo: any = '觀光';
   isDoneSelectedPlaces: boolean = false;
+  finalPrice: any = 0;
+  cusItemJson: Array<any> = [];
   textOfSelectingDays: string = '請點選旅程出發日與返回日';
-  images: string[] = [
-                      // 'assets/images/nature/1.jpg',
-                      'assets/images/nature/2.jpg',
-                      'assets/images/nature/3.jpg',
-                      'assets/images/nature/4.jpg',
-                      ];
-
   showPkgDestail: boolean = false;
-
+  amtBtnClickToShow: boolean = true;
+  time: number = 0;
+  disabledReason: Array<any> = [];
   favCountry: Array<any> = [];
 
   @ViewChild('eleTest')  el:ElementRef;
   @ViewChild('noNeedArea') nNA:ElementRef;
   @ViewChild('arrowUp') arrowUp:ElementRef;
   @ViewChild('getUpClz') getUpClz:ElementRef;
+  @ViewChild('aGotClick') aGotClick:ElementRef;
+  @ViewChild('selectedItem') selectedItem:ElementRef;
+  @ViewChild(OwlCarousel) owl:OwlCarousel;
 
   constructor(
     private dataService:DataServiceService,
+
   ){
     $('html, body').animate({scrollTop: '0px'}, 0);
   }
 
+  images: Array<any> = [];
+
   ngOnInit() {
     this.firstMon = this.getMonday(new Date());
     this.dataService.getIniData().subscribe((posts) => {
+      var array = [];
+      posts.bannerList.forEach((item) => {
+        let objImage = {};
+        objImage['imageUrl'] = 'http://210.242.7.164' + item.imageUrl;
+        objImage['hoverText'] = item.hoverText;
+        objImage['linkUrl'] = item.linkUrl;
+        array.push(objImage);
+      });
+      this.images = array;
+      this.owl.refresh();
+
       this.countries = posts.countryList;
+      console.log(this.countries);
       this.data = posts;
       this.packageList = posts.packageList;
-
+      posts.cusPackageList.filter(val => val.isDefaultPackage == true).map(
+          value => this.defaultCustomerPkg = value
+      );
       posts.packageList.filter(val => val && val.isDefaultPackage).map(value =>
         this.selectedPackage = value
       );
       this.selectedPackageName = this.selectedPackage['packageName'];
       this.secondaryItems = this.selectedPackage['secondaryItems'];
       this.pkgPrimary = this.selectedPackage['primaryItems'];
-      console.log('96', this.pkgPrimary);
       this.featureDesc = this.selectedPackage['featureDesc'];
       this.toGetLogo(this.selectedPackage['companyCode']);
       this.fireInTheHole(this.selectedPackage['packageId'] - 1);
-      // this.toGetDetailOfPkg();
 
       this.purposeList = posts.purposeList;
       this.cusPackageList = posts.cusPackageList;
-      this.selectedCustomePkg = this.cusPackageList[0];
-      console.log(this.selectedCustomePkg);
+      this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
+        var objBack = {};
+        item['amountList'].forEach((unit) => {
+          if(unit['isDefaultOption'] == true) {
+            objBack['companyCode'] = item['companyCode'];
+            objBack['itemCode'] = item['insItemCode'];
+            objBack['amountCode'] = unit['amountCode'];
+            this.cusItemJson.push(objBack);
+          }
+        });
+      });
+
       this.getDayFromBkend = posts.productSetting['startDateLimit'];
       this.startDayLimit = posts.productSetting['startDateLimit'];
       this.textOfOverDays = '超過' + this.getDayFromBkend + '天後才出發？';
       this.disabledDays = posts.disabledDateList;
-      this.disabledDays.push('2017-08-29');
-      this.disabledDays.push('2017-08-30');
+      posts.disabledDateList.forEach((item) => {
+        this.disabledDays.push(item.date);
+      });
+      posts.disabledDateList.forEach((item) => {
+        this.disabledReason.push(item.reason);
+      });
 
+      console.log(posts);
       this.favCountry = posts['favCountry'];
       this.travelPeriodLimit = posts.productSetting['travelPeriodLimit'];
       this.toGetCountryList(this.countries);
-      // this.selectedCountriesId = this.countries[0];
-      // this.toGetCustomPackageContent(this.selectedCustomePkg, 'remove0');
-
+      // $(".js-example-basic-single").select2();
     });
-
+    this.changeCountries('');
     // this.dataService.getMockData().subscribe((mockPosts) => {
     //   console.log(mockPosts);
     // });
   }
 
-  toClearRadio(radioBtn){
-    $('input[name="'+ radioBtn +'"]').prop('checked', false);
+  toGetCusPkgPrice() {
+    let cusData = {};
+    cusData['packageId'] = this.defaultCustomerPkg['packageId'];
+    cusData['days'] = this.diffDays;
+    cusData['cusItemJson'] = this.cusItemJson;
+    this.finalPrice = this.dataService.getCusPkPrice(cusData).subscribe((item)=>{
+      this.finalPrice = item
+    });
   }
 
   tryGetFavor(favorCon:any){
@@ -139,6 +176,7 @@ export class HomePageComponent implements OnInit {
       }
     });
     this.selectedCountries = nameStr;
+    $('html body').animate({'scrollTop': $('#animateFlag').offset().top + 400});
     this.isDoneSelectedPlaces = true;
   }
 
@@ -146,18 +184,82 @@ export class HomePageComponent implements OnInit {
     this.doneSelPurpose = false;
   }
 
-  doNotNeed(number) {
+  doNotNeedToShow: boolean = false;
+  doNotNeed(number, val) {
+    console.log(val)
+    console.log('1', this.cusItemJson);
+    var returnArr = [];
+    this.cusItemJson.forEach((item) => {
+      if(item['itemCode'] == val){
+
+      }else {
+        returnArr.push(item);
+      }
+    })
+    $('#ele'+number+' .divAmtLong p').remove();
+    $('.amtBtnClickToShow'+number).remove();
+    this.cusItemJson = returnArr;
+    this.toGetCusPkgPrice();
+    this.doNotNeedToShow = true
     $('.noNeedClassForWord'+number).slideDown('fast');
     $('.needClassForWord'+number).slideUp('fast');
   }
 
-  amountBtnClick(val) {
-    $('.needClassForWord'+val).slideDown('fast');
-    $('.noNeedClassForWord'+val).slideUp('fast');
+  determineHideOrShow(lists, number) {
+    var reArray = [];
+    lists.forEach((item) => {
+      reArray.push(item['isDefaultOption'])
+    })
+    if(reArray.indexOf(true) >= 0){
+      return false;
+    } else {
+      return true;
+    }
+  }
 
+  amountBtnClick(number, val, itemCode) {
+    // this.toCloseAll();
+    this.amtBtnClickToShow = false;
+    this.doNotNeedToShow = false;
+    let cusData = {};
+    cusData['packageId'] = this.selectedCustomePkg.packageId;
+    cusData['days'] = this.diffDays;
+
+    var cusPkObj = {};
+    cusPkObj['companyCode'] = this.selectedCustomePkg['companyCode'];
+    cusPkObj['itemCode'] = itemCode;
+    cusPkObj['amountCode'] = val['amountCode'];
+
+    this.cusItemJson.filter(item => item['itemCode'] == itemCode).map(
+      (value) => {
+        let index = this.cusItemJson.indexOf(value);
+        var arry = this.cusItemJson;
+        arry.splice(index, 1);
+        this.cusItemJson = arry;
+        this.cusItemJson.push(cusPkObj);
+        console.log('1', this.cusItemJson);
+      }
+    );
+
+    this.toGetCusPkgPrice();
+
+    var html = '';
+    for(let i = 0; i < val['longDetailList'].length; i++){
+      html += '<p>';
+      html += val['longDetailList'][i].desc;
+      html += '</p>';
+    }
+    $('#ele'+number+' .divAmtLong p').remove();
+    $('.amtBtnClickToShow'+number).remove();
+    $('#ele'+number+' .divAmtLong').append(html);
+
+    // this.amountLongList = val['longDetailList'];
+    $('.needClassForWord'+number).slideDown('fast');
+    $('.noNeedClassForWord'+number).slideUp('fast');
   }
 
   toTogglePurposeBtn(clz, value) {
+    $('html body').animate({'scrollTop': $('#animateFlag').offset().top + 740});
     this.purposeGo = value.name;
     this.doneSelPurpose = true;
     $('.' + clz).children('.checkBtn').addClass('hidden');
@@ -177,13 +279,12 @@ export class HomePageComponent implements OnInit {
     if(this.pkgCustomGo){
       this.selPkgH2 = '自訂方案';
       this.pkgCustomTxt = '回建議方案挑選';
+      this.toGetCustomPackageContent(this.defaultCustomerPkg);
     } else {
       this.selPkgH2 = '選擇方案';
       this.pkgCustomTxt = '自訂投保方案';
+      this.getPriceServiceData();
     }
-    setTimeout(function(){
-      $('.packageButton0').click();
-    }, 300);
   }
 
   getDayArr(lastDay, firstDay){
@@ -247,7 +348,12 @@ export class HomePageComponent implements OnInit {
       let secondDate = new Date(this.endTravelDay);
       let diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
       this.diffDays = diffDays+1;
-      this.getPriceServiceData();
+      $('html body').animate({'scrollTop': $('#animateFlag').offset().top + 1100});
+      if(this.pkgCustomGo == false){
+        this.getPriceServiceData();
+      } else {
+        this.toGetCusPkgPrice();
+      }
     }
   }
 
@@ -256,18 +362,24 @@ export class HomePageComponent implements OnInit {
   }
 
   toShowCusDetailContent() {
-    for(let i = 0; i <= $('#paddingSpe i').length; i ++) {
-      if($('#paddingSpe i')[i]){
-        if($('#paddingSpe i')[i]['className'] == 'fa fa-angle-down'){
-          $('#paddingSpe i')[i]['className'] =  'fa fa-angle-up';
+    if(this.getUpClz.nativeElement.children[2]['className'] == 'fa fa-angle-down'){
+      for(let i = 0; i <= $('#paddingSpe i').length; i ++) {
+        if($('#paddingSpe i')[i]){
+          if($('#paddingSpe i')[i]['className'] == 'fa fa-angle-up'){
+            $('#paddingSpe i')[i]['className'] =  'fa fa-angle-down';
+          }
         }
       }
-    }
-
-    if(this.getUpClz.nativeElement.children[2]['className'] == 'fa fa-angle-up'){
-      this.getUpClz.nativeElement.children[2]['className'] = 'fa fa-angle-down';
-    } else if (this.getUpClz.nativeElement.children[2]['className'] == 'fa fa-angle-down') {
       this.getUpClz.nativeElement.children[2]['className'] = 'fa fa-angle-up';
+    } else if (this.getUpClz.nativeElement.children[2]['className'] == 'fa fa-angle-up') {
+      for(let i = 0; i <= $('#paddingSpe i').length; i ++) {
+        if($('#paddingSpe i')[i]){
+          if($('#paddingSpe i')[i]['className'] == 'fa fa-angle-up'){
+            $('#paddingSpe i')[i]['className'] =  'fa fa-angle-down';
+          }
+        }
+      }
+      this.getUpClz.nativeElement.children[2]['className'] = 'fa fa-angle-down';
     }
 
     var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
@@ -278,6 +390,21 @@ export class HomePageComponent implements OnInit {
   }
 
   toGetCustomPackageContent(val) {
+    this.defaultCustomerPkg = val;
+    this.cusItemJson = [];
+    this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
+      var objBack = {};
+      item['amountList'].forEach((unit) => {
+        if(unit['isDefaultOption'] == true) {
+          objBack['companyCode'] = item['companyCode'];
+          objBack['itemCode'] = item['insItemCode'];
+          objBack['amountCode'] = unit['amountCode'];
+          this.cusItemJson.push(objBack);
+        }
+      });
+    });
+    this.toGetCusPkgPrice();
+
     this.selectedCustomePkg = val;
     this.cusSecondItemNa = this.selectedCustomePkg['secondaryItems'];
     this.cusPrimaryItem = this.selectedCustomePkg['primaryItems'];
@@ -287,20 +414,7 @@ export class HomePageComponent implements OnInit {
       this.selectedPackageName = this.selectedPackage['packageName'];
     }
     this.pkgPrimary = this.selectedCustomePkg['primaryItems'];
-
-    // this.toGetDetailOfPkg();
     this.toGetLogo(this.selectedCustomePkg['companyCode']);
-    // if(this.selectedCustomePkg['featureDesc']) {
-    //   this.featureDesc = this.selectedCustomePkg['featureDesc'];
-    // }
-    //
-    // let number = 0;
-    // this.customBtn = [];
-    // this.customBtnAmt = [];
-    // for(var i = 0; i <= this.cusSecondItemNa.length; i++) {
-    //   this.customBtn.push(this.cusSecondItemNa[i]['insItemName']);
-    //   this.customBtnAmt.push(this.cusSecondItemNa[i]['amountList']);
-    // }
   }
 
   returnIfNoNeedIsNeed(obj) {
@@ -329,8 +443,8 @@ export class HomePageComponent implements OnInit {
   toCloseAll() {
     for(let i = 0; i <= $('#paddingSpe i').length; i ++) {
       if($('#paddingSpe i')[i]){
-        if($('#paddingSpe i')[i]['className'] == 'fa fa-angle-down'){
-          $('#paddingSpe i')[i]['className'] =  'fa fa-angle-up';
+        if($('#paddingSpe i')[i]['className'] == 'fa fa-angle-up'){
+          $('#paddingSpe i')[i]['className'] =  'fa fa-angle-down';
         }
       }
     }
@@ -345,17 +459,17 @@ export class HomePageComponent implements OnInit {
   toGetShowContentOfPkg(id, number, objClick){
     for(let i = 0; i <= $('#paddingSpe i').length; i ++) {
       if($('#paddingSpe i')[i]){
-        if($('#paddingSpe i')[i]['className'] == 'fa fa-angle-down'){
-          $('#paddingSpe i')[i]['className'] =  'fa fa-angle-up';
-          objClick.children[1]['className'] = 'fa fa-angle-down';
+        if($('#paddingSpe i')[i]['className'] == 'fa fa-angle-up'){
+          $('#paddingSpe i')[i]['className'] =  'fa fa-angle-down';
+          objClick.children[1]['className'] = 'fa fa-angle-up';
         }
       }
     }
 
     if ($('#'+id).is(':visible')) {
-      objClick.children[1]['className'] = 'fa fa-angle-up';
-    } else {
       objClick.children[1]['className'] = 'fa fa-angle-down';
+    } else {
+      objClick.children[1]['className'] = 'fa fa-angle-up';
     }
 
     this.paddingBottonZero = false;
@@ -367,73 +481,7 @@ export class HomePageComponent implements OnInit {
     if(id == this.el.nativeElement.lastElementChild.id) {
       this.paddingBottonZero = true;
     }
-    // for(let i = 0; i <= $('#paddingSpe i').length; i++){
-    //   if($('#paddingSpe i')[i]['className'] == 'fa fa-angle-down'){
-    //     console.log($('#paddingSpe i')[i]['className']);
-    //   };
-    // }
-    // var numberOfChild = this.el.nativeElement.children;
-    // var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
-    //
-    // switch(number){
-    //   case 0:
-    //     var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
-    //     for(let x = 0; x <= idNum; x++) {
-    //       $('.rowOfBtn'+x)[0]['hidden'] = !$('.rowOfBtn'+x)[0]['hidden'];
-    //     }
-    //     $('.rowOfBtn0')[0]['hidden'] = false;
-    //     break;
-    //   case 1:
-    //     var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
-    //     for(let x = 1; x <= idNum; x++) {
-    //       $('.rowOfBtn'+x)[0]['hidden'] = !$('.rowOfBtn'+x)[0]['hidden'];
-    //     }
-    //     $('.rowOfBtn1')[0]['hidden'] = false;
-    //     break;
-    //   case 2:
-    //     var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
-    //     for(let x = 2; x <= idNum; x++) {
-    //       $('.rowOfBtn'+x)[0]['hidden'] = !$('.rowOfBtn'+x)[0]['hidden'];
-    //     }
-    //     $('.rowOfBtn2')[0]['hidden'] = false;
-    //     break;
-    //   case 3:
-    //     var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
-    //     for(let x = 3; x <= idNum; x++) {
-    //       $('.rowOfBtn'+x)[0]['hidden'] = !$('.rowOfBtn'+x)[0]['hidden'];
-    //     }
-    //     $('.rowOfBtn3')[0]['hidden'] = false;
-    //     break;
-    //   case 4:
-    //     var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
-    //     for(let x = 4; x <= idNum; x++) {
-    //       $('.rowOfBtn'+x)[0]['hidden'] = !$('.rowOfBtn'+x)[0]['hidden'];
-    //     }
-    //     $('.rowOfBtn4')[0]['hidden'] = false;
-    //     break;
-    //   case 5:
-    //     var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
-    //     for(let x = 5; x <= idNum; x++) {
-    //       $('.rowOfBtn'+x)[0]['hidden'] = !$('.rowOfBtn'+x)[0]['hidden'];
-    //     }
-    //     $('.rowOfBtn5')[0]['hidden'] = false;
-    //     break;
-    //   case 6:
-    //     var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
-    //     for(let x = 6; x <= idNum; x++) {
-    //       $('.rowOfBtn'+x)[0]['hidden'] = !$('.rowOfBtn'+x)[0]['hidden'];
-    //     }
-    //     $('.rowOfBtn6')[0]['hidden'] = false;
-    //     break;
-    //   case 7:
-    //     var idNum = this.el.nativeElement.lastElementChild.id.slice(3,4);
-    //     for(let x = 7; x <= idNum; x++) {
-    //       $('.rowOfBtn'+x)[0]['hidden'] = !$('.rowOfBtn'+x)[0]['hidden'];
-    //     }
-    //     $('.rowOfBtn7')[0]['hidden'] = false;
-    //     break;
-    //   default:
-    // }
+
     if ($('#'+id).is(':visible')) {
       $('#'+id).slideUp('fast');
     } else {
@@ -441,20 +489,24 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  buttonToDisabled(calVal, daysNeedToDisable) {
+  buttonToDisabled(calVal) {
     let today = new Date();
     let startDaysDisabled = new Date(this.startTravelDay);
-    let buttonDate = new Date(calVal);
-
-    daysNeedToDisable.forEach((days) => {
-      if(buttonDate.getTime() == new Date(days).getTime()) {
-      }
-    })
+    var buttonDate = new Date(calVal);
 
     if(buttonDate < today || buttonDate < startDaysDisabled){
       return true;
-    }else {
+    } else {
       return false;
+    }
+  }
+
+  buttonToDisabledTwo(btnVal){
+    let buttonDate = new Date(btnVal);
+    for(var i = 0; i <= this.disabledDays.length; i++) {
+      if (buttonDate.getTime() == new Date(this.disabledDays[i]).getTime()) {
+        return true;
+      }
     }
   }
 
@@ -479,15 +531,18 @@ export class HomePageComponent implements OnInit {
       this.secondaryItems = this.selectedPackage['secondaryItems'];
       this.toGetLogo(this.selectedPackage['companyCode']);
       this.pkgPrimary = this.selectedPackage['primaryItems'];
-      console.log(this.pkgPrimary);
+      let dataBak = {};
+      dataBak['packageId'] = this.selectedPackage['packageId'];
+      dataBak['days'] = this.diffDays;
 
+      this.dataService.getPkPrice(dataBak).subscribe((item) => {
+        this.finalPrice = item;
+      });
       this.featureDesc = this.selectedPackage['featureDesc'];
-      // this.toGetDetailOfPkg();
       for (var i = 0; i <= this.pkgPrimary.length; i++){
         // console.log(this.pkgPrimary[i]['frontendDetailInfos']);
       }
     }
-    console.log(val);
   }
 
   /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
@@ -504,12 +559,6 @@ export class HomePageComponent implements OnInit {
     document.body.style.backgroundColor = "white";
   }
 
-  // togglePkgTitle(val) {
-  //   console.log(val);
-  //   this.showPkgTitleInfo = !this.showPkgTitleInfo;
-  // <i (click)="togglePkgTitle()" class="fa " [ngClass]="{'fa-search-plus': !showPkgTitleInfo, 'fa-search-minus': showPkgTitleInfo}"></i>
-  // }
-
   toggleDoneSelect() {
     this.isDoneSelectedPlaces = true;
     console.log(this.selectedCountries);
@@ -521,6 +570,7 @@ export class HomePageComponent implements OnInit {
       }
     })
     this.selectedCountryStr = a;
+    $('html body').animate({'scrollTop': $('#animateFlag').offset().top + 400});
   }
 
   modifiedPlaces() {
@@ -536,176 +586,43 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  chosenCountries:string = '';
-  settleDownTheCountries($event) {
-    console.log($event);
-    this.chosenCountries = this.selectedCountriesId['name'];
-  }
-
-  // toGetClas(i){
-  //   switch(i){
-  //     case 0:
-  //       return this.showPkgDestail0;
-  //     case 1:
-  //       return this.showPkgDestail1;
-  //     case 2:
-  //       return this.showPkgDestail2;
-  //     case 3:
-  //       return this.showPkgDestail3;
-  //   }
-// <i (click)="togglePkg(i)" class="fa " [ngClass]="{'fa-search-plus': !toGetClas(i), 'fa-search-minus': toGetClas(i)}"></i><div id="triangle-up" *ngIf="showPkgDestail" [ngClass]="{'hidden': !toGetClasPic(i), '': toGetClasPic(i)}"></div>
-//   // }
-//
-//   showImgGrey0: boolean = true;
-//   showImgGrey1: boolean = true;
-//   showImgGrey2: boolean = true;
-//   showImgGrey3: boolean = true;
-
-  // toGetClasPic(i){
-  //   switch(i){
-  //     case 0:
-  //       return this.showImgGrey0;
-  //     case 1:
-  //       return this.showImgGrey1;
-  //     case 2:
-  //       return this.showImgGrey2;
-  //     case 3:
-  //       return this.showImgGrey3;
-  //   }
+  // chosenCountries:string = '';
+  // settleDownTheCountries($event) {
+  //   console.log($event);
+  //   this.chosenCountries = this.selectedCountriesId['name'];
   // }
-
-
-  // initImgPic(){
-  //   if(
-  //     !this.showPkgDestail0 &&
-  //     !this.showPkgDestail1 &&
-  //     !this.showPkgDestail2 &&
-  //     !this.showPkgDestail3
-  //   ){
-  //     this.showImgGrey0 = true;
-  //     this.showImgGrey1 = true;
-  //     this.showImgGrey2 = true;
-  //     this.showImgGrey3 = true;
-  //   }
-  // }
-
-
 
   getPriceServiceData() {
-    var dataBak = {};
-    dataBak['cusItemJson'] = [];
-    dataBak['packageId'] = 1;
+    let dataBak = {};
+    dataBak['packageId'] = this.selectedPackage['packageId'];
     dataBak['days'] = this.diffDays;
-    var cusObj = {};
-    cusObj['companyCode'] =  'MingTai';
-    cusObj['itemCode'] = 'TAK009';
-    cusObj['amountCode'] = '50萬';
 
-    dataBak['cusItemJson'].push(cusObj);
-
-    this.dataService.getPkPrice(dataBak);
+     this.dataService.getPkPrice(dataBak).subscribe((item) => {
+       this.finalPrice = item;
+     });
   }
 
   toShowPkgDetail() {
     this.showPkgDestail = !this.showPkgDestail;
   }
 
-  // togglePkg(val) {
-  //   for(var i = 0; i <= this.secondaryItems.length; i++) {
-  //     if(i == val){
-  //       this.longDesc = this.secondaryItems[i]['longDetailList'];
-  //     }
-  //   }
-  //   this.showPkgDestail = !this.showPkgDestail;
-  //   switch(val){
-  //     case 0:
-  //     this.showPkgDestail0 = !this.showPkgDestail0;
-  //     if(this.showPkgDestail0){
-  //       this.showPkgDestail = true;
-  //     }
-  //     if(this.showPkgDestail1){
-  //       this.showPkgDestail1 = false;
-  //     }
-  //     if(this.showPkgDestail2){
-  //       this.showPkgDestail2 = false;
-  //     }
-  //     if(this.showPkgDestail3){
-  //       this.showPkgDestail3 = false;
-  //     }
-  //
-  //     this.showImgGrey0 = false;
-  //     this.showImgGrey0 = !this.showImgGrey0;
-  //     this.showImgGrey1 = false;
-  //     this.showImgGrey2 = false;
-  //     this.showImgGrey3 = false;
-  //     this.initImgPic();
-  //       break;
-  //   case 1:
-  //     this.showPkgDestail1 = !this.showPkgDestail1;
-  //     if(this.showPkgDestail1){
-  //       this.showPkgDestail = true;
-  //     }
-  //     if(this.showPkgDestail0){
-  //       this.showPkgDestail0 = false;
-  //     }
-  //     if(this.showPkgDestail2){
-  //       this.showPkgDestail2 = false;
-  //     }
-  //     if(this.showPkgDestail3){
-  //       this.showPkgDestail3 = false;
-  //     }
-  //
-  //     this.showImgGrey0 = false;
-  //     this.showImgGrey1 = false;
-  //     this.showImgGrey1 = !this.showImgGrey1;
-  //     this.showImgGrey2 = false;
-  //     this.showImgGrey3 = false;
-  //     this.initImgPic();
-  //     break;
-  //   case 2:
-  //     this.showPkgDestail2 = !this.showPkgDestail2;
-  //     if(this.showPkgDestail2){
-  //       this.showPkgDestail = true;
-  //     }
-  //     if(this.showPkgDestail0){
-  //       this.showPkgDestail0 = false;
-  //     }
-  //     if(this.showPkgDestail1){
-  //       this.showPkgDestail1 = false;
-  //     }
-  //     if(this.showPkgDestail3){
-  //       this.showPkgDestail3 = false;
-  //     }
-  //
-  //     this.showImgGrey0 = false;
-  //     this.showImgGrey1 = false;
-  //     this.showImgGrey2 = false;
-  //     this.showImgGrey2 = !this.showImgGrey2;
-  //     this.showImgGrey3 = false;
-  //     this.initImgPic();
-  //     break;
-  //   case 3:
-  //     if(this.showPkgDestail0){
-  //       this.showPkgDestail0 = false;
-  //     }
-  //     if(this.showPkgDestail1){
-  //       this.showPkgDestail1 = false;
-  //     }
-  //     if(this.showPkgDestail2){
-  //       this.showPkgDestail2 = false;
-  //     }
-  //     this.showPkgDestail3 = !this.showPkgDestail3;
-  //     if(this.showPkgDestail3){
-  //       this.showPkgDestail = true;
-  //     }
-  //
-  //     this.showImgGrey0 = false;
-  //     this.showImgGrey1 = false;
-  //     this.showImgGrey2 = false;
-  //     this.showImgGrey3 = false;
-  //     this.showImgGrey3 = !this.showImgGrey3;
-  //     this.initImgPic();
-  //     break;
-  //   }
-  // }
+  iDLikeToGoInsuredBtn(){
+    let dataToSendBack = {};
+    dataToSendBack['orderNumber'] = '';
+    dataToSendBack['countryCode'] = this.selectedCountry;
+    dataToSendBack['cityId'] = 0;
+    dataToSendBack['purpose'] = this.purposeGo;
+    dataToSendBack['transport'] = this.transportation;
+    dataToSendBack['startDate'] = this.startTravelDay;
+    dataToSendBack['endDate'] = this.endTravelDay;
+    dataToSendBack['packageId'] = this.selectedPackage['packageId'];
+    if(this.selectedCustomePkg == undefined){
+      dataToSendBack['cusPackageId'] = this.defaultCustomerPkg['packageId'];
+    } else {
+      dataToSendBack['cusPackageId'] = this.selectedPackage['packageId'];
+    }
+    dataToSendBack['trackingId'] = '';
+    dataToSendBack['cusItemList'] = this.cusItemJson;
+    this.dataService.toSendInsuredDataToBakHomePage(dataToSendBack);
+  }
 }

@@ -1,0 +1,377 @@
+<div id="insuredContainer">
+<div class="row">
+  <div class="container insuredPersonalInfo">
+    <div id="insuredInfoAppend" class="col-lg-12 text-center">
+      <!--// first Card-->
+      <div id="insuredOneCard" class="col-lg-6">
+        <div class="insuredTit col-sm-12 text-left">
+          <div class="col-xs-1">
+            <div class="circleDiv">
+              <p>1</p>
+            </div>
+          </div>
+          <div class="col-xs-11" style="padding-right:0px;">
+            <select name="" [(ngModel)]="firstCardRelationship" (change)="changedRelationship()" class="form-control btn-sm">
+              <option value="">請選擇</option>
+              <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
+            </select>
+            <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+        </div>
+        <div class="col-xs-12 col-sm-6"></div>
+        <div class="col-xs-12 col-sm-12 text-center">
+          <div class="col-xs-6 col-sm-6" style="padding-left:0px;">
+            <input class=" memberFormInput form-control" [disabled]="lockFirstCard" [(ngModel)]="firstCardLastName" type="text" placeholder="姓" value="林">
+          </div>
+          <div class="col-xs-6 col-sm-6" style="padding-right:0px;">
+            <input class=" memberFormInput form-control" [disabled]="lockFirstCard" [(ngModel)]="firstCardFirstName" type="text" placeholder="名" value="先生">
+          </div>
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+        <div class="col-lg-12 text-center">
+          <input class="insuredPid memberFormInput form-control input-lg" [disabled]="lockFirstCard" [(ngModel)]="firstCardPid" type="text" placeholder="身分證字號*" value="a176638555">
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+        <div class="insuredBirthEx col-xs-12 text-center">
+          <div class="col-xs-1">
+            <span class="txtBirth" style="padding-top:15px;">生日</span>
+          </div>
+          <div class="col-xs-5">
+            <select name="" id="" [(ngModel)]="firstCardYear" class="form-control" [disabled]="lockFirstCard" #birthYearValueEl (change)="checkRatioAmt(1)">
+              <option value="">年</option>
+              <option *ngFor="let year of birthdayYears" value="{{year}}" selected>{{year}}</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <select name="" id="" [(ngModel)]="firstCardMonth" class="form-control" [disabled]="lockFirstCard" (change)="checkRatioAmt(1)">
+              <option value="">月</option>
+              <option *ngFor="let month of birthdayMonths"  #birthMonthValueEl value="{{month}}" selected>{{month}}</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <select name="" id="" [(ngModel)]="firstCardDay" class="form-control birthInput" [disabled]="lockFirstCard" (change)="checkRatioAmt(1)">
+              <option value="">日</option>
+              <option *ngFor="let day of birthdayDays" #birthDayValueEl value="{{day}}" selected>{{day}}</option>
+            </select>
+            <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+          </div>
+        </div>
+        <div class="col-xs-12 text-right insuredPriceDivH4">
+          <h4 class="text-right"><span style="color:black;">保費:</span> NT${{firstCardInsuredPrice | number : '1.0'}}</h4>
+        </div>
+      </div>
+
+      <!--// second card-->
+        <div id="insuredOneCard" class="col-lg-6" style="height: 343px;" *ngIf="!owlAnanTwo()">
+          <div class="insuredTit col-sm-12 text-left">
+            <div class="col-xs-1">
+              <div class="circleDiv">
+                <p>2</p>
+              </div>
+            </div>
+            <div class="col-xs-11" style="padding-right:0px;">
+              <select [(ngModel)]="secondCardRelationship" class="form-control btn-sm">
+                <option value="">與要保人關係</option>
+                <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
+              </select>
+              <button [hidden]="true" (click)="deleteThisOne()" class="deleteBtn pull-right">
+                <i class="fa fa-close"></i>
+              </button>
+            </div>
+            <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+          </div>
+          <div class="col-xs-12 col-sm-12 text-center">
+            <div class="col-xs-6 col-sm-6" style="padding-left:0px;">
+              <input class=" memberFormInput form-control" [(ngModel)]="secondCardLastName" type="text" placeholder="姓" value="">
+            </div>
+            <div class="col-xs-6 col-sm-6" style="padding-right:0px;">
+              <input class=" memberFormInput form-control" [(ngModel)]="secondCardFirstName" type="text" placeholder="名" value="">
+            </div>
+            <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+          </div>
+          <div class="col-lg-12 text-center">
+            <input class="insuredPid memberFormInput form-control input-lg" [(ngModel)]="secondCardPid" type="text" placeholder="身分證字號*" value="">
+            <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+          </div>
+          <div class="insuredBirthEx col-xs-12 text-center">
+            <div class="col-xs-1">
+              <span class="txtBirth" style="padding-top:15px;">生日</span>
+            </div>
+            <div class="col-xs-5">
+              <select name="" id="" [(ngModel)]="secondCardYear" class="form-control" (change)="checkRatioAmt(2)">
+                <option value="">年</option>
+                <option *ngFor="let year of birthdayYears" value="{{year}}" selected>{{year}}</option>
+              </select>
+            </div>
+            <div class="col-xs-3">
+              <select name="" id="" [(ngModel)]="secondCardMonth" class="form-control" (change)="checkRatioAmt(2)">
+                <option value="">月</option>
+                <option *ngFor="let month of birthdayMonths" value="{{month}}" selected>{{month}}</option>
+              </select>
+            </div>
+            <div class="col-xs-3">
+              <select name="" id="" [(ngModel)]="secondCardDay" class="form-control birthInput" (change)="checkRatioAmt(2)">
+                <option value="">日</option>
+                <option *ngFor="let day of birthdayDays" value="{{day}}" selected>{{day}}</option>
+              </select>
+              <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+            </div>
+          </div>
+          <div class="col-xs-12 text-right insuredPriceDivH4">
+            <h4 class="text-right"><span style="color:black;">保費:</span> NT${{secondCardInsuredPrice | number : '1.0'}}</h4>
+          </div>
+        </div>
+
+      <!--// third card-->
+      <div id="insuredOneCard" class="col-lg-6" *ngIf="!owlAnanThree()">
+        <div class="insuredTit col-sm-12 text-left">
+          <div class="col-xs-1">
+            <div class="circleDiv">
+              <p>3</p>
+            </div>
+          </div>
+          <div class="col-xs-11" style="padding-right:0px;">
+            <select name="" [(ngModel)]="thirdCardRelationship" id="" class="form-control btn-sm">
+              <option value="">與要保人關係</option>
+              <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
+            </select>
+            <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+        </div>
+        <div class="col-xs-12 col-sm-6"></div>
+        <div class="col-xs-12 col-sm-12 text-center">
+          <div class="col-xs-6 col-sm-6" style="padding-left:0px;">
+            <input class=" memberFormInput form-control" type="text" [(ngModel)]="thirdCardLastName" placeholder="姓" value="">
+          </div>
+          <div class="col-xs-6 col-sm-6" style="padding-right:0px;">
+            <input class=" memberFormInput form-control" type="text" [(ngModel)]="thirdCardFirstName" placeholder="名" value="">
+          </div>
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+        <div class="col-lg-12 text-center">
+          <input class="insuredPid memberFormInput form-control input-lg" [(ngModel)]="thirdCardPid" type="text" placeholder="身分證字號*" value="a176638555">
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+        <div class="insuredBirthEx col-xs-12 text-center">
+          <div class="col-xs-1">
+            <span class="txtBirth" style="padding-top:15px;">生日</span>
+          </div>
+          <div class="col-xs-5">
+            <select name="" [(ngModel)]="thirdCardYear" id="" class="form-control" (change)="checkRatioAmt(3)">
+              <option value="">年</option>
+              <option *ngFor="let year of birthdayYears" value="{{year}}" selected>{{year}}</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <select name="" id="" [(ngModel)]="thirdCardMonth" class="form-control" (change)="checkRatioAmt(3)">
+              <option value="">月</option>
+              <option *ngFor="let month of birthdayMonths" value="{{month}}" selected>{{month}}</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <select name="" id="" [(ngModel)]="thirdCardDay" class="form-control birthInput" (change)="checkRatioAmt(3)">
+              <option value="">日</option>
+              <option *ngFor="let day of birthdayDays" value="{{day}}" selected>{{day}}</option>
+            </select>
+            <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+          </div>
+        </div>
+        <div class="col-xs-12 text-right insuredPriceDivH4">
+          <h4 class="text-right"><span style="color:black;">保費:</span> NT${{thirdCardInsuredPrice | number : '1.0'}}</h4>
+        </div>
+      </div>
+
+      <!--// fourth card-->
+      <div id="insuredOneCard" class="col-lg-6" style="height: 343px;" *ngIf="!owlAnanFour()">
+      <div class="insuredTit col-sm-12 text-left">
+        <div class="col-xs-1">
+          <div class="circleDiv">
+            <p>4</p>
+          </div>
+        </div>
+        <div class="col-xs-11" style="padding-right:0px;">
+          <select name="" id="" [(ngModel)]="fourthCardRelationship" class="form-control btn-sm">
+            <option value="">與要保人關係</option>
+            <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
+          </select>
+          <button [hidden]="true" (click)="deleteThisOne()" class="deleteBtn pull-right">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+        <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+      </div>
+      <div class="col-xs-12 col-sm-12 text-center">
+        <div class="col-xs-6 col-sm-6" style="padding-left:0px;">
+          <input class=" memberFormInput form-control" [(ngModel)]="fourthCardLastName" type="text" placeholder="姓" value="">
+        </div>
+        <div class="col-xs-6 col-sm-6" style="padding-right:0px;">
+          <input class=" memberFormInput form-control" type="text" [(ngModel)]="fourthCardFirstName" placeholder="名" value="">
+        </div>
+        <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+      </div>
+      <div class="col-lg-12 text-center">
+        <input class="insuredPid memberFormInput form-control input-lg" [(ngModel)]="fourthCardPid" type="text" placeholder="身分證字號*" value="">
+        <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+      </div>
+      <div class="insuredBirthEx col-xs-12 text-center">
+        <div class="col-xs-1">
+          <span class="txtBirth" style="padding-top:15px;">生日</span>
+        </div>
+        <div class="col-xs-5">
+          <select name="" id="" [(ngModel)]="fourthCardYear" class="form-control" (change)="checkRatioAmt(4)">
+            <option value="">年</option>
+            <option *ngFor="let year of birthdayYears" value="{{year}}">{{year}}</option>
+          </select>
+        </div>
+        <div class="col-xs-3">
+          <select name="" id="" [(ngModel)]="fourthCardMonth" class="form-control" (change)="checkRatioAmt(4)">
+            <option value="">月</option>
+            <option *ngFor="let month of birthdayMonths" value="{{month}}">{{month}}</option>
+          </select>
+        </div>
+        <div class="col-xs-3">
+          <select name="" id="" [(ngModel)]="fourthCardDay" class="form-control birthInput" (change)="checkRatioAmt(4)">
+            <option value="">日</option>
+            <option *ngFor="let day of birthdayDays" value="{{day}}">{{day}}</option>
+          </select>
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+      </div>
+      <div class="col-xs-12 text-right insuredPriceDivH4">
+        <h4 class="text-right"><span style="color:black;">保費:</span> NT${{fourthCardInsuredPrice | number : '1.0'}}</h4>
+      </div>
+    </div>
+
+      <!--// fifth card-->
+      <div id="insuredOneCard" class="col-lg-6" *ngIf="!owlAnanFifth()">
+      <div class="insuredTit col-sm-12 text-left">
+        <div class="col-xs-1">
+          <div class="circleDiv">
+            <p>5</p>
+          </div>
+        </div>
+        <div class="col-xs-11" style="padding-right:0px;">
+          <select name="" [(ngModel)]="fifthCardRelationship" id="" class="form-control btn-sm">
+            <option value="">與要保人關係</option>
+            <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
+          </select>
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+      </div>
+      <div class="col-xs-12 col-sm-6"></div>
+      <div class="col-xs-12 col-sm-12 text-center">
+        <div class="col-xs-6 col-sm-6" style="padding-left:0px;">
+          <input class=" memberFormInput form-control" [(ngModel)]="fifthCardLastName" type="text" placeholder="姓" value="">
+        </div>
+        <div class="col-xs-6 col-sm-6" style="padding-right:0px;">
+          <input class=" memberFormInput form-control" [(ngModel)]="fifthardFirstName" type="text" placeholder="名" value="">
+        </div>
+        <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+      </div>
+      <div class="col-lg-12 text-center">
+        <input class="insuredPid memberFormInput form-control input-lg" [(ngModel)]="fifthCardPid" type="text" placeholder="身分證字號*" value="">
+        <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+      </div>
+      <div class="insuredBirthEx col-xs-12 text-center">
+        <div class="col-xs-1">
+          <span class="txtBirth" style="padding-top:15px;">生日</span>
+        </div>
+        <div class="col-xs-5">
+          <select name="" [(ngModel)]="fifthCardYear" id="" class="form-control" (change)="checkRatioAmt(5)">
+            <option value="">年</option>
+            <option *ngFor="let year of birthdayYears" value="{{year}}" >{{year}}</option>
+          </select>
+        </div>
+        <div class="col-xs-3">
+          <select name="" [(ngModel)]="fifthCardMonth" id="" class="form-control" (change)="checkRatioAmt(5)">
+            <option value="">月</option>
+            <option *ngFor="let month of birthdayMonths" value="{{month}}" >{{month}}</option>
+          </select>
+        </div>
+        <div class="col-xs-3">
+          <select name="" [(ngModel)]="fifthCardDay" id="" class="form-control birthInput"  (change)="checkRatioAmt(5)">
+            <option value="">日</option>
+            <option *ngFor="let day of birthdayDays" value="{{day}}">{{day}}</option>
+          </select>
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+      </div>
+      <div class="col-xs-12 text-right insuredPriceDivH4">
+        <h4 class="text-right"><span style="color:black;">保費:</span> NT${{fifthCardInsuredPrice | number : '1.0'}}</h4>
+      </div>
+    </div>
+
+      <!--// sixth card-->
+      <div id="insuredOneCard" class="col-lg-6" *ngIf="!owlAnanSixth()" style="height: 343px;">
+        <div class="insuredTit col-sm-12 text-left">
+          <div class="col-xs-1">
+            <div class="circleDiv">
+              <p>6</p>
+            </div>
+          </div>
+          <div class="col-xs-11" style="padding-right:0px;">
+            <select name="" id="" [(ngModel)]="sixthCardRelationship" class="form-control btn-sm">
+              <option value="">與要保人關係</option>
+              <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
+            </select>
+            <button [hidden]="true" (click)="deleteThisOne()" class="deleteBtn pull-right">
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+        <div class="col-xs-12 col-sm-12 text-center">
+          <div class="col-xs-6 col-sm-6" style="padding-left:0px;">
+            <input class=" memberFormInput form-control" type="text" [(ngModel)]="sixthCardLastName" placeholder="姓" value="">
+          </div>
+          <div class="col-xs-6 col-sm-6" style="padding-right:0px;">
+            <input class=" memberFormInput form-control" type="text" [(ngModel)]="sixthCardFirstName" placeholder="名" value="">
+          </div>
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+        <div class="col-lg-12 text-center">
+          <input class="insuredPid memberFormInput form-control input-lg" [(ngModel)]="sixthCardPid" type="text" placeholder="身分證字號*" value="">
+          <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+        </div>
+        <div class="insuredBirthEx col-xs-12 text-center">
+          <div class="col-xs-1">
+            <span class="txtBirth" style="padding-top:15px;">生日</span>
+          </div>
+          <div class="col-xs-5">
+            <select name="" [(ngModel)]="sixthCardYear" id="" class="form-control" (change)="checkRatioAmt(6)">
+              <option value="">年</option>
+              <option *ngFor="let year of birthdayYears" value="{{year}}">{{year}}</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <select name="" id="" [(ngModel)]="sixthCardMonth" class="form-control" (change)="checkRatioAmt(6)">
+              <option value="">月</option>
+              <option *ngFor="let month of birthdayMonths" value="{{month}}">{{month}}</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <select name="" id="" [(ngModel)]="sixthCardDay" class="form-control birthInput" (change)="checkRatioAmt(6)">
+              <option value="">日</option>
+              <option *ngFor="let day of birthdayDays" value="{{day}}">{{day}}</option>
+            </select>
+            <span class="pull-right"><img  *ngIf="false" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+          </div>
+        </div>
+        <div class="col-xs-12 text-right insuredPriceDivH4">
+          <h4 class="text-right"><span style="color:black;">保費:</span> NT${{sixthCardInsuredPrice | number : '1.0'}}</h4>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+
