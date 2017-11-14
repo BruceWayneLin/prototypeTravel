@@ -69,3 +69,20 @@ button.goingMemberArea {
 .firstRow {
   margin-top: 130px;
 }
+
+@media screen and (max-width: 500px){
+  #failPay {
+    margin-top: 25% !important;
+  }
+  .imgH2 h3 {
+    font-size:18px;
+  }
+
+  h2{
+    font-size: 18px!important;
+  }
+  .couponArea .col-xs-6{
+    width: 100%!important;
+    margin-top: 10px;
+  }
+}

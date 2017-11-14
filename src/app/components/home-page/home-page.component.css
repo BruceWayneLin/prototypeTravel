@@ -26,7 +26,7 @@
 
 .secondaryPackageCon ul li {
   list-style: none;
-  text-align: justify;
+  text-align: center;
 }
 
 .toUp {
@@ -70,6 +70,7 @@
 .packageTit ul {
   /*position: relative;*/
   /*top: -5px;*/
+  margin-left: 15%;
 }
 
 .moreDays {
@@ -87,7 +88,10 @@
 }
 
 .feltNotEnoughBtn {
-  width: 50%;
+  font-size: 18px;
+  color: #e84466;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .customPkg {
@@ -209,6 +213,7 @@
 
 .lastButtonAndGoInsured {
   width: 400px;
+  border: 1px solid #e84466;
 }
 
 .logo {
@@ -216,6 +221,7 @@
   height: auto;
   float: right;
   margin: 20px 30%;
+  margin-top: 15px;
 }
 
 
@@ -239,8 +245,8 @@
   color: #5cb85c;
   font-size: 32px;
   position: relative;
-  top: -35px;
-  left: 37px;
+  top: -25px;
+  left: 33px;
 }
 
 #calendarTable .checkBtnTxt {
@@ -321,7 +327,7 @@ input[type="button"]:checked {
   position: absolute;
   top: 18px;
   font-size: 18px;
-  left: 33%;
+  left: 30%;
   pointer-events: none;
 }
 
@@ -446,6 +452,13 @@ td.weekDayText {
   border-radius: 50px;
   background-color: transparent;
   min-height: 50px;
+  border: 1px solid #dddddd;
+  width: 25%;
+  font-size: 18px;
+  padding: 1%;
+  padding-left: 31px;
+  max-height: 50px;
+  margin-right:10px;
 }
 
 .customSelectUi li:first-child {
@@ -544,6 +557,22 @@ td.weekDayText {
   height: 855px;
 }
 
+#country {
+  list-style: none;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  background-color: transparent;
+  min-height: 50px;
+  border: 1px solid #dddddd;
+  width: 25%;
+  font-size: 18px;
+  padding: 1%;
+  padding-left: 31px;
+  max-height: 50px;
+  margin-right: 10px;
+}
+
 @media screen and (max-width:500px){
   #land {
     float: none!important;
@@ -574,7 +603,7 @@ td.weekDayText {
   #calendarTable td .checkBtn {
     font-size: 12px;
     top: -27px;
-    left: 11px;
+    left: 4px!important;
   }
   #calendarTable h4 span {
     font-size: 12px;
@@ -584,6 +613,17 @@ td.weekDayText {
   #tableEndDivRow .col-sm-12 {
     width: 100%;
     padding-left: 55px;
+  }
+  #mainLongDetailDiv {
+    width: 100%;
+    left: 0px;
+  }
+  #mainLongDetailDiv ul {
+    padding-left: 5px;
+  }
+  .packageTit .toShowContentAccordion {
+    width: 95%!important;
+    left: 23px!important;
   }
 }
 
@@ -603,7 +643,7 @@ owl-carousel {
 }
 
 owl-carousel img {
-  height: 580px;
+  color: rgba(221, 221, 221, 0.41);
 }
 
 .immediatelyGo button{
@@ -612,7 +652,7 @@ owl-carousel img {
   top: -135px;
   z-index: 1;
   font-weight: bold;
-  color: #e84466;
+  color: rgba(221, 221, 221, 0.41);
   border: 2px solid white;
 }
 
@@ -723,7 +763,7 @@ owl-carousel img {
 
 #cutAmtBtn.col-xs-7 {
   position: absolute;
-  left: 45%;
+  left: 410px;
 }
 
 .packageContent .packageTit {
@@ -774,7 +814,7 @@ owl-carousel img {
   width: 930px;
   border: 1px solid #ccc;
   left: -16px;
-  padding-top: 12px;
+  padding-top: 5px;
   margin-top: 15px;
   margin-bottom: 7px;
 }
@@ -790,7 +830,7 @@ owl-carousel img {
 }
 
 #cusBtn.form-control.purposeBtn.btn.btn-sm {
-  width: 100px;
+  width: 110px;
 }
 
 header {
@@ -818,26 +858,41 @@ header {
   width: 70%!important;
 }
 
-.col-xs-7.NoPaddingLeft .col-xs-3:first-child {
-  /*padding-right: 20px!Important;*/
-}
+/*.col-xs-7.NoPaddingLeft .col-xs-3:first-child {*/
+  /*!*padding-right: 20px!Important;*!*/
+/*}*/
 
-#cutAmtBtn.col-xs-7.NoPaddingLeft .col-xs-3 {
-  padding-left: 15px;
-  padding-right: 15px;
+/*#cutAmtBtn.col-xs-7.NoPaddingLeft .col-xs-3 {*/
+  /*padding-left: 15px;*/
+  /*padding-right: 15px;*/
+/*}*/
+
+#cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(1){
+  position: relative;
+  left: 8px;
 }
 
 #cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(2){
-  padding-right: 10px;
+  position: relative;
+  left: -15px;
 }
 
 #cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(3){
-  margin-left: 7px!important;
-  margin-right: 0px!important;
+  position: relative;
+  left: -43px;
+}
+
+#cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(4){
+  position: relative;
+}
+
+#cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(4){
+  position: relative;
+  left:-12%;
 }
 
 #cutAmtBtn.col-xs-7.NoPaddingLeft .specialPkgLabel.toCusBtn  span {
-  left: 35px!important;
+  left: 18%!important;
 }
 
 #feltNotEnoRow {
@@ -851,4 +906,313 @@ header {
   left: 22px;
   top: -5px;
   color: #e84466;
+}
+
+.form-control.detailExplian {
+  color: #01a29a;
+  height: 40px;
+  padding-top: 7px;
+  margin-top: 16px;
+}
+
+#rowOfBtn .col-xs-2:nth-child(4){
+  position:relative;
+  left:-24px;
+}
+
+#rowOfBtn .col-xs-2:nth-child(5){
+  position:relative;
+  left:-57px;
+}
+
+#rowOfBtn .col-xs-2:nth-child(6){
+  position:relative;
+  left:-90px;
+}
+
+#detailTabletbl th{
+  text-align: left!important;
+  color: #e84466;
+}
+
+@media screen and (max-width: 500px){
+  #mobileCusPkg {
+    display: initial;
+  }
+  #deskCusPkg {
+    display: none;
+  }
+  #mobileAmt {
+    margin-left: 0px!important;
+  }
+  #calendarTable td button{
+    padding-left: 15px!important;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .purposeLabelCol3 {
+    width: 100%!important;
+  }
+  #mobileCusPkg {
+    display: initial;
+  }
+  #deskCusPkg {
+    display: none;
+  }
+  .specialPkgLabel span {
+    font-size: 13px;
+    left: 0px;
+    width: 100%;
+  }
+  .specialPkgLabel input:checked + span {
+    font-size: 13px;
+    left: 0px;
+    width: 100%;
+  }
+  #btnOfPackages .col-xs-4 {
+
+  }
+  .divAmtLong {
+    margin-left: 0px!important;
+  }
+
+  #btnOfPackages.col-xs-10.text-center {
+    width:100%;
+    position: relative;
+    left: -7px;
+    margin-top: 10px;
+  }
+
+  #btnOfPackages input {
+    height: 45px;
+    width: 100px;
+  }
+  .packageContent .col-xs-6, .packageContent .col-xs-3 {
+    width: 100%;
+  }
+  .packageContent {
+    margin-top: 25px;
+  }
+  .logo {
+    margin: auto 35%;
+  }
+  .packageContent h2 {
+    font-size: 18px;
+    margin-bottom: 0px;
+  }
+  .longTri {
+    left: 40%;
+  }
+  .imgSrcH3Item {
+    font-size: 14px;
+  }
+  .insItemUl li {
+    margin-left: 0px;
+    font-size: 10px;
+  }
+  #secondCol2 {
+    width: 40%;
+  }
+  .packageTit ul {
+    margin-left: 0px;
+  }
+  .feltNotEnoughBtn {
+    display: block;
+    margin: 10px auto;
+    float: none!important;
+    text-align: center;
+  }
+  .myFavCon {
+    font-size: 16px;
+  }
+  label.purposeLabel span {
+    font-size: 15px;
+    left: 38%;
+  }
+  label.purposeLabel input {
+    height: 42px;
+  }
+  .normalH2 {
+    font-size: 18px;
+  }
+  .normalH3 {
+    font-size: 18px;
+  }
+  td.weekDayText {
+    font-size: 12px!important;
+  }
+  #calendarTable td .checkBtn {
+    top: -20px;
+    left: 4px;
+  }
+  #feltNotEnoRow {
+    width: 100%;
+  }
+  #tableEndDivRow h3 {
+    font-size: 18px;
+  }
+  #mobileAmt {
+    margin-left: 0px!important;
+  }
+  #paddingSpe {
+    left: 0px!important;
+  }
+}
+
+@media screen and (min-width: 500px){
+  #mobileCusPkg {
+    display: none;
+  }
+  #deskCusPkg {
+    display: initial;
+  }
+}
+
+@media screen and (max-width: 992px) and (min-width: 500px){
+  #cutAmtBtn.col-xs-7 {
+    position: absolute;
+    left: 321px;
+  }
+  #rowOfBtn input {
+    width: 85px;
+  }
+  .col-xs-7.NoPaddingLeft input {
+    width: 85px!important;
+  }
+  #cusBtn.form-control.purposeBtn.btn.btn-sm {
+    width: 85px;
+  }
+  .specialPkgLabel input:checked + span {
+    font-size: 16px;
+    left: 13px;
+  }
+  .specialPkgLabel.toCusBtn span {
+    font-size: 16px;
+    left: 13px;
+  }
+  #rowOfBtn h2 {
+    font-size: 20px;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft .specialPkgLabel.toCusBtn span {
+    left: 20px!important;
+  }
+  .feltNotEnoughBtn {
+    margin-right: 15%;
+  }
+  #btnOfPackages .specialPkgLabel span {
+    left: 33px;
+  }
+  #btnOfPackages .specialPkgLabel input:checked + span {
+    font-size: 16px;
+    left: 50px;
+  }
+  #tableEndDivRow .col-sm-12 {
+    width: 104%!important;
+  }
+  #land {
+    padding-left: 15px;
+  }
+  #country {
+    padding-left: 15px;
+  }
+  #calendarTable {
+    margin-right: 10px;
+  }
+
+  .packageTit[_ngcontent-c2]   .toShowContentAccordion{
+    width: 109%;
+    left: -15px;
+  }
+
+}
+
+@media screen and (max-width: 768px) and (min-width: 500px){
+  .feltNotEnoughBtn {
+    margin-right: 22%;
+  }
+  #calendarTable {
+    margin-right: 10px;
+  }
+  #calendarTable .checkBtn {
+    left: 25px!important;
+  }
+  .packageTit .toShowContentAccordion{
+    width: 109%;
+    left: -15px;
+  }
+}
+
+@media screen and (max-width: 415px) and (min-width: 413px){
+  #calendarTable td .checkBtn {
+    left: 4px!important;
+  }
+  #calendarTable h4 span {
+    left: -17px!important;
+  }
+}
+
+#secondCol2 {
+  padding-bottom: 15px;
+}
+
+@media screen and (max-width: 1200px) and (min-width: 768px){
+  .purposeLabelCol3 span {
+    left: 10%!important;
+  }
+  #land, #country {
+    width: 25%!important;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 990px) and (min-width: 700px){
+  #calendarTable .checkBtn.fa.fa-check {
+    left: 22px;
+  }
+  #calendarTable .checkBtnTxt {
+    left: 0px;
+  }
+  #land, #country {
+    width: 25%!important;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 700px) and (min-width: 500px){
+  #calendarTable .checkBtn.fa.fa-check {
+    left: 18px;
+    font-size: 18px;
+  }
+  #calendarTable .checkBtnTxt {
+    font-size: 14px;
+  }
+  #land, #country {
+    width: 25%!important;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) and (min-width:500px){
+  .purposeLabelCol3 span {
+    left: 17%!important;
+  }
+}
+
+.immediatelyGo i {
+  font-size: 40px;
+  margin-bottom: 0px;
+  position: relative;
+  top: 0px;
+  color: hsla(0, 0%, 87%, 0.74);
+}
+
+@media screen and (min-width:990px){
+  .purposeLabelCol3 span {
+    left: 22%!important;
+  }
+}
+
+.calDayNone{
+  position: absolute;
 }

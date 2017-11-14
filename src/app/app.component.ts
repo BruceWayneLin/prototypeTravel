@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {DataServiceService} from '../../src/app/services/data-service.service';
 
 declare var jquery:any;
 declare var $ :any;
@@ -8,13 +9,26 @@ declare var $ :any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor() { }
+  loading: boolean = false;
+
+  constructor(
+    private dataService: DataServiceService
+  ) {
+  }
   ngOnInit() {
+  }
+
+  AlertArr(){
+    return this.dataService.AlertTXT;
   }
 
   ngAfterViewInit() {
     this.detectScrollAndHeaderChange();
-    console.log($(document).scrollTop());
+  }
+
+  ifItsLoading(){
+    this.loading = this.dataService.loading;
+    return this.loading;
   }
 
   detectScrollAndHeaderChange() {

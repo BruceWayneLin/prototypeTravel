@@ -1,10 +1,10 @@
 {
-  "/api/*": {
+  "/CareLineTravel/travel-mbr": {
     "target": "http://210.242.7.164",
     "secure": false,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/api" : "http://210.242.7.164"
+      "^/CareLineTravel/travel-mbr" : "http://210.242.7.164/CareLineTravel/travel-mbr"
     },
     "changeOrigin": false
   }

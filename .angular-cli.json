@@ -19,7 +19,6 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../src/assets/css/select2.css",
         "styles.css",
         "../src/assets/css/hoverEff.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -30,7 +29,7 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "../src/assets/js/jquery.hoverdir.js",
-        "../src/assets/js/select2.js"
+        "../node_modules/hammerjs/hammer.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

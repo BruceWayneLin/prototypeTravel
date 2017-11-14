@@ -4,14 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { CarouselModule } from 'ngx-bootstrap';
-import { DataServiceService } from './services/data-service.service'
+import { DataServiceService } from './services/data-service.service';
 import { filterPipe } from './filter';
+import { ReactiveFormsModule} from '@angular/forms';
 import { MomentModule } from 'angular2-moment';
 import { AccordionModule } from 'ngx-accordion';
 import { OwlModule } from 'ngx-owl-carousel';
-import { Select2Module } from 'ng2-select2';
-// import { BreadcrumbsModule } from "ng2-breadcrumbs";
+
+// import { SuiSelectModule } from 'ng2-semantic-ui';
 
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
@@ -23,6 +23,8 @@ import { TempFakeComponent } from './components/temp-fake/temp-fake.component';
 import { ShareService } from "./services/share.service";
 import { ThanksComponent } from './components/thanks/thanks.component';
 import { AddMemberComponent } from './components/add-member/add-member.component';
+import { FailPaymentComponent } from './components/fail-payment/fail-payment.component';
+import { LoadingModule } from 'ngx-loading';
 
 export const routes : Routes = [
   {
@@ -59,11 +61,19 @@ export const routes : Routes = [
       breadcrumb: '投保感謝',
     },
     component: ThanksComponent
+  },
+  {
+    path:'failPayment',
+    data: {
+      breadcrumb: '付款失敗',
+    },
+    component: FailPaymentComponent
   }
 ]
 
 @NgModule({
   declarations: [
+    AddMemberComponent,
     filterPipe,
     AppComponent,
     MemberCreateComponent,
@@ -71,13 +81,15 @@ export const routes : Routes = [
     ConfirmInfoComponent,
     TempFakeComponent,
     ThanksComponent,
-    AddMemberComponent,
+    FailPaymentComponent
+  ],
+  exports: [
   ],
   imports: [
-    CarouselModule,
     BrowserModule,
     // BreadcrumbsModule,
-    Select2Module,
+    ReactiveFormsModule,
+    LoadingModule,
     RouterModule.forRoot(routes),
     FormsModule,
     MomentModule,
@@ -85,6 +97,7 @@ export const routes : Routes = [
     AccordionModule,
     HttpModule,
     OwlModule,
+    // SuiSelectModule
   ],
   providers: [
     DataServiceService,
