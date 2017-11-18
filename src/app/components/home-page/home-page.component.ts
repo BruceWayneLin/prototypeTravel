@@ -75,6 +75,7 @@ export class HomePageComponent implements OnInit {
   ifTheStartIsPlusOneMoreDay: any;
   testDay:any = new Date();
   resetBackCountry: any;
+  options:any = ['a','b','c','d'];
 
   @ViewChild('eleTest')  el:ElementRef;
   @ViewChild('noNeedArea') nNA:ElementRef;
@@ -107,6 +108,7 @@ export class HomePageComponent implements OnInit {
       }
     }
     if(this.dataService.orderNumberForSave){
+
       this.dataService.getCustomerHomePage().subscribe((item)=>{
         this.startTravelDay = item['dateFrom'];
         this.diffDays = item['datePeriod'];
@@ -123,9 +125,50 @@ export class HomePageComponent implements OnInit {
           this.countries = posts.countryList;
           this.toGetCountryList(this.countries);
           this.changeCountries('');
-
         });
       })
+
+      let sendDataBak = {};
+      sendDataBak['product'] = 'Travel';
+      sendDataBak['startDate'] = this.startTravelDay;
+      this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
+        console.log(item);
+        this.cusPackageList = item['cusPackageList'];
+        this.packageList = item['packageList'];
+        item.cusPackageList.filter(val => val.isDefaultPackage == true).map(
+            value => this.defaultCustomerPkg = value
+        );
+
+        item.packageList.filter(val => val && val.isDefaultPackage).map(value =>
+            this.selectedPackage = value
+        );
+        this.selectedPackageName = this.selectedPackage['packageName'];
+        this.secondaryItems = this.selectedPackage['secondaryItems'];
+        this.pkgPrimary = this.selectedPackage['primaryItems'];
+        this.featureDesc = this.selectedPackage['featureDesc'];
+        this.toGetLogo(this.selectedPackage['companyCode']);
+        this.fireInTheHole(this.selectedPackage['packageId'] - 1);
+        this.tableList = this.selectedPackage['table'];
+        console.log('table', this.tableList);
+
+        this.cusPackageList = item.cusPackageList;
+        this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
+          var objBack = {};
+          item['amountList'].forEach((unit) => {
+            if(unit['isDefaultOption'] == true) {
+              objBack['companyCode'] = item['companyCode'];
+              objBack['itemCode'] = item['insItemCode'];
+              objBack['amountCode'] = unit['amountCode'];
+              this.cusItemJson.push(objBack);
+            }
+          });
+        });
+        if(this.pkgCustomGo == false){
+          this.getPriceServiceData();
+        } else {
+          this.toGetCusPkgPrice();
+        }
+      });
     }
 
     this.dataService.getIniData().subscribe((posts) => {
@@ -558,43 +601,7 @@ export class HomePageComponent implements OnInit {
             }
           });
         }, 300);
-          let sendDataBak = {};
-          sendDataBak['product'] = 'Travel';
-          sendDataBak['startDate'] = this.startTravelDay;
-          this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
-            console.log(item);
-            this.cusPackageList = item['cusPackageList'];
-            this.packageList = item['packageList'];
-            item.cusPackageList.filter(val => val.isDefaultPackage == true).map(
-                value => this.defaultCustomerPkg = value
-            );
 
-            item.packageList.filter(val => val && val.isDefaultPackage).map(value =>
-                this.selectedPackage = value
-            );
-
-            this.selectedPackageName = this.selectedPackage['packageName'];
-            this.secondaryItems = this.selectedPackage['secondaryItems'];
-            this.pkgPrimary = this.selectedPackage['primaryItems'];
-            this.featureDesc = this.selectedPackage['featureDesc'];
-            this.toGetLogo(this.selectedPackage['companyCode']);
-            this.fireInTheHole(this.selectedPackage['packageId'] - 1);
-            this.tableList = this.selectedPackage['table'];
-            console.log('table', this.tableList);
-
-            this.cusPackageList = item.cusPackageList;
-            this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
-              var objBack = {};
-              item['amountList'].forEach((unit) => {
-                if(unit['isDefaultOption'] == true) {
-                  objBack['companyCode'] = item['companyCode'];
-                  objBack['itemCode'] = item['insItemCode'];
-                  objBack['amountCode'] = unit['amountCode'];
-                  this.cusItemJson.push(objBack);
-                }
-              });
-            });
-          });
         document.querySelector('#flagFour').scrollIntoView();
       } else {
         if(this.startTravelDay){
@@ -606,6 +613,44 @@ export class HomePageComponent implements OnInit {
             document.querySelector('#flagFour').scrollIntoView();
             return false;
           } else {
+
+            let sendDataBak = {};
+            sendDataBak['product'] = 'Travel';
+            sendDataBak['startDate'] = this.startTravelDay;
+            this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
+              console.log(item);
+              this.cusPackageList = item['cusPackageList'];
+              this.packageList = item['packageList'];
+              item.cusPackageList.filter(val => val.isDefaultPackage == true).map(
+                  value => this.defaultCustomerPkg = value
+              );
+
+              item.packageList.filter(val => val && val.isDefaultPackage).map(value =>
+                  this.selectedPackage = value
+              );
+
+              this.selectedPackageName = this.selectedPackage['packageName'];
+              this.secondaryItems = this.selectedPackage['secondaryItems'];
+              this.pkgPrimary = this.selectedPackage['primaryItems'];
+              this.featureDesc = this.selectedPackage['featureDesc'];
+              this.toGetLogo(this.selectedPackage['companyCode']);
+              this.fireInTheHole(this.selectedPackage['packageId'] - 1);
+              this.tableList = this.selectedPackage['table'];
+              console.log('table', this.tableList);
+
+              this.cusPackageList = item.cusPackageList;
+              this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
+                var objBack = {};
+                item['amountList'].forEach((unit) => {
+                  if(unit['isDefaultOption'] == true) {
+                    objBack['companyCode'] = item['companyCode'];
+                    objBack['itemCode'] = item['insItemCode'];
+                    objBack['amountCode'] = unit['amountCode'];
+                    this.cusItemJson.push(objBack);
+                  }
+                });
+              });
+            });
 
             document.querySelector('#flagFive').scrollIntoView();
             this.textOfSelectingDays = '您的旅遊期間';

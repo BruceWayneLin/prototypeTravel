@@ -85,7 +85,6 @@ h2.formTitTxt{
 }
 
 .personalContentDiv .personalContent {
-  padding-top: 25px;
 }
 
 .insuredTit {
@@ -417,7 +416,7 @@ span.formSubTxt {
   }
   .insuredContent {
     padding: 0px;
-    height: 85px;
+    height: 70px;
     text-align: left;
   }
 }
@@ -426,7 +425,6 @@ span.formSubTxt {
   .insuredPersonalInfo {
     margin-top: 60px;
   }
-
   .insuredBirthEx div{
     padding: 5px;
   }
@@ -467,10 +465,11 @@ span.formSubTxt {
   }
   .checkBoxDiv, .noChecked{
     position: relative!important;
-    top: 25px!important;
+    top: 10px!important;
+    z-index: 99;
   }
   .roundDiv {
-    height: 140px !important;
+    height: 80% !important;
     margin-bottom: 20px;
     padding-top: 20px;
     border-radius: 30px;
@@ -527,7 +526,7 @@ span.formSubTxt {
   font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
 }
 
-.insuredBtnArea .col-xs-8 .titleSpan{
+.insuredBtnArea .col-xs-10 .titleSpan{
   position: relative;
   top: -20px;
   font-size: 28px;
@@ -597,7 +596,7 @@ div.row.memberTitle {
 
 .insuredBoxAlone {
   border-bottom: 1px solid #e84466;
-  width: 70%;
+  width: 78%;
   display: block;
   margin: 0 auto;
   height: 5px;
@@ -712,7 +711,7 @@ div.row.memberTitle {
     top: -38px;
   }
   .roundDiv {
-    height: 110px!important;
+    height: 110px;
   }
   .goingCheckInfo {
     margin-bottom: 15px!important;
@@ -776,18 +775,39 @@ div.row.memberTitle {
 }
 
 @media screen and (max-width: 1280px) and (min-width: 970px) {
-  .col-xs-12.text-center.insuredBtnArea .col-xs-8{
+  .col-xs-12.text-center.insuredBtnArea .col-xs-10{
     width: 85%!important;
     margin-left: 8%;
   }
 }
 
 @media screen and (max-width: 970px) and (min-width: 768px) {
-  .col-xs-12.text-center.insuredBtnArea .col-xs-8{
+  .col-xs-12.text-center.insuredBtnArea .col-xs-10{
     width:100%!important;
     margin-left: 3%!important;
   }
+  #haoma {
+    position:relative;
+    left:-25px
+  }
+  .rules .col-sm-12 {
+    padding-left: 5%;
+  }
+  .rules h2, .agreement{
+    font-size:18px;
+  }
+  .checkBoxDiv {
+    margin-bottom: 20px;
+  }
+  .roundDiv {
+    padding: 15px 20px;
+  }
+  .insuredBtnArea {
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+  }
 }
+
 
 @media screen and (max-width: 768px) {
   #choicesHaoNoHao{
@@ -798,7 +818,7 @@ div.row.memberTitle {
 @media screen and (max-width: 1025px) and (min-width: 768px) {
   #choicesHaoNoHao{
   }
-  .insuredBtnArea .col-xs-8.text-left {
+  .insuredBtnArea .col-xs-10.text-left {
     width: 100%!important;
   }
   .tobeHide .col-xs-6 {
@@ -824,7 +844,7 @@ div.row.memberTitle {
     padding-right: 15px;
     padding-left: 15px;
   }
-  .insuredBtnArea .col-xs-8.text-left {
+  .insuredBtnArea .col-xs-10.text-left {
     left: -4%;
   }
   .form-control.minusBtn {
@@ -846,8 +866,8 @@ div.row.memberTitle {
 @media screen and (max-width: 769px) and (min-width: 500px) {
   #choicesHaoNoHao{
   }
-  .insuredBtnArea .col-xs-8.text-left {
-    width: 110%!important;
+  .insuredBtnArea .col-xs-10.text-left {
+    /*width: 110%!important;*/
   }
   .col-xs-12.col-sm-6 .col-xs-4 {
     padding:0px;

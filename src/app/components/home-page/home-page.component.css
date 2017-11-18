@@ -636,11 +636,11 @@ td.weekDayText {
   font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
 }
 
-owl-carousel {
-  z-index: -1;
-  top: 0px;
-  position: relative;
-}
+/*owl-carousel {*/
+  /*z-index: -1;*/
+  /*top: 0px;*/
+  /*position: relative;*/
+/*}*/
 
 owl-carousel img {
   color: rgba(221, 221, 221, 0.41);
@@ -1067,12 +1067,18 @@ header {
   #deskCusPkg {
     display: initial;
   }
+  .typhoonDay {
+    white-space: nowrap;
+  }
 }
 
 @media screen and (max-width: 992px) and (min-width: 500px){
   #cutAmtBtn.col-xs-7 {
     position: absolute;
     left: 321px;
+  }
+  #calendarTable td button{
+    padding-left: 15px!important;
   }
   #rowOfBtn input {
     width: 85px;
@@ -1135,7 +1141,7 @@ header {
     margin-right: 10px;
   }
   #calendarTable .checkBtn {
-    left: 25px!important;
+    left: 20%;
   }
   .packageTit .toShowContentAccordion{
     width: 109%;
@@ -1148,7 +1154,7 @@ header {
     left: 4px!important;
   }
   #calendarTable h4 span {
-    left: -17px!important;
+    left: -17px;
   }
 }
 
@@ -1168,14 +1174,27 @@ header {
 
 @media screen and (max-width: 990px) and (min-width: 700px){
   #calendarTable .checkBtn.fa.fa-check {
-    left: 22px;
+    left: 20%;
   }
   #calendarTable .checkBtnTxt {
-    left: 0px;
+    left: -17%;
   }
   #land, #country {
     width: 25%!important;
     margin-right: 10px;
+  }
+  #calendarTable td button{
+    padding-left: 20%!important;
+  }
+  #customerLogo {
+    margin: 20px 25%;
+  }
+  .secondaryPackageCon .col-xs-2 {
+    width: 15.6%!important;
+  }
+  .insItemUl {
+    margin-left: 0px!important;
+    font-size:12px!important;
   }
 }
 
@@ -1195,7 +1214,16 @@ header {
 
 @media screen and (max-width: 768px) and (min-width:500px){
   .purposeLabelCol3 span {
-    left: 17%!important;
+    left: 10%!important;
+  }
+  #calendarTable td button{
+    padding-left: 20%!important;
+  }
+  #insuredOneCard {
+    height:100%!important;
+  }
+  .packageTit .col-xs-6 h2 {
+    font-size: 22px;
   }
 }
 
@@ -1207,10 +1235,8 @@ header {
   color: hsla(0, 0%, 87%, 0.74);
 }
 
-@media screen and (min-width:990px){
-  .purposeLabelCol3 span {
-    left: 22%!important;
-  }
+@media screen and (min-width:990px) and (min-width: 768px){
+
 }
 
 .calDayNone{

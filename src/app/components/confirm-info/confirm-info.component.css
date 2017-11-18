@@ -449,7 +449,6 @@ span.priceSpanNT {
   .lastSubMit {
     margin-bottom: 0px!important;
     margin-top: 20px!important;
-    width: 80%!important;
   }
   #MobileUseIdForPrice {
     padding-left: 20%!important;
@@ -461,7 +460,6 @@ span.priceSpanNT {
     left: 49%;
     z-index: 100;
   }
-
   .packageInfo .col-xs-12 h4　{
     left: -16px;
     position: relative;
@@ -471,7 +469,6 @@ span.priceSpanNT {
 }
 
 .lastSubMit {
-  width: 400px;
   display: inline-block;
   margin-right: 15px;
 }
@@ -494,5 +491,22 @@ span.priceSpanNT {
   .lastSubMit {
     margin-bottom: 0px!important;
     margin-top: 20px!important;
+  }
+}
+
+@media screen and (max-width: 990px) and (min-width: 768px) {
+  .imgContain {
+    left: -8%;
+  }
+  #accordionDiv .fa.fa-chevron-circle-down {
+    font-size:30px!important;
+    top: 35px!important;
+  }
+  #accordionDiv .fa.fa-chevron-circle-up {
+    margin-top: 15px;
+    margin-right:14%;
+  }
+  #accordionDiv .col-xs-12 {
+    padding-left: 0px;
   }
 }

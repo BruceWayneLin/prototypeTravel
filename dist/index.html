@@ -1,0 +1,35 @@
+<!doctype html><html lang="zh-TW"><head><meta charset="UTF-8"><title>立刻投保 | Care Line英國凱萊 旅遊平安險</title><base href="/CareLineTravel/travel/"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css"><link href="styles.82ffde8d63c149844412.bundle.css" rel="stylesheet"/></head><body><app-root></app-root><script type="text/javascript" src="inline.c3567ad88de92356e605.bundle.js"></script><script type="text/javascript" src="polyfills.71b130084c52939ca448.bundle.js"></script><script type="text/javascript" src="scripts.9910431d198d0b4a798c.bundle.js"></script><script type="text/javascript" src="vendor.dbf75578cf32c6d56ed0.bundle.js"></script><script type="text/javascript" src="main.17941ec48279bb5a1987.bundle.js"></script></body></html><script>$(document).ready(function () {
+    $(document).on('click', '#xBtn' ,function (){
+      $('#insuredInfoAppend').find('#insuredOneCard').remove();
+      var test = $('.priceHead > h3').text();
+      var test2 = parseInt(test);
+    })
+    $(document).on('scroll', function () {
+      if($(window).scrollTop() > 212){
+      }
+    });
+    $(document).on('click', '.customSelectUi', function(){
+        var testBtn = $('ul.customSelectUi').children('li').hasClass('hidden');
+        console.log(testBtn);
+    })
+
+    // Get the modal
+    var modal = document.getElementById('myModal');
+    // Get the button that opens the modal
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    var closeB2 = document.getElementById("closebtn");
+    closeB2.onclick = function() {
+        modal.style.display = "none";
+    }
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  });</script>

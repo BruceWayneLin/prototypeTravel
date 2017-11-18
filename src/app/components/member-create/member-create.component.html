@@ -1,3 +1,4 @@
+<div class="container formContainer">
 <div class="row memberTitle">
   <div class="app-index container">
     <div class="whereDgo col-lg-12 text-center">
@@ -7,10 +8,10 @@
 </div>
 
 <div class="row">
-  <div class="container-fluid insuredContent" style="margin: 0px 6%;">
-    <div class="col-lg-12 text-center">
-      <div class="titleForm">
-        <h2>要保人</h2>
+  <div class="container-fluid" style="height: 80px;">
+    <div class="col-lg-12" style="padding:0px;">
+      <div class="titleForm text-left">
+        <h2 style="padding-top:10px; padding-bottom:20px;">要保人</h2>
       </div>
     </div>
   </div>
@@ -98,6 +99,7 @@
     </div>
   </div>
 </div>
+
 <div class="row personalContentDiv">
   <div class="container personalContent">
     <div class="col-lg-12 text-center paddingExtra">
@@ -145,7 +147,7 @@
       <div class="col-lg-12 text-center">
         <div class="col-xs-12 col-sm-6"></div>
         <div class="col-xs-12 col-sm-6">
-          <input class="memberFormInput form-control input-lg" [ngClass]="{'inValidInput': addrEl.touched && addrCheck(addrEl.value)}" [(ngModel)]="addr" #addrEl="ngModel" type="text" placeholder="地址 *" value="凱選路中正街一號">
+          <input class="memberFormInput form-control input-lg" maxlength="50" [ngClass]="{'inValidInput': addrEl.touched && addrCheck(addrEl.value)}" [(ngModel)]="addr" #addrEl="ngModel" type="text" placeholder="地址 *" value="凱選路中正街一號">
           <span class="pull-right"><img  *ngIf="addrEl.touched && addrCheck(addrEl.value)" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
           <div class="inValid" *ngIf="addrEl.touched && addrCheck(addrEl.value)">此欄位為必填。</div>
         </div>
@@ -155,7 +157,7 @@
         <div class="col-xs-12 col-sm-6 text-left">
           <label for="aggreeToUpdate">
             <div ngClass="{{aggreeToUpdate? 'checkBoxDiv' : 'checkBoxDiv noChecked' }}">
-              <input type="checkbox" [hidden]="true" [(ngModel)]="aggreeToUpdate" (click)="aggreeToUpdate = !aggreeToUpdate" class="aggreeToUpdate" id="aggreeToUpdate">
+              <input type="checkbox" [hidden]="true" [checked]="aggreeToUpdate" (click)="aggreeToUpdate = !aggreeToUpdate" class="aggreeToUpdate" id="aggreeToUpdate">
               <span class="aggreeToUpdate">更新聯絡資料</span>
             </div>
           </label>
@@ -166,18 +168,24 @@
   </div>
 </div>
 
+  <div class="row">
+    <div class="container-fluid">
+      <div class="col-lg-12" style="padding:0px;">
+        <div class="titleForm text-left">
+          <h2 style="padding-top:10px; padding-bottom:20px;">要保人</h2>
+        </div>
+      </div>
+    </div>
+  </div>
 <div class="row" id="addInsuredAdd">
   <div class="container-fluid insuredContent" style="margin: 0px 6%;">
     <div class="col-xs-12 text-center">
-      <div class="titleForm">
-        <h2>被保險人</h2>
-      </div>
       <div class="col-xs-12 text-center insuredBtnArea">
         <div class="col-xs-12 text-center">
-          <div class="col-xs-2"></div>
-          <div class="col-xs-8 text-left">
+          <div class="col-xs-1"></div>
+          <div class="col-xs-10 text-left">
             <div class="col-xs-6">
-              <div class="pull-left">
+              <div id="haoma" class="pull-left">
                 <span class="titleSpan" style="padding-right:0px;white-space: nowrap;">需要為您的同行旅伴加保嗎？</span>
                 <h4 style="color:#e84466;white-space: nowrap;position: relative;top: -22px;">*提醒您，購買保險需有血緣/婚姻關係喔</h4>
               </div>
@@ -193,7 +201,7 @@
               </label>
             </div>
           </div>
-          <div class="col-xs-2"></div>
+          <div class="col-xs-1"></div>
         </div>
       </div>
       <div class="row" *ngIf="windowSizeCheck()">
@@ -224,11 +232,13 @@
 <ng-container *ngIf="(!noGoWithYourFds && (hiddenAtBegining !== 'hide'))">
   <div class="row">
     <div class="col-xs-12">
-      <div class="col-xs-2">
+      <div class="col-xs-1">
       </div>
       <div class="col-xs-10">
       </div>
       <div class="insuredBoxAlone">
+      </div>
+      <div class="col-xs-1">
       </div>
     </div>
 
@@ -356,15 +366,17 @@
     </div>
   </div>
 </div>
+<div class="row">
 <app-add-member></app-add-member>
+</div>
 </ng-container>
 
 <div [hidden]="hiddenAtBegining == 'hide'">
   <div class="row">
-    <div class="container-fluid insuredContent" style="">
-      <div class="col-lg-12 text-center">
-        <div class="titleForm">
-          <h2 style="margin: 25px 17px;">受益人</h2>
+    <div class="container-fluid">
+      <div class="col-lg-12" style="padding:0px;">
+        <div class="titleForm text-left">
+          <h2 style="padding-top:10px; padding-bottom:20px;">受益人</h2>
         </div>
       </div>
     </div>
@@ -378,7 +390,7 @@
       </div>
       <div class="col-lg-12 text-center">
         <div class="roundDiv text-center">
-          <div (click)="aggreeToUpdateAlreadyRead = !aggreeToUpdateAlreadyRead"  ngClass="{{aggreeToUpdateAlreadyRead? 'checkBoxDiv' : 'checkBoxDiv noChecked' }}">
+          <div (click)="aggreeToUpdateAlreadyRead = !aggreeToUpdateAlreadyRead"  ngClass="{{aggreeToUpdateAlreadyRead == true ? 'checkBoxDiv' : 'checkBoxDiv noChecked' }}">
             <input type="text" [hidden]="true" style="display:none;" class="square pull-left" type="checkbox" checked/>
           </div>
           <ng-container>
@@ -395,10 +407,15 @@
 
   <div class="row">
     <div class="container">
-      <div class="col-xs-12 text-center">
-        <button [routerLink]="['/']" class="form-control goingCheckInfo" style="background-color:white;color:black;">回方案選擇</button>
-        <button class="form-control goingCheckInfo" (click)="ToSaveInsured()">下一步</button>
+      <div class="col-lg-12 text-center">
+        <div class="col-xs-12 col-sm-6 col-lg-6">
+          <button [routerLink]="['/']" class="form-control goingCheckInfo" style="background-color:white;color:black;">回方案選擇</button>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-6">
+          <button class="form-control goingCheckInfo" (click)="ToSaveInsured()">下一步</button>
+        </div>
       </div>
     </div>
   </div>
   </div>
+</div>

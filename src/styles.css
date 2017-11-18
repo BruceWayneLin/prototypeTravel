@@ -681,6 +681,7 @@ div.owl-dots {
   width: 60px;
   height: 104px;
   color: transparent!important;
+  z-index:999;
   background-repeat: no-repeat!important;
 }
 
@@ -828,10 +829,6 @@ div.text {
   display: none!important;
 }
 
-body {
-  -webkit-overflow-scrolling: touch!important;
-}
-
 #specialWordDivDetail, .divAmtLong {
   margin-left: 19%!important;
 }
@@ -857,6 +854,44 @@ input, input:before, input:after {
   -moz-user-select: initial;
   -ms-user-select: initial;
   user-select: initial;
+}
+
+@media screen and (max-width: 500px){
+  .panel-group .fa-chevron-circle-down{
+    font-size: 25px!important;
+    top: 45px!important;
+    z-index:999!important;
+  }
+  .owl-theme .owl-nav .owl-prev, .owl-theme .owl-nav .owl-next {
+    z-index:999!important;
+  }
+  .typhoonDay{
+    white-space: nowrap!important;
+    left:-9px !important;
+  }
+  .insuredPriceDivH4{
+    top: 10px!important;
+  }
+  html, body {
+    max-height: 100%;
+    position: relative;
+    -webkit-transform: translate3d(0,0,0);
+  }
+
+  html, body {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .checkBtnTxt{
+    white-space: nowrap!important;
+  }
+  input, button, textarea, select {
+    -webkit-transform: translate3d(0,0,0)!important;
+  }
+  .insuredBirthEx .col-xs-3:nth-child(2){
+    width: 30%!important;
+    padding-right:0px!important;
+  }
 }
 
 /*@import "~@angular/material/prebuilt-themes/indigo-pink.css";*/
