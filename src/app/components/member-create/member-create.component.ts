@@ -95,6 +95,7 @@ export class MemberCreateComponent implements OnInit {
   alonePidWrong: boolean;
   aloneBdEmpty: boolean;
   btnClickToGoFds: boolean = false;
+  ans:boolean;
 
   @ViewChild('emailElm') EmailEl:ElementRef;
   @ViewChild('lastNameEl') lastNameEl:ElementRef;
@@ -388,8 +389,24 @@ export class MemberCreateComponent implements OnInit {
     }
   }
 
+  ToShowConfirmModal(val:boolean){
+    if(val){
+        var modal = document.getElementById('myConfirmModal');
+        modal.style.display = "block";
+        var body = $("html, body");
+        body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
+        });
+    }else{
+        var modal = document.getElementById('myConfirmModal2');
+        modal.style.display = "block";
+        var body = $("html, body");
+        body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
+        });
+    }
+
+  }
+
   GoingWithFds(val) {
-    var ans;
     var body = $("html, body");
     body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
     });
@@ -425,11 +442,7 @@ export class MemberCreateComponent implements OnInit {
           this.hiddenAtBegining = false;
         }
       }else{
-        ans = confirm('您的被保人資料將不被保留，要繼續？');
-        var body = $("html, body");
-        body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
-        });
-        if(!ans){
+        if(!this.ans){
           this.noGoWithYourFds = true;
           return false;
         }else{
@@ -456,7 +469,7 @@ export class MemberCreateComponent implements OnInit {
             this.personalAgeOver
         ){
           this.hiddenAtBegining = 'hide';
-          var modal = document.getElementById('myModal');
+          var modal = document.getElementById('myConfirmModal');
           modal.style.display = "block";
           this.dataService.AlertTXT = [];
           this.dataService.AlertTXT.push('您必須先填寫完以上資料');
@@ -473,11 +486,7 @@ export class MemberCreateComponent implements OnInit {
           this.dataService.owlAnanOne = false;
         }
         }else{
-        ans = confirm('您的被保人資料將不被保留，要繼續？');
-        var body = $("html, body");
-        body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
-        });
-        if(!ans){
+        if(!this.ans){
           this.noGoWithYourFds = false;
           return false;
         }else{
@@ -493,6 +502,26 @@ export class MemberCreateComponent implements OnInit {
     }
   };
 
+
+  ModelCancel(){
+      var modal = document.getElementById('myConfirmModal');
+      modal.style.display = "none";
+      var modal = document.getElementById('myConfirmModal2');
+      modal.style.display = "none";
+  }
+
+  ModelClick(val){
+      this.ans = true;
+      if(val){
+      var modal = document.getElementById('myConfirmModal');
+      modal.style.display = "none";
+      this.GoingWithFds(true);
+    }else{
+      var modal = document.getElementById('myConfirmModal2');
+      modal.style.display = "none";
+      this.GoingWithFds(false);
+    }
+  }
     // var ans;
     // if(this.hiddenAtBegining == 'hide'){
     //

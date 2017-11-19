@@ -16,7 +16,7 @@ import { MemberCreateComponent } from './components/member-create/member-create.
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ConfirmInfoComponent } from './components/confirm-info/confirm-info.component';
 
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMockDbService } from './mock-packageList';
 import { TempFakeComponent } from './components/temp-fake/temp-fake.component';
 import { ShareService } from "./services/share.service";
@@ -92,7 +92,7 @@ export const routes : Routes = [
     RouterModule.forRoot(routes),
     FormsModule,
     MomentModule,
-    InMemoryWebApiModule.forRoot(InMockDbService),
+    // InMemoryWebApiModule.forRoot(InMockDbService),
     AccordionModule,
     HttpModule,
     OwlModule,
