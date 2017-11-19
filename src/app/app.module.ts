@@ -24,6 +24,8 @@ import { ThanksComponent } from './components/thanks/thanks.component';
 import { AddMemberComponent } from './components/add-member/add-member.component';
 import { FailPaymentComponent } from './components/fail-payment/fail-payment.component';
 import { LoadingModule } from 'ngx-loading';
+import { LayoutModule } from 'cl-layout/src/app/shared/layout/layout.module';
+import 'cl-layout/thirdparty-library';
 
 export const routes : Routes = [
   {
@@ -86,13 +88,17 @@ export const routes : Routes = [
   ],
   imports: [
     BrowserModule,
+    LayoutModule,
     // BreadcrumbsModule,
     ReactiveFormsModule,
     LoadingModule,
     RouterModule.forRoot(routes),
     FormsModule,
     MomentModule,
-    InMemoryWebApiModule.forRoot(InMockDbService),
+    InMemoryWebApiModule.forRoot(InMockDbService,
+    {
+      passThruUnknownUrl : true
+    }),
     AccordionModule,
     HttpModule,
     OwlModule,
