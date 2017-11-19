@@ -90,7 +90,7 @@ export class MemberCreateComponent implements OnInit {
   insuredList: any;
   countAlertNum: number = 0;
   countBrthDayFromSelectedBtn:any;
-
+  firstTimeClickHaoA: Boolean = false;
   aloneNameEmpty: boolean;
   alonePidWrong: boolean;
   aloneBdEmpty: boolean;
@@ -390,23 +390,26 @@ export class MemberCreateComponent implements OnInit {
   }
 
   ToShowConfirmModal(val:boolean){
-    if(val){
+    if(val && this.firstTimeClickHaoA){
         var modal = document.getElementById('myConfirmModal');
         modal.style.display = "block";
         var body = $("html, body");
         body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
         });
-    }else{
+    }else if(!val && this.firstTimeClickHaoA){
         var modal = document.getElementById('myConfirmModal2');
         modal.style.display = "block";
         var body = $("html, body");
         body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
         });
     }
-
+    if(!this.firstTimeClickHaoA){
+        this.GoingWithFds(val);
+    }
   }
 
   GoingWithFds(val) {
+    this.firstTimeClickHaoA = true;
     var body = $("html, body");
     body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
     });
