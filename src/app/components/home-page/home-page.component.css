@@ -1239,13 +1239,13 @@ header {
 
 }
 
-@media screen and (max-width:400px) {
+@media screen and (max-width:500px) {
   .whereDgo, .container.oneCon{
     border:none;
   }
   .imAline {
     border: 0.5px solid #e84466;
-    width: 350px;
+    width: 92%;
     display: block!important;
     margin: 0px auto;
   }

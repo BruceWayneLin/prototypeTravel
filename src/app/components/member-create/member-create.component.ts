@@ -393,15 +393,37 @@ export class MemberCreateComponent implements OnInit {
     if(val && this.firstTimeClickHaoA){
         var modal = document.getElementById('myConfirmModal');
         modal.style.display = "block";
-        var body = $("html, body");
-        body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
+        $('.modal').css({
+          'height': $(document).height(),
+          'padding': '40% 0',
+          'text-align': 'center'
         });
+      if(window.innerWidth <= 500){
+        // $('.modal-content').css({
+        //   'margin-top': '200%'
+        // });
+        // document.getElementById('myConfirmModal2').scrollIntoView({block: 'start', behavior: 'smooth'});
+      }else{
+      }
+      document.getElementById('myConfirmModal').scrollIntoView({block: 'start', behavior: 'smooth'});
     }else if(!val && this.firstTimeClickHaoA){
         var modal = document.getElementById('myConfirmModal2');
         modal.style.display = "block";
-        var body = $("html, body");
-        body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
-        });
+      if(window.innerWidth <= 500){
+        // $('.modal-content').css({
+        //   'margin-top': '200%'
+        // });
+        // document.getElementById('myConfirmModal2').scrollIntoView({block: 'start', behavior: 'smooth'});
+      }else{
+      }
+      $('.modal').css({
+        'height': $(document).height(),
+        'padding': '40% 0',
+        'text-align': 'center'
+      });
+      $('.modal-content').css({
+      });
+      document.getElementById('myConfirmModal2').scrollIntoView({block: 'start', behavior: 'smooth'});
     }
     if(!this.firstTimeClickHaoA){
         this.GoingWithFds(val);
@@ -411,8 +433,6 @@ export class MemberCreateComponent implements OnInit {
   GoingWithFds(val) {
     this.firstTimeClickHaoA = true;
     var body = $("html, body");
-    body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
-    });
     if(!val){
       if(this.hiddenAtBegining == 'hide'){
         if(!this.lastName ||
