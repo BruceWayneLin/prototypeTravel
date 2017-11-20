@@ -1,0 +1,19 @@
+ <svg xmlns="http://www.w3.org/2000/svg" class="svg-outer" viewBox="0 0 166.5 186.49">
+        <defs>
+          <style>
+            .main {
+              width: 100px;
+              height: auto;
+            }
+            .circle {           
+              fill: rgba(255, 255, 255, 0.6);
+            }
+          </style>
+        </defs>
+        <g>
+          <g>
+            <path class="circle" d="M166.5,83.25a83.25,83.25,0,1,0-100,81.56v19.1a2.76,2.76,0,0,0,3.25,2.5c.69.35,34.46-19.69,45.67-26.36A83.27,83.27,0,0,0,166.5,83.25Z"
+            />
+          </g>
+        </g>
+      </svg>
