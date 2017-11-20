@@ -75,7 +75,6 @@ export class HomePageComponent implements OnInit {
   ifTheStartIsPlusOneMoreDay: any;
   testDay:any = new Date();
   resetBackCountry: any;
-  options:any = ['a','b','c','d'];
 
   @ViewChild('eleTest')  el:ElementRef;
   @ViewChild('noNeedArea') nNA:ElementRef;
@@ -478,14 +477,6 @@ export class HomePageComponent implements OnInit {
         $('.toShowContentAccordion').slideUp('fast');
       }, 200);
     }
-    // var body = $("html, body");
-    // if(window.innerWidth <= 500){
-    //   body.stop().animate({scrollTop:1450}, 200, 'swing', function() {
-    //   });
-    // }else{
-    //   body.stop().animate({scrollTop:1620}, 200, 'swing', function() {
-    //   });
-    // }
     document.querySelector('#flagSix').scrollIntoView();
 
     if(this.pkgCustomGo){
@@ -495,6 +486,19 @@ export class HomePageComponent implements OnInit {
     } else {
       this.selPkgH2 = '選擇方案';
       this.pkgCustomTxt = '自訂投保方案';
+      this.dataService.getIniData().subscribe((posts) => {
+        posts.packageList.filter(val => val && val.isDefaultPackage).map(value =>
+            this.selectedPackage = value
+        );
+        this.selectedPackageName = this.selectedPackage['packageName'];
+        this.secondaryItems = this.selectedPackage['secondaryItems'];
+        this.pkgPrimary = this.selectedPackage['primaryItems'];
+        this.featureDesc = this.selectedPackage['featureDesc'];
+        this.toGetLogo(this.selectedPackage['companyCode']);
+        this.fireInTheHole(this.selectedPackage['packageId'] - 1);
+        this.tableList = this.selectedPackage['table'];
+        console.log('table', this.tableList);
+      });
       this.getPriceServiceData();
     }
   }

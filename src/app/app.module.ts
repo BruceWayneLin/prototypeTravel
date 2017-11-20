@@ -11,7 +11,6 @@ import { MomentModule } from 'angular2-moment';
 import { AccordionModule } from 'ngx-accordion';
 import { OwlModule } from 'ngx-owl-carousel';
 import { SuiSelectModule } from 'ng2-semantic-ui';
-
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ConfirmInfoComponent } from './components/confirm-info/confirm-info.component';
@@ -104,4 +103,5 @@ export const routes : Routes = [
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

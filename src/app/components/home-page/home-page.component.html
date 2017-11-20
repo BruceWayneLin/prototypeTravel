@@ -156,19 +156,10 @@
   </ng-container>
   <div id="flagFive" style="position:relative; top: 123px;"></div>
   <div id="calendarFlagAnimate"></div>
-  <ng-container *ngIf="!tableShowHidden">
+  <div *ngIf="!tableShowHidden">
     <div class="row">
       <div class="col-lg-12">
         <table id="calendarTable" class="table">
-          <!--[hidden]="startTravelDayOn"-->
-          <!--<thead *ngIf="checkLastDayOfMonth()">-->
-            <!--<h3 class="text-center calendarFirstH3">{{ firstMon | amLocal | amDateFormat: 'YYYY' }}年{{ firstMon | amLocal | amDateFormat: 'MM' }}月</h3>-->
-            <!--<tr class="weekDayTr" style="border-top:30px solid transparent!important;">-->
-              <!--<th class="weekDayText text-center" *ngFor="let number of [1,2,3,4,5,6,7]; let x = index;">-->
-                <!--{{firstMon | amLocale: 'zh-TW' | amAdd:x : 'days' | amDateFormat: 'dddd'}}-->
-              <!--</th>-->
-            <!--</tr>-->
-          <!--</thead>-->
           <tbody>
           <ng-container *ngFor="let item of createRange(365); let i = index;">
               <ng-container *ngIf="checkShoudShowTitle((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'))">
@@ -207,8 +198,9 @@
         <h4 *ngIf="startTravelDayOn">請來電免費客服專線0800-234-088</h4>
       </div>
     </div>
-  </ng-container>
+  </div>
 </div>
+
 <!-- end of calendar -->
 <div id="flagSix" style="position:relative; top: -60px;"></div>
 <div class="row" >
