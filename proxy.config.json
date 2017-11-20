@@ -7,6 +7,14 @@
       "^/CareLineTravel/travel-mbr" : "http://210.242.7.164/CareLineTravel/travel-mbr"
     },
     "changeOrigin": false
+  },
+  "/CareLineMember": {
+    "target": "http://210.242.7.164",
+    "secure": false
+  },
+  "/CareLineBranding": {
+    "target": "http://210.242.7.164",
+    "secure": false
   }
 }
 
