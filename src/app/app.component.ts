@@ -31,6 +31,11 @@ export class AppComponent {
     return this.loading;
   }
 
+  cancelThisModal(){
+    var modal = document.getElementById('myModal');
+    modal.style.display = "none";
+  }
+
   detectScrollAndHeaderChange() {
    $(document).on('scroll', function(){
      if($(document).scrollTop() > 400){

@@ -90,11 +90,12 @@ export class MemberCreateComponent implements OnInit {
   insuredList: any;
   countAlertNum: number = 0;
   countBrthDayFromSelectedBtn:any;
-
+  firstTimeClickHaoA: Boolean = false;
   aloneNameEmpty: boolean;
   alonePidWrong: boolean;
   aloneBdEmpty: boolean;
   btnClickToGoFds: boolean = false;
+  ans:boolean;
 
   @ViewChild('emailElm') EmailEl:ElementRef;
   @ViewChild('lastNameEl') lastNameEl:ElementRef;
@@ -143,7 +144,6 @@ export class MemberCreateComponent implements OnInit {
           }
         } else if(this.applicantAloneBirthYear >= (currentYear - this.insuredMinAge)){
           if((this.applicantAloneBirthMonth >= currentMonth) && (this.applicantAloneBirthDay >= currentDay) || (this.applicantAloneBirthMonth > currentMonth) && (this.applicantAloneBirthDay <= currentDay)){
-            console.log('out ininininini2');
             this.aloneBdWrong = true;
             console.log('3', userAge);
           } else {
@@ -388,11 +388,70 @@ export class MemberCreateComponent implements OnInit {
     }
   }
 
+  ToShowConfirmModal(val:boolean){
+    if(!this.lastName ||
+        !this.firstName ||
+        !this.email ||
+        !this.pid ||
+        !this.pBirthYear ||
+        !this.pBirthMonth ||
+        !this.pBirthDay ||
+        !this.Mobile ||
+        !this.selectedCity ||
+        !this.selectedDistrict ||
+        !this.addr ||
+        this.personalAgeOver
+    ){
+      this.hiddenAtBegining = 'hide';
+      var modal = document.getElementById('myModal');
+      modal.style.display = "block";
+      this.dataService.AlertTXT = [];
+      this.dataService.AlertTXT.push('您必須先填寫完以上資料');
+      var body = $("html, body");
+      body.stop().animate({scrollTop:0}, 200, 'swing', function() {
+      });
+      this.firstTimeClickHaoA = false;
+      return false;
+    }else{
+      if(val && this.firstTimeClickHaoA){
+        var modal = document.getElementById('myConfirmModal');
+        modal.style.display = "block";
+        $('.modal').css({
+          'height': $(document).height(),
+          'padding': '40% 0',
+          'text-align': 'center'
+        });
+        if(window.innerWidth <= 500){
+        }else{
+        }
+        document.getElementById('myConfirmModal').scrollIntoView({block: 'start', behavior: 'smooth'});
+      }else if(!val && this.firstTimeClickHaoA){
+        var modal = document.getElementById('myConfirmModal2');
+        modal.style.display = "block";
+        if(window.innerWidth <= 500){
+          // $('.modal-content').css({
+          //   'margin-top': '200%'
+          // });
+          // document.getElementById('myConfirmModal2').scrollIntoView({block: 'start', behavior: 'smooth'});
+        }else{
+        }
+        $('.modal').css({
+          'height': $(document).height(),
+          'padding': '40% 0',
+          'text-align': 'center'
+        });
+        $('.modal-content').css({
+        });
+        document.getElementById('myConfirmModal2').scrollIntoView({block: 'start', behavior: 'smooth'});
+      }
+      if(!this.firstTimeClickHaoA){
+        this.GoingWithFds(val);
+      }
+    }
+  }
+
   GoingWithFds(val) {
-    var ans;
-    var body = $("html, body");
-    body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
-    });
+    this.firstTimeClickHaoA = true;
     if(!val){
       if(this.hiddenAtBegining == 'hide'){
         if(!this.lastName ||
@@ -416,6 +475,7 @@ export class MemberCreateComponent implements OnInit {
           var body = $("html, body");
           body.stop().animate({scrollTop:0}, 200, 'swing', function() {
           });
+          this.firstTimeClickHaoA = false;
           return false;
         }else{
           this.noGoWithYourFds = false;
@@ -425,11 +485,7 @@ export class MemberCreateComponent implements OnInit {
           this.hiddenAtBegining = false;
         }
       }else{
-        ans = confirm('您的被保人資料將不被保留，要繼續？');
-        var body = $("html, body");
-        body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
-        });
-        if(!ans){
+        if(!this.ans){
           this.noGoWithYourFds = true;
           return false;
         }else{
@@ -456,13 +512,15 @@ export class MemberCreateComponent implements OnInit {
             this.personalAgeOver
         ){
           this.hiddenAtBegining = 'hide';
-          var modal = document.getElementById('myModal');
+          var modal = document.getElementById('myConfirmModal');
           modal.style.display = "block";
           this.dataService.AlertTXT = [];
           this.dataService.AlertTXT.push('您必須先填寫完以上資料');
           var body = $("html, body");
+          this.firstTimeClickHaoA = false;
           body.stop().animate({scrollTop: 0}, 200, 'swing', function () {
           });
+
           return false;
         }else{
           this.noGoWithYourFds = true;
@@ -473,11 +531,7 @@ export class MemberCreateComponent implements OnInit {
           this.dataService.owlAnanOne = false;
         }
         }else{
-        ans = confirm('您的被保人資料將不被保留，要繼續？');
-        var body = $("html, body");
-        body.stop().animate({scrollTop: 820}, 200, 'swing', function () {
-        });
-        if(!ans){
+        if(!this.ans){
           this.noGoWithYourFds = false;
           return false;
         }else{
@@ -493,6 +547,26 @@ export class MemberCreateComponent implements OnInit {
     }
   };
 
+
+  ModelCancel(){
+      var modal = document.getElementById('myConfirmModal');
+      modal.style.display = "none";
+      var modal = document.getElementById('myConfirmModal2');
+      modal.style.display = "none";
+  }
+
+  ModelClick(val){
+      this.ans = true;
+      if(val){
+      var modal = document.getElementById('myConfirmModal');
+      modal.style.display = "none";
+      this.GoingWithFds(true);
+    }else{
+      var modal = document.getElementById('myConfirmModal2');
+      modal.style.display = "none";
+      this.GoingWithFds(false);
+    }
+  }
     // var ans;
     // if(this.hiddenAtBegining == 'hide'){
     //
@@ -668,6 +742,26 @@ export class MemberCreateComponent implements OnInit {
     }
   }
 
+  calculate_age(birth_month,birth_day,birth_year)
+  {
+    let today_date = new Date(this.countBrthDayFromSelectedBtn);
+    console.log(today_date);
+    let today_year = today_date.getFullYear();
+    let today_month = today_date.getMonth();
+    let today_day = today_date.getDate();
+    let age = today_year - birth_year;
+
+    if ( today_month < (birth_month - 1))
+    {
+      age--;
+    }
+    if (((birth_month - 1) == today_month) && (today_day < birth_day))
+    {
+      age--;
+    }
+    return age;
+  }
+
   ngOnInit() {
     if(this.dataService.backFromConfirm && this.dataService.noGoWithYourFdsFlag !== undefined){
       this.hiddenAtBegining = false;
@@ -679,11 +773,11 @@ export class MemberCreateComponent implements OnInit {
           console.log(item);
           this.relationShip = item.relationList;
           this.rateInfoList = item.rateInfoList;
+
           console.log('insuredAgeMax', item.companySetting['insuredAgeMax']);
           console.log('insuredAgeMin', item.companySetting['insuredAgeMin']);
 
           this.insuredAgeMax = item.companySetting['insuredAgeMax'];
-          this.insuredAgeMin = item.companySetting['insuredAgeMin'];
           this.insuredLimitedAge = item.companySetting['insuredAgeMax'] - item.companySetting['insuredAgeMin'];
           this.insuredMinAge = item.companySetting['insuredAgeMin'];
 
@@ -693,7 +787,39 @@ export class MemberCreateComponent implements OnInit {
           this.applicantAloneMinAge = item.companySetting['insuredAgeMin'];
           this.countBrthDayFromSelectedBtn = item['travelStartDate'];
 
+          this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+          item.applicant.birthday.length == 0 ? this.checkBDay = false : this.checkBDay = true;
+          this.pBirthYear = item.applicant.birthday.slice(0, 4);
+          this.pBirthMonth = item.applicant.birthday.slice(5, 7);
+
+          this.relationship = item.relationList;
           this.applicantSelectBirth();
+          if(item.applicant.birthday){
+            item.applicant.birthday.length == 0 ? this.checkBDay = false : this.checkBDay = true;
+            this.pBirthYear = item.applicant.birthday.slice(0, 4);
+            this.pBirthMonth = item.applicant.birthday.slice(5, 7);
+
+            if (this.pBirthMonth.slice(0, 1) == '0') {
+              this.pBirthMonth = this.pBirthMonth.slice(1, 2);
+            }
+            this.pBirthDay = item.applicant.birthday.slice(8, 10);
+            if (this.pBirthDay.slice(0, 1) == '0') {
+              this.pBirthDay = this.pBirthDay.slice(1, 2);
+            }
+          }
+          this.birthYears();
+
+          let personAge = this.calculate_age(this.pBirthMonth, this.pBirthDay, this.pBirthYear);
+          if(personAge <= item.companySetting['applicantAgeMin']){
+            this.applicantAgeMin = item.companySetting['applicantAgeMin'] - item.companySetting['applicantAgeMin'];
+            this.applicantSelectBirth();
+            this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+            this.personalAgeOver = true;
+          } else {
+            this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+            this.applicantSelectBirth();
+          }
+
           this.pdfUrl4Terms = item.pdfUrl4Terms;
           this.birthYears();
           this.relationship = item.relationList;
@@ -705,16 +831,33 @@ export class MemberCreateComponent implements OnInit {
           this.firstName.length == 0 ? this.checkFirstNameDis = false : this.checkFirstNameDis = true;
           this.pid = item.applicant.pid;
           this.pid.length == 0 ? this.checkPidDis = false : this.checkPidDis = true;
-          item.applicant.birthday.length == 0 ? this.checkBDay = false : this.checkBDay = true;
-          this.pBirthYear = item.applicant.birthday.slice(0, 4);
-          this.pBirthMonth = item.applicant.birthday.slice(5, 7);
-          if (this.pBirthMonth.slice(0, 1) == '0') {
-            this.pBirthMonth = this.pBirthMonth.slice(1, 2);
-          }
-          this.pBirthDay = item.applicant.birthday.slice(8, 10);
-          if (this.pBirthDay.slice(0, 1) == '0') {
-            this.pBirthDay = this.pBirthDay.slice(1, 2);
-          }
+
+          // item.applicant.birthday.length == 0 ? this.checkBDay = false : this.checkBDay = true;
+          // this.pBirthYear = item.applicant.birthday.slice(0, 4);
+          // this.pBirthMonth = item.applicant.birthday.slice(5, 7);
+          // if (this.pBirthMonth.slice(0, 1) == '0') {
+          //   this.pBirthMonth = this.pBirthMonth.slice(1, 2);
+          // }
+          // this.pBirthDay = item.applicant.birthday.slice(8, 10);
+          // if (this.pBirthDay.slice(0, 1) == '0') {
+          //   this.pBirthDay = this.pBirthDay.slice(1, 2);
+          // }
+          //
+          // let personAge = this.calculate_age(this.pBirthMonth, this.pBirthDay, this.pBirthYear);
+          //
+          // this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+          // this.applicantSelectBirth();
+          //
+          // if(personAge <= item.companySetting['applicantAgeMin']){
+          //   this.applicantAgeMin = item.companySetting['applicantAgeMin'] - item.companySetting['applicantAgeMin'];
+          //   this.applicantSelectBirth();
+          //   this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+          //   this.personalAgeOver = true;
+          // }else {
+          //   this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+          //   this.applicantSelectBirth();
+          // }
+
           this.Mobile = item.applicant.mobile;
           this.selectedCity = (item.applicant.addressCityId == 0 ? '' : item.applicant.addressCityId);
           this.toLoadArea('init');
@@ -766,8 +909,8 @@ export class MemberCreateComponent implements OnInit {
       this.dataService.toGetInsuredInfo(idArray).subscribe((item) => {
         if (item) {
           console.log(item);
-          this.relationShip = item.relationList;
           this.rateInfoList = item.rateInfoList;
+          this.relationShip = item['relationList'];
           console.log('insuredAgeMax', item.companySetting['insuredAgeMax']);
           console.log('insuredAgeMin', item.companySetting['insuredAgeMin']);
 
@@ -782,9 +925,40 @@ export class MemberCreateComponent implements OnInit {
           this.applicantAloneMinAge = item.companySetting['insuredAgeMin'];
           this.countBrthDayFromSelectedBtn = item['travelStartDate'];
 
+          this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+
+          this.relationship = item.relationList;
           this.applicantSelectBirth();
-          this.pdfUrl4Terms = item.pdfUrl4Terms;
+          if(item.applicant.birthday){
+            item.applicant.birthday.length == 0 ? this.checkBDay = false : this.checkBDay = true;
+            this.pBirthYear = item.applicant.birthday.slice(0, 4);
+            this.pBirthMonth = item.applicant.birthday.slice(5, 7);
+
+            if (this.pBirthMonth.slice(0, 1) == '0') {
+              this.pBirthMonth = this.pBirthMonth.slice(1, 2);
+            }
+            this.pBirthDay = item.applicant.birthday.slice(8, 10);
+            if (this.pBirthDay.slice(0, 1) == '0') {
+              this.pBirthDay = this.pBirthDay.slice(1, 2);
+            }
+          }
+
+
           this.birthYears();
+
+          let personAge = this.calculate_age(this.pBirthMonth, this.pBirthDay, this.pBirthYear);
+
+          if(personAge <= item.companySetting['applicantAgeMin']){
+            this.applicantAgeMin = item.companySetting['applicantAgeMin'] - item.companySetting['applicantAgeMin'];
+            this.applicantSelectBirth();
+            this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+            this.personalAgeOver = true;
+          } else {
+            this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+            this.applicantSelectBirth();
+          }
+
+          this.pdfUrl4Terms = item.pdfUrl4Terms;
           this.relationship = item.relationList;
           this.email = item.applicant.email;
           this.email.length == 0 ? this.checkEmailDis = false : this.checkEmailDis = true;
@@ -794,16 +968,35 @@ export class MemberCreateComponent implements OnInit {
           this.firstName.length == 0 ? this.checkFirstNameDis = false : this.checkFirstNameDis = true;
           this.pid = item.applicant.pid;
           this.pid.length == 0 ? this.checkPidDis = false : this.checkPidDis = true;
-          item.applicant.birthday.length == 0 ? this.checkBDay = false : this.checkBDay = true;
-          this.pBirthYear = item.applicant.birthday.slice(0, 4);
-          this.pBirthMonth = item.applicant.birthday.slice(5, 7);
-          if (this.pBirthMonth.slice(0, 1) == '0') {
-            this.pBirthMonth = this.pBirthMonth.slice(1, 2);
-          }
-          this.pBirthDay = item.applicant.birthday.slice(8, 10);
-          if (this.pBirthDay.slice(0, 1) == '0') {
-            this.pBirthDay = this.pBirthDay.slice(1, 2);
-          }
+          // item.applicant.birthday.length == 0 ? this.checkBDay = false : this.checkBDay = true;
+          // this.pBirthYear = item.applicant.birthday.slice(0, 4);
+          // this.pBirthMonth = item.applicant.birthday.slice(5, 7);
+          //
+          // if (this.pBirthMonth.slice(0, 1) == '0') {
+          //   this.pBirthMonth = this.pBirthMonth.slice(1, 2);
+          // }
+          // this.pBirthDay = item.applicant.birthday.slice(8, 10);
+          // if (this.pBirthDay.slice(0, 1) == '0') {
+          //   this.pBirthDay = this.pBirthDay.slice(1, 2);
+          // }
+          // let personAge = this.calculate_age(this.pBirthMonth, this.pBirthDay, this.pBirthYear);
+          // console.log(this.pBirthYear);
+          // console.log(this.pBirthMonth);
+          // console.log(this.pBirthDay);
+          // console.log(personAge);
+          // if(personAge <= item.companySetting['applicantAgeMin']){
+          //   this.applicantAgeMin = item.companySetting['applicantAgeMin'] - item.companySetting['applicantAgeMin'];
+          //   this.applicantSelectBirth();
+          //   this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+          //   this.personalAgeOver = true;
+          //   console.log('4312', this.applicantAgeMin);
+          //
+          // } else {
+          //   this.applicantAgeMin = item.companySetting['applicantAgeMin'];
+          //   console.log('4312', this.applicantAgeMin);
+          //   this.applicantSelectBirth();
+          // }
+
           this.Mobile = item.applicant.mobile;
           this.selectedCity = (item.applicant.addressCityId == 0 ? '' : item.applicant.addressCityId);
           this.toLoadArea('init');
@@ -874,6 +1067,8 @@ export class MemberCreateComponent implements OnInit {
   }
 
   birthYears() {
+    console.log(this.countBrthDayFromSelectedBtn);
+    console.log(this.insuredLimitedAge);
     var date = new Date(this.countBrthDayFromSelectedBtn);
     let limitAge = date.getFullYear() - this.applicantAloneMinAge;
     var returnVal = [];

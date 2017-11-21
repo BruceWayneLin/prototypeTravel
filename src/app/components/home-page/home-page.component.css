@@ -577,12 +577,12 @@ td.weekDayText {
   #land {
     float: none!important;
     width: 100%;
-    text-align: center;
+    /*text-align: center;*/
   }
   #country {
     float: none!important;
     width: 100%;
-    text-align: center;
+    /*text-align: center;*/
   }
   label.purposeLabel span {
     left: 13%;
@@ -1239,6 +1239,22 @@ header {
 
 }
 
+@media screen and (max-width:500px) {
+  .whereDgo, .container.oneCon{
+    border:none;
+  }
+  .imAline {
+    border: 0.5px solid #e84466;
+    width: 92%;
+    display: block!important;
+    margin: 0px auto;
+  }
+}
+
 .calDayNone{
   position: absolute;
+}
+
+.imAline {
+  display:none;
 }

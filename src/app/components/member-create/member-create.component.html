@@ -1,5 +1,50 @@
 <div class="container formContainer">
-<div class="row memberTitle">
+  <div id="myConfirmModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <p>
+        <span class="close hidden">&times;</span>
+      </p>
+      <div class="col-xs-12 text-cetner">
+        <img id="modalLogo" class="img-responsive" src="assets/images/logos/modalLogo.png" alt="">
+      </div>
+      <div class="text-center">
+        <div>
+          <p>您的被保人資料將不被保留，要繼續？</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <button id="closebtn" class="closebtn2" (click)="ModelCancel()">取消</button>
+          <button id="closebtn" class="closebtn2" (click)="ModelClick(true)">確定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myConfirmModal2" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <p>
+        <span class="close hidden">&times;</span>
+      </p>
+      <div class="col-xs-12 text-cetner">
+        <img id="modalLogo" class="img-responsive" src="assets/images/logos/modalLogo.png" alt="">
+      </div>
+      <div class="text-center">
+        <div>
+          <p>您的被保人資料將不被保留，要繼續？</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <button id="closebtn" class="closebtn2" (click)="ModelCancel()">取消</button>
+          <button id="closebtn" class="closebtn2" (click)="ModelClick(false)">確定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="memberTitleFlag" class="row memberTitle">
   <div class="app-index container">
     <div class="whereDgo col-lg-12 text-center">
       <h2>要/被保險人資訊</h2>
@@ -192,11 +237,11 @@
             </div>
             <div id="choicesHaoNoHao" class="pull-right"  *ngIf="!windowSizeCheck()">
               <label id="choiceOne" >
-                <input name="withFds" type="radio" class="form-control btn-sm" (click)="GoingWithFds(false)" [checked]="!noGoWithYourFds">
+                <input name="withFds" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(false)" [checked]="!noGoWithYourFds">
                 <span style="pointer-events: none;" class="widthFdsSpanOne">先不用</span>
               </label>
               <label id="choiceTwo">
-                <input name="withFds"  type="radio" class="form-control btn-sm"  (click)="GoingWithFds(true)" [checked]="noGoWithYourFds">
+                <input name="withFds"  type="radio" class="form-control btn-sm"  (click)="ToShowConfirmModal(true)" [checked]="noGoWithYourFds">
                 <span style="pointer-events: none;" class="widthFdsSpanTwo">好啊</span>
               </label>
             </div>
@@ -208,7 +253,7 @@
         <div id="MobileChoicesHaoNoHao" class="col-xs-12">
           <div class="col-xs-6">
             <label id="choiceMobileOne">
-            <input name="withFds2" type="radio" class="form-control btn-sm" [checked]="!noGoWithYourFds" (click)="GoingWithFds(false)">
+            <input name="withFds2" type="radio" class="form-control btn-sm" [checked]="!noGoWithYourFds" (click)="ToShowConfirmModal(false)">
               <span class="widthFdsSpanOne">
                 先不用
               </span>
@@ -217,7 +262,7 @@
 
           <div class="col-xs-6">
             <label id="choiceMobileTwo">
-            <input name="withFds2" type="radio" class="form-control btn-sm" [checked]="noGoWithYourFds" (click)="GoingWithFds(true)">
+            <input name="withFds2" type="radio" class="form-control btn-sm" [checked]="noGoWithYourFds" (click)="ToShowConfirmModal(true)">
               <span class="widthFdsSpanTwo">
                 好啊
               </span>
@@ -294,7 +339,7 @@
                 <option *ngFor="let year of birthdayYears" value="{{year}}" selected>{{year}}</option>
               </select>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-3" style="padding: 0px;">
               <select [(ngModel)]="applicantAloneBirthMonth" (change)="checkAloneBd()" [ngClass]="{inValidInput: birthdayYAM.touched && !birthdayYAM.valid || aloneBdWrong || aloneBdEmpty}"  (change)="changedData()"  #birthdayYAM="ngModel" class="form-control" [disabled]="applicantAloneLockInput" required>
                 <option value="">月</option>
                 <option *ngFor="let month of birthdayMonths" value="{{month}}" selected>{{month}}</option>
