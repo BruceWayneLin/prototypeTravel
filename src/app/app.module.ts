@@ -33,6 +33,13 @@ export const routes : Routes = [
     component: HomePageComponent
   },
   {
+    path:'index',
+    data: {
+      breadcrumb: '首頁',
+    },
+    component: HomePageComponent
+  },
+  {
     path:'memberCreate',
     data: {
       breadcrumb: '會員',

@@ -31,6 +31,7 @@ export class DataServiceService {
   backFromConfirm: boolean;
   loading: boolean =  false;
   noGoWithYourFdsFlag: boolean;
+  backFromNextPage:boolean = false;
 
     constructor(
         public http:Http,
@@ -117,6 +118,7 @@ export class DataServiceService {
       // body.append('data', JSON.stringify(value));
       var i = this.http.post('/CareLineTravel/travel-mbr/journey/savePackage', value).map(res => {
           if (res.json().isEx) {
+              this.loading = false;
               var msgs = res.json().msgs;
               var modal = document.getElementById('myModal');
               modal.style.display = "block";

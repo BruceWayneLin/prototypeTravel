@@ -75,6 +75,7 @@ export class HomePageComponent implements OnInit {
   ifTheStartIsPlusOneMoreDay: any;
   testDay:any = new Date();
   resetBackCountry: any;
+  trackNum: string;
 
   @ViewChild('eleTest')  el:ElementRef;
   @ViewChild('noNeedArea') nNA:ElementRef;
@@ -94,7 +95,33 @@ export class HomePageComponent implements OnInit {
 
   images: Array<any> = [];
 
+  toGetDataFromUrl(url) {
+    var queryStart = url.indexOf('?') + 1;
+    var queryEnd = url.length + 1;
+    var query = url.slice(queryStart, queryEnd - 1);
+    var pairs = query.replace(/\+/g, '').split('&');
+    var parms = {};
+    var i;
+    var n;
+    var v;
+    var nv;
+    if (query === url || query === '') return;
+    for (i = 0; i < pairs.length; i++) {
+      nv = pairs[i].split('=', 2);
+      n = decodeURIComponent(nv[0]);
+      v = decodeURIComponent(nv[1]);
+      if (!parms.hasOwnProperty(n)) parms[n] = [];
+      parms[n].push(nv.length === 2 ? v : null);
+    }
+    return parms;
+  };
   ngOnInit() {
+
+    var Url = window.location.href;
+    var turnBakUrl = this.toGetDataFromUrl(Url);
+    if(turnBakUrl){
+      this.trackNum = turnBakUrl['__track'][0];
+    }
     if(new Date(this.testDay).getDay() == 0 && !this.modifiedClicked){
       var tmr = new Date(this.testDay).setDate(new Date(this.testDay).getDate() + 1);
       this.firstMon = this.getMonday(new Date(tmr));
@@ -110,9 +137,51 @@ export class HomePageComponent implements OnInit {
 
       this.dataService.getCustomerHomePage().subscribe((item)=>{
         this.startTravelDay = item['dateFrom'];
+
+        let sendDataBak = {};
+        sendDataBak['product'] = 'Travel';
+        sendDataBak['startDate'] = this.startTravelDay;
+        this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
+          this.cusPackageList = item['cusPackageList'];
+          this.packageList = item['packageList'];
+          item.cusPackageList.filter(val => val.isDefaultPackage == true).map(
+              value => this.defaultCustomerPkg = value
+          );
+
+          item.packageList.filter(val => val && val.isDefaultPackage).map(value =>
+              this.selectedPackage = value
+          );
+          this.selectedPackageName = this.selectedPackage['packageName'];
+          this.secondaryItems = this.selectedPackage['secondaryItems'];
+          this.pkgPrimary = this.selectedPackage['primaryItems'];
+          this.featureDesc = this.selectedPackage['featureDesc'];
+          this.toGetLogo(this.selectedPackage['companyCode']);
+          this.fireInTheHole(this.selectedPackage['packageId'] - 1);
+          this.tableList = this.selectedPackage['table'];
+          console.log('table', this.tableList);
+
+          this.cusPackageList = item.cusPackageList;
+          this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
+            var objBack = {};
+            item['amountList'].forEach((unit) => {
+              if(unit['isDefaultOption'] == true) {
+                objBack['companyCode'] = item['companyCode'];
+                objBack['itemCode'] = item['insItemCode'];
+                objBack['amountCode'] = unit['amountCode'];
+                this.cusItemJson.push(objBack);
+              }
+            });
+          });
+          if(this.pkgCustomGo == false){
+            this.getPriceServiceData();
+          } else {
+            this.toGetCusPkgPrice();
+          }
+        });
+
         this.diffDays = item['datePeriod'];
         this.endTravelDay = item['dateTo'];
-        this.pkgCustomGo = item['isCusPackage'];
+        // this.pkgCustomGo = item['isCusPackage'];
         this.purposeGo = item['purpose'];
         this.resetBackCountry = item['country'];
         this.selectedCountries = item['country'];
@@ -126,48 +195,6 @@ export class HomePageComponent implements OnInit {
           this.changeCountries('');
         });
       })
-
-      let sendDataBak = {};
-      sendDataBak['product'] = 'Travel';
-      sendDataBak['startDate'] = this.startTravelDay;
-      this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
-        console.log(item);
-        this.cusPackageList = item['cusPackageList'];
-        this.packageList = item['packageList'];
-        item.cusPackageList.filter(val => val.isDefaultPackage == true).map(
-            value => this.defaultCustomerPkg = value
-        );
-
-        item.packageList.filter(val => val && val.isDefaultPackage).map(value =>
-            this.selectedPackage = value
-        );
-        this.selectedPackageName = this.selectedPackage['packageName'];
-        this.secondaryItems = this.selectedPackage['secondaryItems'];
-        this.pkgPrimary = this.selectedPackage['primaryItems'];
-        this.featureDesc = this.selectedPackage['featureDesc'];
-        this.toGetLogo(this.selectedPackage['companyCode']);
-        this.fireInTheHole(this.selectedPackage['packageId'] - 1);
-        this.tableList = this.selectedPackage['table'];
-        console.log('table', this.tableList);
-
-        this.cusPackageList = item.cusPackageList;
-        this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
-          var objBack = {};
-          item['amountList'].forEach((unit) => {
-            if(unit['isDefaultOption'] == true) {
-              objBack['companyCode'] = item['companyCode'];
-              objBack['itemCode'] = item['insItemCode'];
-              objBack['amountCode'] = unit['amountCode'];
-              this.cusItemJson.push(objBack);
-            }
-          });
-        });
-        if(this.pkgCustomGo == false){
-          this.getPriceServiceData();
-        } else {
-          this.toGetCusPkgPrice();
-        }
-      });
     }
 
     this.dataService.getIniData().subscribe((posts) => {
@@ -186,37 +213,40 @@ export class HomePageComponent implements OnInit {
       this.countries = posts.countryList;
       console.log(this.countries);
       this.data = posts;
-      this.packageList = posts.packageList;
-      posts.cusPackageList.filter(val => val.isDefaultPackage == true).map(
-          value => this.defaultCustomerPkg = value
-      );
 
-      posts.packageList.filter(val => val && val.isDefaultPackage).map(value =>
-        this.selectedPackage = value
-      );
+      if(!this.dataService.orderNumberForSave){
+        this.packageList = posts.packageList;
+        posts.cusPackageList.filter(val => val.isDefaultPackage == true).map(
+            value => this.defaultCustomerPkg = value
+        );
 
-      this.selectedPackageName = this.selectedPackage['packageName'];
-      this.secondaryItems = this.selectedPackage['secondaryItems'];
-      this.pkgPrimary = this.selectedPackage['primaryItems'];
-      this.featureDesc = this.selectedPackage['featureDesc'];
-      this.toGetLogo(this.selectedPackage['companyCode']);
-      this.fireInTheHole(this.selectedPackage['packageId'] - 1);
-      this.tableList = this.selectedPackage['table'];
-      console.log('table', this.tableList);
+        posts.packageList.filter(val => val && val.isDefaultPackage).map(value =>
+            this.selectedPackage = value
+        );
 
-      this.purposeList = posts.purposeList;
-      this.cusPackageList = posts.cusPackageList;
-      this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
-        var objBack = {};
-        item['amountList'].forEach((unit) => {
-          if(unit['isDefaultOption'] == true) {
-            objBack['companyCode'] = item['companyCode'];
-            objBack['itemCode'] = item['insItemCode'];
-            objBack['amountCode'] = unit['amountCode'];
-            this.cusItemJson.push(objBack);
-          }
+        this.selectedPackageName = this.selectedPackage['packageName'];
+        this.secondaryItems = this.selectedPackage['secondaryItems'];
+        this.pkgPrimary = this.selectedPackage['primaryItems'];
+        this.featureDesc = this.selectedPackage['featureDesc'];
+        this.toGetLogo(this.selectedPackage['companyCode']);
+        this.fireInTheHole(this.selectedPackage['packageId'] - 1);
+        this.tableList = this.selectedPackage['table'];
+        console.log('table', this.tableList);
+
+        this.purposeList = posts.purposeList;
+        this.cusPackageList = posts.cusPackageList;
+        this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
+          var objBack = {};
+          item['amountList'].forEach((unit) => {
+            if(unit['isDefaultOption'] == true) {
+              objBack['companyCode'] = item['companyCode'];
+              objBack['itemCode'] = item['insItemCode'];
+              objBack['amountCode'] = unit['amountCode'];
+              this.cusItemJson.push(objBack);
+            }
+          });
         });
-      });
+      }
 
       var d = new Date(this.testDay);
       var n = d.getDay()+1;
@@ -621,40 +651,42 @@ export class HomePageComponent implements OnInit {
             let sendDataBak = {};
             sendDataBak['product'] = 'Travel';
             sendDataBak['startDate'] = this.startTravelDay;
-            this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
-              console.log(item);
-              this.cusPackageList = item['cusPackageList'];
-              this.packageList = item['packageList'];
-              item.cusPackageList.filter(val => val.isDefaultPackage == true).map(
-                  value => this.defaultCustomerPkg = value
-              );
+            if(!this.pkgCustomGo){
+              this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
+                console.log(item);
+                this.cusPackageList = item['cusPackageList'];
+                this.packageList = item['packageList'];
+                item.cusPackageList.filter(val => val.isDefaultPackage == true).map(
+                    value => this.defaultCustomerPkg = value
+                );
 
-              item.packageList.filter(val => val && val.isDefaultPackage).map(value =>
-                  this.selectedPackage = value
-              );
+                item.packageList.filter(val => val && val.isDefaultPackage).map(value =>
+                    this.selectedPackage = value
+                );
 
-              this.selectedPackageName = this.selectedPackage['packageName'];
-              this.secondaryItems = this.selectedPackage['secondaryItems'];
-              this.pkgPrimary = this.selectedPackage['primaryItems'];
-              this.featureDesc = this.selectedPackage['featureDesc'];
-              this.toGetLogo(this.selectedPackage['companyCode']);
-              this.fireInTheHole(this.selectedPackage['packageId'] - 1);
-              this.tableList = this.selectedPackage['table'];
-              console.log('table', this.tableList);
+                this.selectedPackageName = this.selectedPackage['packageName'];
+                this.secondaryItems = this.selectedPackage['secondaryItems'];
+                this.pkgPrimary = this.selectedPackage['primaryItems'];
+                this.featureDesc = this.selectedPackage['featureDesc'];
+                this.toGetLogo(this.selectedPackage['companyCode']);
+                this.fireInTheHole(this.selectedPackage['packageId'] - 1);
+                this.tableList = this.selectedPackage['table'];
+                console.log('table', this.tableList);
 
-              this.cusPackageList = item.cusPackageList;
-              this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
-                var objBack = {};
-                item['amountList'].forEach((unit) => {
-                  if(unit['isDefaultOption'] == true) {
-                    objBack['companyCode'] = item['companyCode'];
-                    objBack['itemCode'] = item['insItemCode'];
-                    objBack['amountCode'] = unit['amountCode'];
-                    this.cusItemJson.push(objBack);
-                  }
+                this.cusPackageList = item.cusPackageList;
+                this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
+                  var objBack = {};
+                  item['amountList'].forEach((unit) => {
+                    if(unit['isDefaultOption'] == true) {
+                      objBack['companyCode'] = item['companyCode'];
+                      objBack['itemCode'] = item['insItemCode'];
+                      objBack['amountCode'] = unit['amountCode'];
+                      this.cusItemJson.push(objBack);
+                    }
+                  });
                 });
               });
-            });
+            }
 
             document.querySelector('#flagFive').scrollIntoView();
             this.textOfSelectingDays = '您的旅遊期間';
@@ -730,7 +762,6 @@ export class HomePageComponent implements OnInit {
           this.defaultCustomerPkg = item;
           this.selectedCustomePkg = item;
           this.cusItemJson = [];
-          console.log('secondaryItems', this.defaultCustomerPkg['secondaryItems'])
           this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
             var objBack = {};
             item['amountList'].forEach((unit) => {
@@ -1626,6 +1657,8 @@ export class HomePageComponent implements OnInit {
       dataToSendBack['transport'] = this.transportation;
       dataToSendBack['startDate'] = this.startTravelDay;
       dataToSendBack['endDate'] = this.endTravelDay;
+      dataToSendBack['trackingId'] = this.trackNum;
+
 
       dataToSendBack['packageId'] = this.selectedPackage['packageId'];
 
@@ -1633,10 +1666,11 @@ export class HomePageComponent implements OnInit {
       $.each(this.cusItemJson, function(i, el){
         if($.inArray(el, uniqueItemJson) === -1) uniqueItemJson.push(el);
       });
-      dataToSendBack['trackingId'] = '';
       dataToSendBack['cusItemList'] = uniqueItemJson;
       if(this.pkgCustomGo){
-        dataToSendBack['packageId'] = 0;
+        dataToSendBack['packageId'] = 0
+        console.log('1234', this.defaultCustomerPkg['packageId']);
+        console.log('14332142', this.selectedPackage['packageId']);
         dataToSendBack['cusPackageId'] = this.defaultCustomerPkg['packageId'];
       }else{
         dataToSendBack['cusPackageId'] = 0;

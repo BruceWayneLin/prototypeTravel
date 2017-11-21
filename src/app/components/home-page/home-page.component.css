@@ -1258,3 +1258,12 @@ header {
 .imAline {
   display:none;
 }
+
+.dropDown{
+  position: relative;
+  left: -60px;
+  top: 5px;
+  color: #ccc;
+  font-weight: 400;
+  pointer-events: none;
+}
