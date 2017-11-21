@@ -40,12 +40,12 @@
         <div class="col-xs-12 col-sm-6"></div>
         <div class="col-xs-12 col-sm-12 text-center">
           <div class="col-xs-6 col-sm-6" style="padding-left:0px;">
-            <input class=" memberFormInput form-control" (change)="checkDisable()" [ngClass]="{inValidInput: firstLast.touched && !firstLast.valid || firstNameValiFail || firstLastNameValiFail}" #firstLast="ngModel" [disabled]="lockFirstCard" [(ngModel)]="firstCardLastName" type="text" placeholder="姓" value="" required>
+            <input class=" memberFormInput form-control" (change)="checkDisable()" [ngClass]="{inValidInput: firstLast.touched && !firstLast.valid || firstLastNameValiFail}" #firstLast="ngModel" [disabled]="lockFirstCard" [(ngModel)]="firstCardLastName" type="text" placeholder="姓" value="" required>
             <div class="inValid text-left" *ngIf="firstLast.touched && !firstLast.valid || firstCardValidFail || firstLastNameValiFail">此欄位為必填。</div>
             <div class="inValid text-left" *ngIf="checkChineseName(firstLast.value)">姓名必須是中文。</div>
           </div>
           <div class="col-xs-6 col-sm-6" style="padding-right:0px;">
-            <input class=" memberFormInput form-control" (change)="checkDisable()" [ngClass]="{inValidInput: firstFirst.touched && !firstFirst.valid || firstNameValiFail || firstFirstNameValiFail}" #firstFirst="ngModel" [disabled]="lockFirstCard" [(ngModel)]="firstCardFirstName" type="text" placeholder="名" value="" required>
+            <input class=" memberFormInput form-control" (change)="checkDisable()" [ngClass]="{inValidInput: firstFirst.touched && !firstFirst.valid || firstFirstNameValiFail}" #firstFirst="ngModel" [disabled]="lockFirstCard" [(ngModel)]="firstCardFirstName" type="text" placeholder="名" value="" required>
             <div class="inValid text-left" *ngIf="firstFirst.touched && !firstFirst.valid || firstCardValidFail || firstFirstNameValiFail">此欄位為必填。</div>
             <div class="inValid text-left" *ngIf="checkChineseName(firstFirst.value)">姓名必須是中文。</div>
           </div>

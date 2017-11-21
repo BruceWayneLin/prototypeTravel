@@ -163,7 +163,7 @@ export class MemberCreateComponent implements OnInit {
   emailChange(email){
   }
 
-  changedData(year, month, day){
+  changedData(year = null, month = null, day = null){
     this.checkBirthday(year, month, day);
     this.dataService.clearData = false;
   }
@@ -356,7 +356,7 @@ export class MemberCreateComponent implements OnInit {
     }
   }
 
-  toZipCode(value, areaId) {
+  toZipCode(value, areaId = null) {
     if(value){
      this.areaList.forEach((item) => {
        if(item.id == areaId){
@@ -368,7 +368,7 @@ export class MemberCreateComponent implements OnInit {
    }
   }
 
-  toLoadArea(value) {
+  toLoadArea(value = null) {
     var emptyArray = [];
     if(this.selectedCity && value == 'init'){
       this.areaList.forEach((item) => {

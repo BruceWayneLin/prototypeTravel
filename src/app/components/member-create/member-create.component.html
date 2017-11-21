@@ -166,7 +166,7 @@
         </div>
         <div class="col-xs-12 col-sm-6">
           <div class="col-xs-4" style="padding-left:0px;">
-            <select class="form-control" [ngClass]="{'inValidInput': birthdayCityEl.touched && birthdayDistrictEl.touched && checkCityArea(birthdayCityEl.value, birthdayDistrictEl.value)}"  [(ngModel)]="selectedCity"  #birthdayCityEl="ngModel" (change)="toLoadArea(item)">
+            <select class="form-control" [ngClass]="{'inValidInput': birthdayCityEl.touched && birthdayDistrictEl.touched && checkCityArea(birthdayCityEl.value, birthdayDistrictEl.value)}"  [(ngModel)]="selectedCity"  #birthdayCityEl="ngModel" (change)="toLoadArea()">
               <option value="">縣市</option>
                 <option *ngFor="let item of cityList; let i = index;" [ngValue]="item.id">
                   {{item.name}}
