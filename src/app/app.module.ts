@@ -24,8 +24,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/switchMap';
 
-
-
 // import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMockDbService } from './mock-packageList';
 import { TempFakeComponent } from './components/temp-fake/temp-fake.component';
