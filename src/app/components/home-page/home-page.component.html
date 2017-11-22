@@ -1,9 +1,9 @@
 <!-- carousel -->
 <owl-carousel [options]="{autoplay: true, loop: true, nav: true, items: 1, dots: true, navigation: true, touchDrag: true, onLoadedLazy: true}" [carouselClasses]="['owl-theme', 'sliding']">
-<div class="item" *ngFor="let image of images;let i = index">
-    <a [href]="image.linkUrl == null? '#' : image.linkUrl" title="{{image.hoverText}}" (click)="clickWannaInsuredBtn(image.clickAndGoToAncher)">
+<div class="item" *ngFor="let image of images;let i = index" style="cursor:pointer;">
+    <div title="{{image.hoverText}}" (click)="clickWannaInsuredBtn(image.clickAndGoToAncher, image.linkUrl)">
       <img style="margin-top: 75px;" class="img-responsive" src="{{image.imageUrl}}" alt="{{image.hoverText}}">
-    </a>
+    </div>
 </div>
 </owl-carousel>
 
@@ -17,9 +17,9 @@
 
       </div>
       <h2 style="margin-bottom:20px;margin-top:15px;">這次旅行去哪呢 ?
-        <a href="#flagOne">
+        <div style="cursor:pointer;width:20px;display:inline-block;" (click)="clickWannaInsuredBtn(image.clickAndGoToAncher, '')">
         <i class="fa fa-chevron-circle-down" style="color:#dddddd"></i>
-        </a>
+        </div>
       </h2>
       <div class="imAline"></div>
       <div class="row text-center" [hidden]="checkShoGoNot()">

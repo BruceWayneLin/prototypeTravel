@@ -838,7 +838,10 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  clickWannaInsuredBtn(value) {
+  clickWannaInsuredBtn(value, link) {
+    if(link){
+      window.location.href = link;
+    }
     document.querySelector('#flagOne').scrollIntoView();
   }
 
