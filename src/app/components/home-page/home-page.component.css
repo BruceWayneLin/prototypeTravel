@@ -1249,6 +1249,12 @@ header {
     display: block!important;
     margin: 0px auto;
   }
+  .dropDown {
+    left: -30px!important;
+    top: -57px!important;
+    float:right;
+    display: inline-block;
+  }
 }
 
 .calDayNone{
@@ -1257,4 +1263,13 @@ header {
 
 .imAline {
   display:none;
+}
+
+.dropDown{
+  position: relative;
+  left: -60px;
+  top: 5px;
+  color: #ccc;
+  font-weight: 400;
+  pointer-events: none;
 }

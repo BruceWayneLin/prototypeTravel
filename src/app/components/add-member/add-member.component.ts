@@ -74,79 +74,85 @@ export class AddMemberComponent implements OnInit {
 
     if(this.dataService.backFromConfirm){
       setTimeout(() => {
-        this.dataService.toGetBakInfo().subscribe((item) => {
-          this.insuredList = item['insuredList'];
-          this.insuredList.forEach((item, index)=>{
-            switch(index){
-              case 0:
-                this.firstCardRelationship = item['relation'];
-                this.firstCardLastName = item['lastName'];
-                this.firstCardFirstName = item['firstName'];
-                this.firstCardPid = item['pid'];
-                this.firstCardYear = item['birthday'].slice(0, 4);
-                this.firstCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
-                this.firstCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
-                this.checkRatioAmt(1);
-                break;
-              case 1:
-                this.secondCardRelationship = item['relation'];
-                this.secondCardLastName = item['lastName'];
-                this.secondCardFirstName = item['firstName'];
-                this.secondCardPid = item['pid'];
-                this.secondCardYear = item['birthday'].slice(0, 4);
-                this.secondCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
-                this.secondCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
-                this.checkRatioAmt(2);
-                this.secondCardLock = true;
-                break;
-              case 2:
-                this.thirdCardRelationship = item['relation'];
-                this.thirdCardLastName = item['lastName'];
-                this.thirdCardFirstName = item['firstName'];
-                this.thirdCardPid = item['pid'];
-                this.thirdCardYear = item['birthday'].slice(0, 4);
-                this.thirdCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
-                this.thirdCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
-                this.checkRatioAmt(3);
-                this.thirdCardLock = true;
-                break;
-              case 3:
-                this.fourthCardRelationship = item['relation'];
-                this.fourthCardLastName = item['lastName'];
-                this.fourthCardFirstName = item['firstName'];
-                this.fourthCardPid = item['pid'];
-                this.fourthCardYear = item['birthday'].slice(0, 4);
-                this.fourthCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
-                this.fourthCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
-                this.checkRatioAmt(4);
-                this.fourthCardLock = true;
-                break;
-              case 4:
-                this.fifthCardRelationship = item['relation'];
-                this.fifthCardLastName = item['lastName'];
-                this.fifthCardFirstName = item['firstName'];
-                this.fifthCardPid = item['pid'];
-                this.fifthCardYear = item['birthday'].slice(0, 4);
-                this.fifthCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
-                this.fifthCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
-                this.checkRatioAmt(5);
-                this.fifthCardLock = true;
-                break;
-              case 5:
-                this.sixthCardRelationship = item['relation'];
-                this.sixthCardLastName = item['lastName'];
-                this.sixthCardFirstName = item['firstName'];
-                this.sixthCardPid = item['pid'];
-                this.sixthCardYear = item['birthday'].slice(0, 4);
-                this.sixthCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
-                this.sixthCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
-                this.checkRatioAmt(6);
-                this.sixthCardLock = true;
-                break;
-              default:
-            }
-          })
-        });
+        if(!this.dataService.noGoWithYourFdsFlag){
+          this.firstCardRelationship = '本人';
+          this.changedRelationship('', '');
+        }else{
+          this.dataService.toGetBakInfo().subscribe((item) => {
+            this.insuredList = item['insuredList'];
+            this.insuredList.forEach((item, index)=>{
+              switch(index){
+                case 0:
+                  this.firstCardRelationship = item['relation'];
+                  this.changedRelationship('', '');
+                  this.firstCardLastName = item['lastName'];
+                  this.firstCardFirstName = item['firstName'];
+                  this.firstCardPid = item['pid'];
+                  this.firstCardYear = item['birthday'].slice(0, 4);
+                  this.firstCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
+                  this.firstCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
+                  this.checkRatioAmt(1);
+                  break;
+                case 1:
+                  this.secondCardRelationship = item['relation'];
+                  this.secondCardLastName = item['lastName'];
+                  this.secondCardFirstName = item['firstName'];
+                  this.secondCardPid = item['pid'];
+                  this.secondCardYear = item['birthday'].slice(0, 4);
+                  this.secondCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
+                  this.secondCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
+                  this.checkRatioAmt(2);
+                  this.secondCardLock = true;
+                  break;
+                case 2:
+                  this.thirdCardRelationship = item['relation'];
+                  this.thirdCardLastName = item['lastName'];
+                  this.thirdCardFirstName = item['firstName'];
+                  this.thirdCardPid = item['pid'];
+                  this.thirdCardYear = item['birthday'].slice(0, 4);
+                  this.thirdCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
+                  this.thirdCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
+                  this.checkRatioAmt(3);
+                  this.thirdCardLock = true;
+                  break;
+                case 3:
+                  this.fourthCardRelationship = item['relation'];
+                  this.fourthCardLastName = item['lastName'];
+                  this.fourthCardFirstName = item['firstName'];
+                  this.fourthCardPid = item['pid'];
+                  this.fourthCardYear = item['birthday'].slice(0, 4);
+                  this.fourthCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
+                  this.fourthCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
+                  this.checkRatioAmt(4);
+                  this.fourthCardLock = true;
+                  break;
+                case 4:
+                  this.fifthCardRelationship = item['relation'];
+                  this.fifthCardLastName = item['lastName'];
+                  this.fifthCardFirstName = item['firstName'];
+                  this.fifthCardPid = item['pid'];
+                  this.fifthCardYear = item['birthday'].slice(0, 4);
+                  this.fifthCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
+                  this.fifthCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
+                  this.checkRatioAmt(5);
+                  this.fifthCardLock = true;
+                  break;
+                case 5:
+                  this.sixthCardRelationship = item['relation'];
+                  this.sixthCardLastName = item['lastName'];
+                  this.sixthCardFirstName = item['firstName'];
+                  this.sixthCardPid = item['pid'];
+                  this.sixthCardYear = item['birthday'].slice(0, 4);
+                  this.sixthCardMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
+                  this.sixthCardDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
+                  this.checkRatioAmt(6);
+                  this.sixthCardLock = true;
+                  break;
+                default:
+              }
+            })
+          });
+        }
       }, 300);
     }
 
@@ -494,12 +500,12 @@ export class AddMemberComponent implements OnInit {
       }
     }
     if(
-        this.thirdCardFirstName &&
-        this.thirdCardLastName &&
+        this.thirdCardFirstName !== '' &&
+        this.thirdCardLastName !== '' &&
         !this.thirdPidTypeWrong &&
-        this.thirdCardYear &&
-        this.thirdCardMonth &&
-        this.thirdCardDay
+        this.thirdCardYear !== '' &&
+        this.thirdCardMonth !== '' &&
+        this.thirdCardDay !== ''
     ){
       this.fourthCardLock = true;
     }else{
