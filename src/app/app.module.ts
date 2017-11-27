@@ -15,8 +15,17 @@ import { MemberCreateComponent } from './components/member-create/member-create.
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ConfirmInfoComponent } from './components/confirm-info/confirm-info.component';
 
+// import 'rxjs/add/operator/do';
+// import 'rxjs/add/operator/filter';
+// import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/distinctUntilChanged';
+// import 'rxjs/add/observable/of';
+// import 'rxjs/add/operator/catch';
+// import 'rxjs/add/operator/debounceTime';
+// import 'rxjs/add/operator/switchMap';
+
 // import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMockDbService } from './mock-packageList';
+// import { InMockDbService } from './mock-packageList';
 import { TempFakeComponent } from './components/temp-fake/temp-fake.component';
 import { ShareService } from "./services/share.service";
 import { ThanksComponent } from './components/thanks/thanks.component';
@@ -25,11 +34,17 @@ import { FailPaymentComponent } from './components/fail-payment/fail-payment.com
 import { LoadingModule } from 'ngx-loading';
 import { LayoutModule } from 'cl-layout/src/app/shared/layout/layout.module';
 import 'cl-layout/thirdparty-library';
-import { CarelineProjectType } from 'cl-layout/src/app/shared/layout/careline-layout-config';
 
 export const routes : Routes = [
   {
     path:'',
+    data: {
+      breadcrumb: '首頁',
+    },
+    component: HomePageComponent
+  },
+  {
+    path:'index',
     data: {
       breadcrumb: '首頁',
     },

@@ -54,7 +54,7 @@
 
 <div class="row">
   <div class="container-fluid" style="height: 80px;">
-    <div class="col-lg-12" style="padding:0px;">
+    <div class="col-lg-12" style="padding:0px;height: 50px;">
       <div class="titleForm text-left">
         <h2 style="padding-top:10px; padding-bottom:20px;">要保人</h2>
       </div>
@@ -130,7 +130,7 @@
           </div>
           <span class="pull-right"><img  *ngIf="birthdayYEl.touched && !birthdayYEl.valid && birthdayMEl.touched && !birthdayMEl.valid &&  birthdayDEl.touched && !birthdayDEl.valid || personalAgeOver" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
           <div class="inValid" *ngIf="birthdayYEl.touched && !birthdayYEl.valid && birthdayMEl.touched && !birthdayMEl.valid &&  birthdayDEl.touched && !birthdayDEl.valid">生日不正確。</div>
-          <div class="inValid" *ngIf="personalAgeOver">{{'年月日檢核要依據各保險公司/產品的投保年齡限制，如不符合顯示[本站僅提供滿'+ applicantAgeMax +'歲以上，'+ applicantAgeMin +'歲以下(足歲未滿)投保服務，有任何問題請來電免費客服專線0800-234-088。]'}}</div>
+          <div class="inValid" *ngIf="personalAgeOver">{{'本站僅提供滿'+ applicantAgeMin +'歲以上，'+ applicantAgeMax +'歲以下(足歲未滿)投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
         </div>
       </div>
       <div class="col-xs-12">
@@ -222,6 +222,7 @@
       </div>
     </div>
   </div>
+
 <div class="row" id="addInsuredAdd">
   <div class="container-fluid insuredContent" style="margin: 0px 6%;">
     <div class="col-xs-12 text-center">
@@ -236,13 +237,13 @@
               </div>
             </div>
             <div id="choicesHaoNoHao" class="pull-right"  *ngIf="!windowSizeCheck()">
-              <label id="choiceOne" >
-                <input name="withFds" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(false)" [checked]="!noGoWithYourFds">
-                <span style="pointer-events: none;" class="widthFdsSpanOne">先不用</span>
+              <label id="choiceOne">
+                <input name="withFds" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(false)"  [ngClass]="{inputRadioChecked: !noGoWithYourFds}">
+                <span style="pointer-events: none;" class="widthFdsSpanOne" [ngClass]="{inputRadioCheckedTxt: !noGoWithYourFds}">先不用</span>
               </label>
               <label id="choiceTwo">
-                <input name="withFds"  type="radio" class="form-control btn-sm"  (click)="ToShowConfirmModal(true)" [checked]="noGoWithYourFds">
-                <span style="pointer-events: none;" class="widthFdsSpanTwo">好啊</span>
+                <input name="withFds"  type="radio" class="form-control btn-sm"  (click)="ToShowConfirmModal(true)"  [ngClass]="{inputRadioChecked: noGoWithYourFds}">
+                <span style="pointer-events: none;" class="widthFdsSpanTwo" [ngClass]="{inputRadioCheckedTxt: noGoWithYourFds}">好啊</span>
               </label>
             </div>
           </div>
@@ -253,8 +254,8 @@
         <div id="MobileChoicesHaoNoHao" class="col-xs-12">
           <div class="col-xs-6">
             <label id="choiceMobileOne">
-            <input name="withFds2" type="radio" class="form-control btn-sm" [checked]="!noGoWithYourFds" (click)="ToShowConfirmModal(false)">
-              <span class="widthFdsSpanOne">
+            <input name="withFds2" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(false)" [ngClass]="{inputRadioChecked: !noGoWithYourFds}">
+              <span class="widthFdsSpanOne" [ngClass]="{inputRadioCheckedTxt: !noGoWithYourFds}">
                 先不用
               </span>
             </label>
@@ -262,8 +263,8 @@
 
           <div class="col-xs-6">
             <label id="choiceMobileTwo">
-            <input name="withFds2" type="radio" class="form-control btn-sm" [checked]="noGoWithYourFds" (click)="ToShowConfirmModal(true)">
-              <span class="widthFdsSpanTwo">
+            <input name="withFds2" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(true)" [ngClass]="{inputRadioChecked: noGoWithYourFds}">
+              <span class="widthFdsSpanTwo" [ngClass]="{inputRadioCheckedTxt: noGoWithYourFds}">
                 好啊
               </span>
             </label>
@@ -352,7 +353,7 @@
               </select>
             </div>
             <span class="pull-right"><img  *ngIf="birthdayYAE.touched && !birthdayYAE.valid && birthdayYAM.touched && !birthdayYAM.valid &&  birthdayYAD.touched && !birthdayYAD.valid || aloneBdWrong || aloneBdEmpty" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
-            <div class="inValid" *ngIf="aloneBdWrong">{{'年月日檢核要依據各保險公司/產品的投保年齡限制，如不符合顯示[本站僅提供滿'+ insuredAgeMax +'歲以上，'+ insuredAgeMin +'歲以下(足歲未滿)投保服務，有任何問題請來電免費客服專線0800-234-088。]'}}</div>
+            <div class="inValid" *ngIf="aloneBdWrong">{{'本站僅提供滿'+ insuredAgeMax +'歲以上，'+ insuredAgeMin +'歲以下(足歲未滿)投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
             <div class="inValid text-left" *ngIf="birthdayYAE.touched && !birthdayYAE.valid && birthdayYAM.touched && !birthdayYAM.valid &&  birthdayYAD.touched && !birthdayYAD.valid || aloneBdEmpty">此欄位為必填。</div>
           </div>
         </div>
