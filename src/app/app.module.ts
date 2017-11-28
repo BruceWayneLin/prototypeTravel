@@ -34,6 +34,7 @@ import { FailPaymentComponent } from './components/fail-payment/fail-payment.com
 import { LoadingModule } from 'ngx-loading';
 import { LayoutModule } from 'cl-layout/src/app/shared/layout/layout.module';
 import 'cl-layout/thirdparty-library';
+import { CarelineProjectType } from 'cl-layout/src/app/shared/layout/careline-layout-config';
 
 export const routes : Routes = [
   {

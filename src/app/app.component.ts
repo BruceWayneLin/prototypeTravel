@@ -23,7 +23,7 @@ export class AppComponent {
   }
 
   ngAfterViewInit() {
-    this.detectScrollAndHeaderChange();
+    // this.detectScrollAndHeaderChange();
   }
 
   ifItsLoading(){
