@@ -37,6 +37,8 @@
     "jquery-mousewheel": "^3.1.13",
     "lodash": "^4.17.4",
     "mixitup": "^3.2.1",
+    "mockdate": "^2.0.2",
+    "moment": "^2.19.2",
     "ng2-semantic-ui": "^0.9.6",
     "ngx-accordion": "0.0.17",
     "ngx-bootstrap": "^1.9.3",

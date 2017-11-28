@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, ElementRef, ViewChild, ViewChildren}  from '@angular/core';
+import {Component, OnInit, AfterViewInit, ElementRef, ViewChild, ViewChildren, AfterViewChecked}  from '@angular/core';
 import { ActivatedRoute, RouterModule, Routes } from "@angular/router";
 import { DataServiceService } from '../../services/data-service.service';
 import { OwlCarousel } from 'ngx-owl-carousel';
@@ -76,6 +76,7 @@ export class HomePageComponent implements OnInit {
   testDay:any = new Date();
   resetBackCountry: any;
   trackNum: string;
+  theDayBeginingNeedToRun: number;
 
   @ViewChild('eleTest')  el:ElementRef;
   @ViewChild('noNeedArea') nNA:ElementRef;
@@ -88,7 +89,7 @@ export class HomePageComponent implements OnInit {
   @ViewChild(OwlCarousel) owl:OwlCarousel;
 
   constructor(
-    private dataService:DataServiceService,
+    private dataService:DataServiceService
   ){
     $('body,html').animate({scrollTop: '0px'}, 0);
   }
@@ -116,21 +117,22 @@ export class HomePageComponent implements OnInit {
     return parms;
   };
   ngOnInit() {
+    this.CusDetailContent = true;
 
     var Url = window.location.href;
     var turnBakUrl = this.toGetDataFromUrl(Url);
     if(turnBakUrl){
       this.trackNum = turnBakUrl['__track'][0];
     }
-    if(new Date(this.testDay).getDay() == 0 && !this.modifiedClicked){
-      var tmr = new Date(this.testDay).setDate(new Date(this.testDay).getDate() + 1);
+    if(new Date().getDay() == 0 && !this.modifiedClicked){
+      var tmr = new Date().setDate(new Date().getDate() + 1);
       this.firstMon = this.getMonday(new Date(tmr));
     }else{
       if(this.modifiedClicked){
         this.testDay = new Date();
-        this.firstMon = this.getMonday(new Date(this.testDay));
+        this.firstMon = this.getMonday(new Date());
       }else{
-        this.firstMon = this.getMonday(new Date(this.testDay));
+        this.firstMon = this.getMonday(new Date());
       }
     }
     if(this.dataService.orderNumberForSave){
@@ -183,6 +185,7 @@ export class HomePageComponent implements OnInit {
         this.endTravelDay = item['dateTo'];
         // this.pkgCustomGo = item['isCusPackage'];
         this.purposeGo = item['purpose'];
+        this.doneSelPurpose = true;
         this.resetBackCountry = item['country'];
         this.selectedCountries = item['country'];
         this.tryGetFavor(item['country']);
@@ -248,10 +251,11 @@ export class HomePageComponent implements OnInit {
         });
       }
 
-      var d = new Date(this.testDay);
+      var d = new Date();
       var n = d.getDay()+1;
 
       this.getDayFromBkend = (posts.productSetting['startDateLimit'] + n);
+      this.theDayBeginingNeedToRun = this.getDayFromBkend + 10;
       this.startDayLimit = posts.productSetting['startDateLimit'];
       this.ifTheStartIsPlusOneMoreDay = posts.productSetting['start'];
 
@@ -267,7 +271,7 @@ export class HomePageComponent implements OnInit {
       // console.log(posts.disabledDateList);
 
       console.log(posts);
-      this.favCountry = posts['favCountry'];
+      this.favCountry = posts['favCountry'] == null? [] : posts['favCountry'];
       this.travelPeriodLimit = posts.productSetting['travelPeriodLimit'];
       this.toGetCountryList(this.countries);
     });
@@ -321,11 +325,13 @@ export class HomePageComponent implements OnInit {
         returnArr.push(item);
       }
     })
+    // alert($('.noNeedClassForWord' + number).is(':visible'));
     // $('#ele'+number+' .divAmtLong p').remove();
     // $('.amtBtnClickToShow'+number).remove();
     this.cusItemJson = returnArr;
     this.toGetCusPkgPrice();
     var idNum = $('#titlePkg .toShowContentAccordion').length;
+
     // console.log(idNum);
     // $('#specialWordDivDetail p').remove();
     // for(let i = 0; i <= idNum; i++){
@@ -345,6 +351,8 @@ export class HomePageComponent implements OnInit {
     //     console.log('false', i);
     //   }
     // }
+    $('.noNeedClassForWord'+number).removeAttr('hidden');
+
     if(!this.doNotNeedToShow){
       this.doNotNeedToShow = true;
       $('.noNeedClassForWord'+number).slideDown('fast');
@@ -368,6 +376,7 @@ export class HomePageComponent implements OnInit {
   }
 
   determineHideOrShow(lists, number) {
+
     var reArray = [];
     lists.forEach((item) => {
       reArray.push(item['isDefaultOption'])
@@ -502,11 +511,16 @@ export class HomePageComponent implements OnInit {
 
   pkgCustomToggle() {
     this.pkgCustomGo = !this.pkgCustomGo;
-    if(window.innerWidth <= 500){
-      setTimeout(function(){
-        $('.toShowContentAccordion').slideUp('fast');
-      }, 200);
-    }
+    setTimeout(function(){
+      $('.toShowContentAccordion').hide();
+      $('#mainLongDetailDiv').hide();
+      $('#mobileAmt').show();
+    }, 100);
+    // if(window.innerWidth <= 500){
+    //   setTimeout(function(){
+    //     $('.toShowContentAccordion').slideUp('fast');
+    //   }, 200);
+    // }
     document.querySelector('#flagSix').scrollIntoView();
 
     if(this.pkgCustomGo){
@@ -542,7 +556,8 @@ export class HomePageComponent implements OnInit {
     // if(diffDays == 6){
     //   diffDays++
     // }
-    var diffDays = new Date(firstDay).getDay();
+
+    let diffDays = new Date(firstDay).getDay();
     let returnArr = [];
     for(let i = 1; i <= diffDays; i++){
       returnArr.push(i);
@@ -560,9 +575,9 @@ export class HomePageComponent implements OnInit {
       this.toShowMoreDays = false;
       this.textOfOverDays = '出國超過' + this.travelPeriodLimit + '天？';
     }else{
-      let testDayAddOneMonth = new Date(new Date(this.testDay).getFullYear(), new Date(this.testDay).getMonth()+this.theTimeClicked, 0);
+      let testDayAddOneMonth = new Date(new Date().getFullYear(), new Date().getMonth()+this.theTimeClicked, 0);
       let day = 1000*60*60*24;
-      var diffDays2 = Math.round(Math.abs((new Date(this.testDay).getTime() - new Date(testDayAddOneMonth).getTime())/(day)));
+      var diffDays2 = Math.round(Math.abs((new Date().getTime() - new Date(testDayAddOneMonth).getTime())/(day)));
       if(this.theTimeClicked == 5){
           this.getDayFromBkend = this.travelPeriodLimit;
       }else{
@@ -580,13 +595,15 @@ export class HomePageComponent implements OnInit {
     this.tableShowHidden = false;
     this.selectTravelDayIsDone = false;
     this.modifiedClicked = true;
-    this.testDay = new Date();
-    this.firstMon = this.getMonday(new Date(this.testDay));
+    // this.testDay = new Date();
+    // this.firstMon = this.getMonday(new Date());
     this.startTravelDay = '';
     this.endTravelDay = '';
     this.theTimeClicked = 2;
-    // this.toShowMoreDays = !this.toShowMoreDays;
+    this.theDayBeginingNeedToRun = this.getDayFromBkend + 10;
+    this.toShowMoreDays = !this.toShowMoreDays;
     this.getDayFromBkend = this.startDayLimit;
+
     this.textOfOverDays = '出國超過' + this.getDayFromBkend + '天？';
 
     // let countWeek = function(){
@@ -614,14 +631,14 @@ export class HomePageComponent implements OnInit {
         this.textOfSelectingDays = '請點選旅程出發日與返回日';
         this.startTravelDay = $event.target.value;
         // this.testDay = this.startTravelDay;
-        let testDayAddOneMonth = new Date(new Date(this.testDay).getFullYear(), new Date(this.testDay).getMonth()+2, 0);
+        let testDayAddOneMonth = new Date(new Date().getFullYear(), new Date().getMonth()+2, 0);
         let day = 1000*60*60*24;
         // if(this.modifiedClicked){
         //   var diffDays = Math.round(Math.abs((new Date(this.testDay).getTime() - new Date(testDayAddOneMonth).getTime())/(day)));
         //   this.getDayFromBkend = diffDays;
         // }
-
         // this.firstMon = this.getMonday(new Date(this.startTravelDay));
+        this.theDayBeginingNeedToRun = this.travelPeriodLimit + 50;
         this.totalTimesTimes = Math.round(this.travelPeriodLimit/30);
         // this.getDayFromBkend = diffDays;
         this.selectTravelDayIsDone = true;
@@ -752,9 +769,7 @@ export class HomePageComponent implements OnInit {
   }
 
   toGetCustomPackageContent(val) {
-
     console.log(JSON.stringify(val));
-    $('#mainLongDetailDiv').slideUp('fast');
     this.defaultCustomerPkg = val;
     if(val.length == 1){
       this.cusPackageList.forEach((item)=>{
@@ -812,11 +827,18 @@ export class HomePageComponent implements OnInit {
       this.pkgPrimary = this.selectedCustomePkg['primaryItems'];
       this.toGetLogo(this.selectedCustomePkg['companyCode']);
     }
-    if(window.innerWidth <= 500){
-      setTimeout(function(){
-        $('.toShowContentAccordion').slideUp('fast');
-      }, 200);
-    }
+
+    setTimeout(function(){
+      $('#mainLongDetailDiv').hide();
+      $('.toShowContentAccordion').hide();
+    }, 100);
+
+    // if(window.innerWidth <= 500){
+    //   setTimeout(function(){
+    //     $('#mainLongDetailDiv').slideUp('fast');
+    //     $('.toShowContentAccordion').slideUp('fast');
+    //   }, 300);
+    // }
   }
 
   returnIfNoNeedIsNeed(obj) {
@@ -865,6 +887,19 @@ export class HomePageComponent implements OnInit {
   }
 
   toGetShowContentOfPkg(id, number, objClick){
+    // if(!this.doNotNeedToShow && $('.noNeedClassForWord' + number).is(':visible')){
+    //   $('.noNeedClassForWord'+number).slideUp('fast');
+    //   $('.amtBtnClickToShow'+number).slideDown('fast');
+    // }else{
+    //   $('.amtBtnClickToShow'+number).slideDown('fast');
+    //   $('.needClassForWord'+number).slideDown('fast');
+    //   $('.noNeedClassForWord'+number).slideUp('fast');
+    // }
+    // alert();
+
+    // $('.noNeedClassForWord' + number).slideUp('fast');
+    setTimeout(function(){
+    }, 300);
     for(let i = 0; i <= $('#paddingSpe i').length; i ++) {
       if($('#paddingSpe i')[i]){
         if($('#paddingSpe i')[i]['className'] == 'fa fa-angle-up'){
@@ -903,10 +938,10 @@ export class HomePageComponent implements OnInit {
     // let lastSun = this.getLastSunday(new Date(monDay));
     // console.log(day);
     // console.log(lastSun);
-    if(new Date(monDay) >= new Date(this.testDay)){
+    if(new Date(monDay) >= new Date()){
       return month;
-    }else if(new Date(monDay) < new Date(this.testDay)){
-      return new Date(this.testDay).getMonth()+1;
+    }else if(new Date(monDay) < new Date()){
+      return new Date().getMonth()+1;
     }
   }
 
@@ -1009,11 +1044,11 @@ export class HomePageComponent implements OnInit {
       }
     }
   }
-
-  whichWeek(){
-    var date = new Date(this.startTravelDay),
+  whichWeek(val){
+    var date = new Date(val),
         prefixes = ['First', 'Second', 'Third', 'Fourth', 'Fifth'];
-    return prefixes[0 | date.getDate() / 8];
+
+    return prefixes[0 | date.getDate() / 7];
   }
 
   // getSunday(sun) {
@@ -1038,7 +1073,7 @@ export class HomePageComponent implements OnInit {
   }
 
   getRemanningDays() {
-  var date = new Date(this.testDay);
+  var date = new Date();
   var time = new Date(date.getTime());
   time.setMonth(date.getMonth() + 1);
   time.setDate(0);
@@ -1047,9 +1082,9 @@ export class HomePageComponent implements OnInit {
   }
 
   checkLastDayOfMonth() {
-    let day = new Date(this.testDay).getDate();
-    let numberDay = new Date(this.testDay).getDay();
-    if((new Date(2017, 11, 0).getDate()) <= day || (day <= 7 && numberDay != 0)){
+    let day = new Date().getDate();
+    let numberDay = new Date().getDay();
+    if((new Date().getDate()) <= day || (day <= 7 && numberDay != 0)){
       return false;
     }else{
       return true;
@@ -1060,8 +1095,9 @@ export class HomePageComponent implements OnInit {
     if(this.startTravelDay){
        var oneDay = 24*60*60*1000;
        var nextMonthLastDay = new Date(new Date(this.startTravelDay).getFullYear(), new Date(this.startTravelDay).getMonth() + this.theTimeClicked, 0);
+       let startDayPlusLimitedDay = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit - 1);
 
-       var startDayPlusLastDayNum = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit);
+      var startDayPlusLastDayNum = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit);
 
        if(this.theTimeClicked == this.totalTimesTimes){
          startDayPlusLastDayNum = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit);
@@ -1108,8 +1144,15 @@ export class HomePageComponent implements OnInit {
         return false;
       }
     }else{
-      var yesterday = new Date(this.testDay).setDate(new Date(this.getMonday(this.testDay)).getDate()-1);
-      var lastPlustStartDayLimited = new Date(this.testDay).setDate(new Date(this.testDay).getDate() + this.startDayLimit);
+      // let yesterday = new Date(new Date().setDate(new Date().getDate()-1));
+       var yesterday = new Date().setDate(new Date(this.getMonday(new Date())).getDate()-1);
+       // console.log(new Date(yesterday));
+     //
+     //  if(new Date(value) < yesterday){
+     //  return true;
+     // }
+      var yesterday = new Date().setDate(new Date(this.getMonday(new Date())).getDate()-1);
+      var lastPlustStartDayLimited = new Date().setDate(new Date().getDate() + this.startDayLimit);
       var lastDayNeedToHide;
       switch (new Date(lastPlustStartDayLimited).getDay()){
         case 0:
@@ -1136,8 +1179,8 @@ export class HomePageComponent implements OnInit {
         default:
       }
 
-     if(new Date(this.testDay).getDate() == 1){
-       if(new Date(value) < new Date(this.testDay)){
+     if(new Date().getDate() == 1){
+       if(new Date(value) < new Date()){
          return true;
        }else if (new Date(value) > new Date(lastDayNeedToHide)){
          return true;
@@ -1147,8 +1190,8 @@ export class HomePageComponent implements OnInit {
      }else if(new Date(value) < new Date(yesterday)){
         return true;
      }else{
-        if(new Date(this.testDay).getDay() == 6){
-          let tmr = new Date(new Date(this.testDay).setDate(new Date(this.testDay).getDate()+1));
+        if(new Date().getDay() == 6){
+          let tmr = new Date(new Date().setDate(new Date().getDate()+1));
           if(new Date(value) <= new Date(tmr)){
             return true;
           }else{
@@ -1340,11 +1383,11 @@ export class HomePageComponent implements OnInit {
         return false;
       }
     }else{
-      var tmr = new Date(this.testDay).setDate(new Date(this.testDay).getDate() + 1);
-      var lastDayNoStartDay = new Date(this.testDay).setDate(new Date(this.testDay).getDate() + this.startDayLimit - 1);
+      var tmr = new Date().setDate(new Date().getDate() + 1);
+      var lastDayNoStartDay = new Date().setDate(new Date().getDate() + this.startDayLimit - 1);
       if((new Date(val).getDate() == 1 || (new Date(val).getDay() == 0 && new Date(val) < new Date(tmr)))){
-        if(new Date(this.testDay).getDate() == 1){
-          if(new Date(val) < new Date(this.testDay.setDate(new Date(this.testDay).getDate() - new Date(this.testDay).getDay()))){
+        if(new Date().getDate() == 1){
+          if(new Date(val) < new Date(new Date().setDate(new Date().getDate() - new Date().getDay()))){
             return true;
           }
         }else if(new Date(val) > new Date(lastDayNoStartDay)){
@@ -1454,7 +1497,7 @@ export class HomePageComponent implements OnInit {
   buttonToDisabled(calVal) {
     var startDaysDisabled = new Date(this.startTravelDay);
     var buttonDate = new Date(calVal);
-    var todayPlusStartDayLimitAndDisaster = new Date(this.testDay).setDate(new Date(this.testDay).getDate() + this.startDayLimit + 1);
+    var todayPlusStartDayLimitAndDisaster = new Date().setDate(new Date().getDate() + this.startDayLimit);
     var startDayPlusLimitedDay = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit - 1);
 
     if(this.startTravelDay){
@@ -1467,11 +1510,11 @@ export class HomePageComponent implements OnInit {
         return false;
       }
     }else{
-      var theBeginingDay = new Date(this.testDay).setDate(new Date(this.testDay).getDate() + (this.ifTheStartIsPlusOneMoreDay - 1));
+      var theBeginingDay = new Date().setDate(new Date().getDate() + (this.ifTheStartIsPlusOneMoreDay - 1));
       if(
           buttonDate < new Date(theBeginingDay) ||
           buttonDate >= new Date(todayPlusStartDayLimitAndDisaster) ||
-          buttonDate < new Date(this.testDay)
+          buttonDate < new Date()
       ){
         return true;
       } else {

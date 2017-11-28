@@ -63,6 +63,9 @@ html, body {
 }
 
 @media screen and (max-width: 780px) {
+  .owl-prev, .owl-next {
+    top: 30%!important;
+  }
   .nav.navbar-nav.navbar-right {
     display: none;
   }
@@ -118,7 +121,7 @@ select.form-control, button.form-control, input.form-control {
   -webkit-appearance: none;
   margin-top: 7px;
   margin-bottom: 7px;
-  height: 50px;
+  height: 50px!important;
   width: 100%;
   padding: 12px 15px;
   font-size: 18px;
@@ -634,6 +637,9 @@ header {
 }
 
 @media screen and (max-width: 500px){
+  .owl-prev, .owl-next {
+    top: 30%!important;
+  }
   #accordionDiv div.panel.panel-default {
     padding-left: 0px;
   }
@@ -856,10 +862,18 @@ input, input:before, input:after {
   user-select: initial;
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 376px) {
   .panel-group .fa-chevron-circle-down{
     font-size: 25px!important;
     top: 45px!important;
+    z-index:999!important;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .panel-group .fa-chevron-circle-down{
+    font-size: 25px!important;
+    top: 35px!important;
     z-index:999!important;
   }
   .owl-theme .owl-nav .owl-prev, .owl-theme .owl-nav .owl-next {
@@ -893,5 +907,79 @@ input, input:before, input:after {
     padding-right:0px!important;
   }
 }
+.modal-content {
+  background-color: #fefefe;
+  margin: auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 270px; /* Could be more or less, depending on screen size */
+  top: 4%;
+}
 
+.container-inward {
+  margin-top: 0px!important;
+}
+.weekDayText, td {
+  border-top: none!important;
+  padding: 0px!important;
+}
+
+#closebtn {
+  color: white;
+  background: #808080;
+  border-color: #808080;
+  cursor: pointer;
+  width: 10%;
+  height: 40%;
+  border-radius: 25px;
+  border-width: 2px;
+  border-style: solid;
+  padding-left: 1.75vw;
+  padding-right: 1.75vw;
+  min-width: 100px;
+}
+
+#closebtn.closebtn1 {
+  color: #808080;
+  background: transparent;
+  border-color: #808080;
+  cursor: pointer;
+  width: 10%;
+  height: 40%;
+  border-radius: 25px;
+  border-width: 2px;
+  border-style: solid;
+  padding-left: 1.75vw;
+  padding-right: 1.75vw;
+  min-width: 100px;
+}
+.modal-content h2 {
+  font-size: 28px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+  color:#e84466;
+  font-family: segoe ui,microsoft jhenghei,microsoft mhei,stheititc,sans-serif;
+  margin-left: 25px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  text-align: center;
+}
+
+@media screen and (max-width: 375px) {
+  .panel.panel-default .panel-title {
+    padding-right: 20px!important;
+  }
+  .panel-group .fa.fa-chevron-circle-down {
+    top: 30px!important;
+  }
+  .fa.fa-chevron-circle-up {
+    font-size: 30px!important;
+  }
+}
+
+
+
+.side-panel {
+  display:none!important;
+}
 /*@import "~@angular/material/prebuilt-themes/indigo-pink.css";*/
