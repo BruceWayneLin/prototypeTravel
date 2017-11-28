@@ -115,8 +115,8 @@
       <!-- regular accordion -->
       <accordion>
         <ng-container *ngFor="let item of insuredList; let i = index;">
-          <i class="fa  fa-chevron-circle-down" aria-hidden="true"></i>
-          <accordion-group class="clickAccordion" heading="{{' '+item['inLastName']+item['inFirstName']+' '+item['inPackageName']+'  保費 NT$'+item['inRate']}}">
+          <i class="fa  fa-chevron-circle-down" aria-hidden="true" style="pointer-events: none;" (click)="toTriggerCloseA()"></i>
+          <accordion-group class="clickAccordion" heading="{{' '+item['inLastName']+item['inFirstName']+' '+item['inPackageName']+' NT$'+item['inRate']}}">
             <div class="row packageInfo">
               <div class="container">
                 <div class="col-lg-12 text-left">
@@ -210,14 +210,12 @@
   <div class="row">
     <div class="container">
       <div class="col-lg-12 text-center imgContain">
-        <div class="col-xs-3"></div>
-        <div class="col-xs-5">
+        <div style="display:block; margin: 0 auto;">
           <div class="imageCla">
             <img src="assets/images/dolls/kaiowlTalking.png" alt="" class="img-responsive">
             <span>{{text4Activity}}</span>
           </div>
         </div>
-        <div class="col-xs-4"></div>
       </div>
     </div>
   </div>

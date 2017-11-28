@@ -252,7 +252,7 @@
 #calendarTable .checkBtnTxt {
   color: #e84466;
   position: relative;
-  top: -5px;
+  top: -8px;
   left: 10px;
   font-weight: normal;
 }
@@ -309,7 +309,7 @@ label.purposeLabel span {
 }
 
 .packageContent {
-  margin-top: 21px;
+  margin-top: 20px;
   max-width: 930px;
 }
 
@@ -992,7 +992,7 @@ header {
     width: 100%;
   }
   .packageContent {
-    margin-top: 25px;
+    margin-top: 20px;
   }
   .logo {
     margin: auto 35%;
@@ -1101,7 +1101,7 @@ header {
     font-size: 20px;
   }
   #cutAmtBtn.col-xs-7.NoPaddingLeft .specialPkgLabel.toCusBtn span {
-    left: 20px!important;
+    left: 20px;
   }
   .feltNotEnoughBtn {
     margin-right: 15%;
@@ -1126,7 +1126,7 @@ header {
     margin-right: 10px;
   }
 
-  .packageTit[_ngcontent-c2]   .toShowContentAccordion{
+  .packageTit .toShowContentAccordion{
     width: 109%;
     left: -15px;
   }
@@ -1134,8 +1134,15 @@ header {
 }
 
 @media screen and (max-width: 768px) and (min-width: 500px){
+  .owl-prev, .owl-next {
+    top: 85px!important;
+  }
+  .form-control.detailExplian {
+    padding-top: 10px;
+  }
   .feltNotEnoughBtn {
     margin-right: 22%;
+    padding-right:19%;
   }
   #calendarTable {
     margin-right: 10px;
@@ -1146,6 +1153,35 @@ header {
   .packageTit .toShowContentAccordion{
     width: 109%;
     left: -15px;
+  }
+  #detailDivShift{
+    width: 24%!important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(4) {
+    left: -28px;
+  }
+  #selectNameTitle{
+    margin-top: 25px!important;
+  }
+  #land, #country {
+    width: 40% !important;
+    margin-right: 0px!important;
+  }
+  #paddingSpe {
+    width: 16.2%;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(4) {
+    left: -62px;
+  }
+  input.form-control.purposeBtn.packageButton3 {
+    margin-left: 6px;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(3){
+    position: relative;
+    left: -40px;
+  }
+  #cusAmtBtn .amtName {
+    left: 4%!important;
   }
 }
 
@@ -1167,7 +1203,7 @@ header {
     left: 10%!important;
   }
   #land, #country {
-    width: 25%!important;
+    width: 25%;
     margin-right: 10px;
   }
 }
@@ -1180,7 +1216,7 @@ header {
     left: -17%;
   }
   #land, #country {
-    width: 25%!important;
+    width: 25%;
     margin-right: 10px;
   }
   #calendarTable td button{
@@ -1207,7 +1243,7 @@ header {
     font-size: 14px;
   }
   #land, #country {
-    width: 25%!important;
+    width: 25%;
     margin-right: 10px;
   }
 }
@@ -1225,6 +1261,26 @@ header {
   .packageTit .col-xs-6 h2 {
     font-size: 22px;
   }
+  .mainLongDetail {
+    width: 109%;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft .specialPkgLabel.toCusBtn span {
+    left: 15px!important;
+  }
+  .purposeLabelCol3 span {
+    left: 8%!important;
+  }
+  #btnOfPackages .specialPkgLabel input:checked + span {
+    left:18%!important;
+    font-size:18px!important;
+  }
+  #btnOfPackages .specialPkgLabel span {
+    left: 18%!important;
+    top: 15px!important;
+  }
+  .specialPkgLabel.toCusBtn  span, .specialPkgLabel input:checked + span {
+    left: 13%!important;
+  }
 }
 
 .immediatelyGo i {
@@ -1240,6 +1296,10 @@ header {
 }
 
 @media screen and (max-width:500px) {
+  .packageTit .toShowContentAccordion {
+    margin-top: 0px;
+    top: -5px;
+  }
   .whereDgo, .container.oneCon{
     border:none;
   }
@@ -1272,4 +1332,8 @@ header {
   color: #ccc;
   font-weight: 400;
   pointer-events: none;
+}
+
+.checkBtnTxt {
+  font-size: 18px;
 }

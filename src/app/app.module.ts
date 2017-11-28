@@ -15,6 +15,8 @@ import { MemberCreateComponent } from './components/member-create/member-create.
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ConfirmInfoComponent } from './components/confirm-info/confirm-info.component';
 
+import * as $ from 'jquery';
+
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';

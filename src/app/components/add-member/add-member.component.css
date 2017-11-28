@@ -114,10 +114,12 @@ h2.formTitTxt{
 
 .plusBtn {
     padding: 15px;
+    margin-top: 10px;
 }
 
 .fa-plus {
     color: white;
+    margin-top: 10px;
 }
 
 .plutBtn {
@@ -335,7 +337,7 @@ input.memberFormInput.form-control.input-lg[disabled] {
     padding-bottom: 5px;
     position: relative;
     top: -70px;
-    width: 535px;
+    width: 520px;
 }
 
 .noneTit {
@@ -391,6 +393,9 @@ span.formSubTxt {
         position:relative;
         left:-10px;
     }
+    .row.addPPlMinusPlus {
+        margin-top: 50px;
+    }
 }
 
 .lastNameDiv {
@@ -402,8 +407,15 @@ span.formSubTxt {
 }
 
 .insuredContent {
-    margin: 0px 5%;
     padding: 0px 25px;
+}
+
+.insuredBoxAlone {
+    border-bottom: 1px solid #e84466;
+    width: 78%;
+    display: block;
+    margin: 0 auto;
+    height: 5px;
 }
 
 @media screen and (max-width: 1200px) {

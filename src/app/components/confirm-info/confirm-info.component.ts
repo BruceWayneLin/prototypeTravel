@@ -65,6 +65,10 @@ export class ConfirmInfoComponent implements OnInit {
     });
   }
 
+  toTriggerCloseA(){
+    $(this).closet('a').trigger('click');
+  }
+
   animateStart(value){
     console.log(value);
     $(document).on('click', '#clickAccordion', function(){

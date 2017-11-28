@@ -96,6 +96,7 @@ export class MemberCreateComponent implements OnInit {
   aloneBdEmpty: boolean;
   btnClickToGoFds: boolean = false;
   ans:boolean;
+  msgError:any;
 
   @ViewChild('emailElm') EmailEl:ElementRef;
   @ViewChild('lastNameEl') lastNameEl:ElementRef;
@@ -583,16 +584,16 @@ export class MemberCreateComponent implements OnInit {
   };
 
 
-  ModelCancel(val:boolean){
+  ModelCancel(){
       var modal = document.getElementById('myConfirmModal');
       modal.style.display = "none";
       var modal = document.getElementById('myConfirmModal2');
       modal.style.display = "none";
   }
 
-  ModelClick(val){
+  ModelClick(val:boolean){
       this.ans = true;
-      if(val){
+    if(val){
       var modal = document.getElementById('myConfirmModal');
       modal.style.display = "none";
       this.GoingWithFds(true);
@@ -908,7 +909,11 @@ export class MemberCreateComponent implements OnInit {
           this.insuredList.forEach((item, index)=>{
             switch(index){
               case 0:
-                this.applicantAloneLockInput = true;
+                if(item['relation']){
+                  this.applicantAloneLockInput = true;
+                }else{
+                  this.applicantAloneLockInput = false;
+                }
                 this.personalInfoSelect = item['relation'];
                 this.applicantAloneLastName = item['lastName'];
                 this.applicantAloneFirstName = item['firstName'];
@@ -1297,6 +1302,7 @@ export class MemberCreateComponent implements OnInit {
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('您最多只能五位加保人');
+      document.querySelector('#myModal').scrollIntoView();
     }
   }
 
