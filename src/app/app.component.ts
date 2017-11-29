@@ -32,7 +32,16 @@ export class AppComponent {
     return this.loading;
   }
 
-  cancelThisModal(){
+    ifItsLoading(){
+        this.loading = this.dataService.loading;
+        return this.loading;
+    }
+
+  cancelThisModal(id){
+    if(id){
+        document.querySelector('#'+id).scrollIntoView();
+        this.dataService.idToGoFlow = '';
+    }
     var modal = document.getElementById('myModal');
     modal.style.display = "none";
   }

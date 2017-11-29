@@ -536,7 +536,7 @@ export class HomePageComponent implements OnInit {
     document.querySelector('#flagSix').scrollIntoView();
 
     if(this.pkgCustomGo){
-      this.selPkgH2 = '自訂方案';
+      this.selPkgH2 = '挑不到想要的?點我自己選';
       this.pkgCustomTxt = '回建議方案挑選';
       this.toGetCustomPackageContent(this.defaultCustomerPkg);
     } else {
@@ -667,7 +667,7 @@ export class HomePageComponent implements OnInit {
 
         document.querySelector('#flagFour').scrollIntoView();
       } else {
-        if(this.startTravelDay){
+        if(this.startTravelDay) {
           if(this.startTravelDay == $event.target.value){
             var modal = document.getElementById('myModal');
             modal.style.display = "block";
@@ -717,28 +717,35 @@ export class HomePageComponent implements OnInit {
                 });
               });
             }
+            console.log(this.startTravelDay);
+            console.log(this.endTravelDay);
+            this.endTravelDay = $event.target.value;
 
-            document.querySelector('#flagFive').scrollIntoView();
+            if (this.startTravelDay && this.endTravelDay) {
+                console.log(this.endTravelDay);
+
+                document.querySelector('#flagFive').scrollIntoView();
             this.textOfSelectingDays = '您的旅遊期間';
             this.tableShowHidden = true;
-            this.endTravelDay = $event.target.value;
             let oneDay = 24*60*60*1000;
             let firstDate = new Date(this.startTravelDay);
             let secondDate = new Date(this.endTravelDay);
             console.log(firstDate);
             console.log(secondDate);
-            let diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay))) + 1;
-
-            if(isNaN(this.diffDays)){
-              this.diffDays = 0;
-            }else{
+              let diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay))) + 1;
               this.diffDays = diffDays;
+              if(this.pkgCustomGo == false){
+                  this.getPriceServiceData();
+              } else {
+                  this.toGetCusPkgPrice();
+              }
             }
-            if(this.pkgCustomGo == false){
-              this.getPriceServiceData();
-            } else {
-              this.toGetCusPkgPrice();
-            }
+            // if(isNaN(this.diffDays)){
+            //   this.diffDays = 0;
+            // }else{
+            //
+            // }
+
           }
         }
       }
@@ -1641,12 +1648,14 @@ export class HomePageComponent implements OnInit {
 
   iDLikeToGoInsuredBtn(){
     if(!this.selectedCountry){
-      var modal = document.getElementById('myModal');
+        this.dataService.idToGoFlow = 'flagOne';
+        var modal = document.getElementById('myModal');
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('請選擇國家');
-      document.querySelector('#flagOne').scrollIntoView();
-      // var body = $("html, body");
+        document.querySelector('#myModal').scrollIntoView();
+
+        // var body = $("html, body");
       // if(window.innerWidth <= 500){
       //   body.stop().animate({scrollTop:320}, 200, 'swing', function() {
       //   });
@@ -1656,12 +1665,14 @@ export class HomePageComponent implements OnInit {
       // }
       return false;
     } else if(!this.purposeGo){
-      var modal = document.getElementById('myModal');
+        this.dataService.idToGoFlow = 'flagTwo';
+        var modal = document.getElementById('myModal');
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('目的');
-      document.querySelector('#flagTwo').scrollIntoView();
-      // var body = $("html, body");
+        document.querySelector('#myModal').scrollIntoView();
+
+        // var body = $("html, body");
       // if(window.innerWidth <= 500){
       //   body.stop().animate({scrollTop:390}, 200, 'swing', function() {
       //   });
@@ -1673,12 +1684,15 @@ export class HomePageComponent implements OnInit {
     } else if(!this.transportation){
 
     }else if(!this.startTravelDay){
-      var modal = document.getElementById('myModal');
+        document.querySelector('#myModal').scrollIntoView();
+        this.dataService.idToGoFlow = 'flagFour';
+        var modal = document.getElementById('myModal');
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('請選擇出發日期');
-      document.querySelector('#flagFour').scrollIntoView();
-      // var body = $("html, body");
+        document.querySelector('#myModal').scrollIntoView();
+
+        // var body = $("html, body");
       // if(window.innerWidth <= 500){
       //   body.stop().animate({scrollTop:1210}, 200, 'swing', function() {
       //   });
@@ -1687,12 +1701,16 @@ export class HomePageComponent implements OnInit {
       //   });
       // }
     } else if(!this.endTravelDay){
-      var modal = document.getElementById('myModal');
+        document.querySelector('#myModal').scrollIntoView();
+        this.dataService.idToGoFlow = 'flagFour';
+
+        var modal = document.getElementById('myModal');
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('請選擇回國日期');
-      document.querySelector('#flagFour').scrollIntoView();
-      // var body = $("html, body");
+        document.querySelector('#myModal').scrollIntoView();
+
+        // var body = $("html, body");
       // if(window.innerWidth <= 500){
       //   body.stop().animate({scrollTop:1210}, 200, 'swing', function() {
       //   });

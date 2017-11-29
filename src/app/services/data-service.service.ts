@@ -31,6 +31,7 @@ export class DataServiceService {
   backFromConfirm: boolean;
   loading: boolean =  false;
   noGoWithYourFdsFlag: boolean;
+  idToGoFlow: any;
   backFromNextPage:boolean = false;
 
     constructor(
