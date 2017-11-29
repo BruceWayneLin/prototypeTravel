@@ -848,6 +848,10 @@ html,body
   overflow-x: hidden!important;
 }
 
+html, body, h1, h2, h3, h4, h5, h6, span, p {
+  font-family: Microsoft JhengHei,Microsoft YaHei,Heiti TC Light,微软雅黑,Arial Narrow Regular,stheititc,sans-serif!important;
+}
+
 .backdrop {
   background-color: rgba(221,221,221,0.8)!important;
 }
@@ -867,6 +871,12 @@ input, input:before, input:after {
     font-size: 25px!important;
     top: 45px!important;
     z-index:999!important;
+  }
+}
+
+@media screen and (max-width: 500px) and (min-width: 376px) {
+  h4.panel-title {
+    padding-right: 10px!important;
   }
 }
 
@@ -906,14 +916,18 @@ input, input:before, input:after {
     width: 30%!important;
     padding-right:0px!important;
   }
+  .packageContent {
+    margin-top:19px!important;
+  }
 }
 .modal-content {
   background-color: #fefefe;
-  margin: auto; /* 15% from the top and centered */
+  margin: 50px auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 270px; /* Could be more or less, depending on screen size */
-  top: 4%;
+  width: 40%!important; /* Could be more or less, depending on screen size */
+  min-width: 270px!important;
+  top: 10px!important;
 }
 
 .container-inward {
@@ -977,9 +991,33 @@ input, input:before, input:after {
   }
 }
 
-
+#closebtn {
+  white-space: nowrap!important;
+}
 
 .side-panel {
   display:none!important;
 }
+
+.owl-theme.sliding.owl-carousel.owl-loaded.owl-drag {
+  /*height: 555px!important;*/
+}
+
+.lastButtonAndGoInsured:hover, .goingCheckInfo:hover, .inputRadioChecked:hover, .lastSubMit:hover {
+  background-color: #D0596E!important;
+}
+
+#goingCheckInfoBack:hover {
+  background-color: #808080!important;
+  color: #FFFFFF!important;
+}
 /*@import "~@angular/material/prebuilt-themes/indigo-pink.css";*/
+
+#detailDivShift {
+  width: 220px;
+}
+@media screen and (max-width: 500px) {
+  #detailDivShift button {
+    margin-left: 45%;
+  }
+}

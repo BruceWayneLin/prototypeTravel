@@ -710,7 +710,7 @@ div.row.memberTitle {
   .agreement {
     position: relative;
     left: 30px;
-    top: -50%;
+    top: -25%;
   }
   .roundDiv {
     height: 110px;
@@ -833,14 +833,21 @@ div.row.memberTitle {
 
 
 @media screen and (max-width: 768px) {
-  #choicesHaoNoHao{
+  #choicesHaoNoHao {
     margin-top: 45%;
   }
+
   .insuredBtnArea {
-    margin-left:2%;
+    margin-left: 2%;
   }
+
   .checkBoxDiv {
     margin-top: 30px;
+  }
+}
+@media screen and (max-width: 500px) and (min-width: 375px) {
+  .checkBoxDiv, .noChecked {
+   margin-top: 0px;
   }
 }
 
@@ -851,12 +858,20 @@ div.row.memberTitle {
     top: -28px;
   }
   .agreement {
-    top: -73px;
+    top: -40px;
   }
   .checkBoxDiv, .noChecked {
     position: relative !important;
-    top: 0px !important;
+    top: 45px !important;
   }
+  .titleForm h2{
+    margin-top: 20px;
+  }
+}
+
+
+@media screen and (max-width: 375px) {
+
 }
 
 @media screen and (max-width: 1025px) and (min-width: 768px) {
@@ -1022,7 +1037,7 @@ div.row.memberTitle {
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
-  top: 4%;
+  top: 40px!important;
 }
 
 .modal ul {
@@ -1066,3 +1081,4 @@ div.row.memberTitle {
     top: 30px!important;
   }
 }
+

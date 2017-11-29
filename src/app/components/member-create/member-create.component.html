@@ -70,7 +70,7 @@
           <span class="formSubTxt">請填寫中文姓名，以保障您的權益</span>
         </div>
         <div class="col-sm-6">
-            <input required maxlength="50" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [ngClass]="{'inValidInput': emailElm.touched && !emailElm.valid}" class="memberFormInput form-control input-lg emailInput" [(ngModel)]="email" #emailElm="ngModel" (change)="emailChange(email)" type="text" placeholder="電子信箱 *" [disabled]="checkEmailDis">
+            <input required maxlength="50" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[a-z]{2,3}$" [ngClass]="{'inValidInput': emailElm.touched && !emailElm.valid}" class="memberFormInput form-control input-lg emailInput" [(ngModel)]="email" #emailElm="ngModel" (change)="emailChange(email)" type="text" placeholder="電子信箱 *" [disabled]="checkEmailDis">
             <span class="pull-right"><img  *ngIf="emailElm.touched && !emailElm.valid" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
           <div class="inValid" *ngIf="emailElm.touched && !emailElm.valid">email格式不正確。</div>
         </div>
@@ -217,7 +217,7 @@
     <div class="container-fluid">
       <div class="col-lg-12" style="padding:0px;">
         <div class="titleForm text-left">
-          <h2 style="padding-top:10px; padding-bottom:20px;">要保人</h2>
+          <h2 style="padding-top:10px; padding-bottom:20px;">被保險人</h2>
         </div>
       </div>
     </div>
@@ -467,7 +467,7 @@
     <div class="container">
       <div class="col-lg-12 text-center">
         <div class="col-xs-12 col-sm-6 col-lg-6">
-          <button [routerLink]="['/']" class="form-control goingCheckInfo" style="background-color:white;color:black;">回方案選擇</button>
+          <button [routerLink]="['/']" id="goingCheckInfoBack" class="form-control goingCheckInfo" style="background-color:white;color:black;">回方案選擇</button>
         </div>
         <div class="col-xs-12 col-sm-6 col-lg-6">
           <button class="form-control goingCheckInfo" (click)="ToSaveInsured()">下一步</button>

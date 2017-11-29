@@ -736,3 +736,8 @@ div.row.memberTitle {
         height: 100%!important;
     }
 }
+
+
+.tobeHide .col-xs-6 {
+    width: 49%!important;
+}

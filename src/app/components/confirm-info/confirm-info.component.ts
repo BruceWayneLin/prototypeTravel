@@ -40,9 +40,11 @@ export class ConfirmInfoComponent implements OnInit {
 
   ngOnInit() {
     $(document).on('click', '.panel-heading', function(){
-      var body = $("html, body");
-      body.stop().animate({scrollTop: 290}, 200, 'swing', function () {
-      });
+      document.querySelector('#flagInsuredPPlFlag').scrollIntoView();
+
+      // var body = $("html, body");
+      // body.stop().animate({scrollTop: 290}, 200, 'swing', function () {
+      // });
     })
 
     this.dataService.getConfirmInfo().subscribe((item) => {
@@ -70,12 +72,15 @@ export class ConfirmInfoComponent implements OnInit {
   }
 
   animateStart(value){
+    document.querySelector('#flagInsuredPPlFlag').scrollIntoView();
     console.log(value);
-    $(document).on('click', '#clickAccordion', function(){
-      var body = $("html, body");
-      body.stop().animate({scrollTop: 290}, 200, 'swing', function () {
-      });
-    })
+    // $(document).on('click', '#clickAccordion', function(){
+    //
+    //   //
+    //   // var body = $("html, body");
+    //   // body.stop().animate({scrollTop: 290}, 200, 'swing', function () {
+    //   // });
+    // })
   }
 
   confirmPaying(){
@@ -84,9 +89,7 @@ export class ConfirmInfoComponent implements OnInit {
 
   doSomethingOnClose() {
     this.MyAccordion.closeAll();
-    var body = $("html, body");
-    body.stop().animate({scrollTop: 290}, 200, 'swing', function () {
-    });
+    document.querySelector('#flagInsuredPPlFlag').scrollIntoView();
   }
 
   getBakInfo(){

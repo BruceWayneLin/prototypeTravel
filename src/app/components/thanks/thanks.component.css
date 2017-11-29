@@ -9,6 +9,12 @@
   font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
 }
 
+img.img-responsive {
+  margin: 0px auto;
+  margin-bottom: 20px;
+  height: 200px;
+}
+
 h2 {
   color: #e84466;
   font-weight: 400;
@@ -67,7 +73,7 @@ button.goingMemberArea {
 }
 
 .firstRow {
-  margin-top: 130px;
+  margin-top: 80px;
 }
 
 @media screen and (max-width: 500px){

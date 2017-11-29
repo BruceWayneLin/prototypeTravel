@@ -16,6 +16,7 @@ export class AppComponent {
   ) {
   }
   ngOnInit() {
+    this.detectScrollAndHeaderChange();
   }
 
   AlertArr(){
@@ -39,36 +40,42 @@ export class AppComponent {
   detectScrollAndHeaderChange() {
    $(document).on('scroll', function(){
      if($(document).scrollTop() > 400){
-       $('header').css({
-         'background-color': 'white',
-         'color': '#999'
+       $('.navbar.navbar-expand-xl.fixed-top.navbar-default.navbar-mobile-inverse.navbar-light.navbar-light-shadow').css({
+         'position': 'fixed'
        });
-       $('.memberBtn').css({
-         'background-color': 'rgba(255, 255, 255, 0.83)',
-         'color': 'rgb(153, 153, 153)',
-         'border': '1px solid'
-       });
-       $('.logo').css({
-         'background': 'url(assets/images/logos/carelineBlack.png)',
-         'background-repeat': 'no-repeat',
-         'background-size': 'contain',
-       });
+       // $('header').css({
+       //   'background-color': 'white',
+       //   'color': '#999'
+       // });
+       // $('.memberBtn').css({
+       //   'background-color': 'rgba(255, 255, 255, 0.83)',
+       //   'color': 'rgb(153, 153, 153)',
+       //   'border': '1px solid'
+       // });
+       // $('.logo').css({
+       //   'background': 'url(assets/images/logos/carelineBlack.png)',
+       //   'background-repeat': 'no-repeat',
+       //   'background-size': 'contain',
+       // });
 
      } else {
-       $('.logo').css({
-         'background': 'url(assets/images/logos/carelineWhite.png)',
-         'background-repeat': 'no-repeat',
-         'background-size': 'contain',
+       $('nav').css({
+         'position': 'inline-block'
        });
-       $('header').css({
-         'background-color': 'rgba(0, 0, 0, 0.48)',
-         'color': 'white'
-       });
-       $('.memberBtn').css({
-         'background-color': 'transparent',
-         'color': 'white',
-         'border': '1px solid white'
-       });
+       // $('.logo').css({
+       //   'background': 'url(assets/images/logos/carelineWhite.png)',
+       //   'background-repeat': 'no-repeat',
+       //   'background-size': 'contain',
+       // });
+       // $('header').css({
+       //   // 'background-color': 'rgba(0, 0, 0, 0.48)',
+       //   'color': 'white'
+       // });
+       // $('.memberBtn').css({
+       //   'background-color': 'transparent',
+       //   'color': 'white',
+       //   'border': '1px solid white'
+       // });
      }
    });
   }

@@ -1,9 +1,16 @@
 h2 {
     color: #e84466;
+    margin-bottom: 25px;
+    font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif!important;
 }
 
 h3 {
     font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif!important;
+}
+
+h4 {
+  font-size: 20px;
+  font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif!important;
 }
 
 .content p, .content b {
@@ -24,7 +31,7 @@ button {
     border-radius: 30px;
     min-width: 100px;
     height: 40px;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -50,7 +57,6 @@ button:hover {
     h3 {
       font-size:18px;
     }
-
     .content p, .content b {
        font-size: 18px;
     }

@@ -77,6 +77,8 @@ export class HomePageComponent implements OnInit {
   resetBackCountry: any;
   trackNum: string;
   theDayBeginingNeedToRun: number;
+  pakNum: any = '';
+  product: any = {};
 
   @ViewChild('eleTest')  el:ElementRef;
   @ViewChild('noNeedArea') nNA:ElementRef;
@@ -118,12 +120,20 @@ export class HomePageComponent implements OnInit {
   };
   ngOnInit() {
     this.CusDetailContent = true;
+    this.product['product'] = 'Travel';
 
     var Url = window.location.href;
     var turnBakUrl = this.toGetDataFromUrl(Url);
     if(turnBakUrl){
-      this.trackNum = turnBakUrl['__track'][0];
+      if(turnBakUrl['__track']){
+        this.trackNum = turnBakUrl['__track'][0];
+      }
+      if(turnBakUrl['pack']){
+        this.pakNum = turnBakUrl['pack'][0];
+      }
     }
+    this.product['pack'] = this.pakNum;
+
     if(new Date().getDay() == 0 && !this.modifiedClicked){
       var tmr = new Date().setDate(new Date().getDate() + 1);
       this.firstMon = this.getMonday(new Date(tmr));
@@ -142,6 +152,7 @@ export class HomePageComponent implements OnInit {
 
         let sendDataBak = {};
         sendDataBak['product'] = 'Travel';
+        sendDataBak['pack'] = this.pakNum;
         sendDataBak['startDate'] = this.startTravelDay;
         this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
           this.cusPackageList = item['cusPackageList'];
@@ -192,7 +203,7 @@ export class HomePageComponent implements OnInit {
         if(this.diffDays && this.startTravelDay && this.endTravelDay){
           this.tableShowHidden = true;
         }
-        this.dataService.getIniData().subscribe((posts) => {
+        this.dataService.getIniData(this.product).subscribe((posts) => {
           this.countries = posts.countryList;
           this.toGetCountryList(this.countries);
           this.changeCountries('');
@@ -200,7 +211,7 @@ export class HomePageComponent implements OnInit {
       })
     }
 
-    this.dataService.getIniData().subscribe((posts) => {
+    this.dataService.getIniData(this.product).subscribe((posts) => {
       var array = [];
       posts.bannerList.forEach((item) => {
         let objImage = {};
@@ -276,6 +287,7 @@ export class HomePageComponent implements OnInit {
       this.toGetCountryList(this.countries);
     });
     this.changeCountries('');
+
   }
 
   toGetCusPkgPrice() {
@@ -530,7 +542,7 @@ export class HomePageComponent implements OnInit {
     } else {
       this.selPkgH2 = '選擇方案';
       this.pkgCustomTxt = '自訂投保方案';
-      this.dataService.getIniData().subscribe((posts) => {
+      this.dataService.getIniData(this.product).subscribe((posts) => {
         posts.packageList.filter(val => val && val.isDefaultPackage).map(value =>
             this.selectedPackage = value
         );
@@ -667,6 +679,7 @@ export class HomePageComponent implements OnInit {
 
             let sendDataBak = {};
             sendDataBak['product'] = 'Travel';
+            sendDataBak['pack'] = this.pakNum;
             sendDataBak['startDate'] = this.startTravelDay;
             if(!this.pkgCustomGo){
               this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
@@ -1024,6 +1037,7 @@ export class HomePageComponent implements OnInit {
 
   modifiedPlaces() {
     this.isDoneSelectedPlaces = false;
+    this.selectedCountry = '';
   }
 
   changeCountries(item) {
