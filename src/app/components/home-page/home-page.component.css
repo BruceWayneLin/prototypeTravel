@@ -64,7 +64,7 @@
 }
 
 .packageTit h2 {
-  margin-bottom: 20px;
+  margin-ㄔㄣ: 20px;
 }
 
 .packageTit ul {
@@ -950,6 +950,18 @@ header {
   }
 }
 
+@media screen and (max-width: 375px){
+  #calendarTable td button{
+    padding-left: 10px!important;
+  }
+  .specialPkgLabel input:checked + span {
+    left: 5px!important;
+  }
+  table .checkBtnTxt {
+    left: -12px!important;
+  }
+}
+
 @media screen and (max-width: 500px){
   .purposeLabelCol3 {
     width: 100%!important;
@@ -993,9 +1005,6 @@ header {
   }
   .packageContent {
     margin-top: 20px;
-  }
-  .logo {
-    margin: auto 35%;
   }
   .packageContent h2 {
     font-size: 18px;
@@ -1057,6 +1066,22 @@ header {
   }
   #paddingSpe {
     left: 0px!important;
+  }
+}
+
+@media screen and (max-width: 500px) and (min-width: 375px) {
+  #customerLogo.logo {
+    margin: 0px!important;
+    /*margin: auto;*/
+  }
+  .logo {
+    margin-left: 35%!important;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .logo {
+    margin: auto 35%;
   }
 }
 

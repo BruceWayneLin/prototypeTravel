@@ -1035,7 +1035,10 @@ export class MemberCreateComponent implements OnInit {
     this.birthdayMonths = this.birthMonths();
     this.birthdayDays = this.birthDays(new Date().getFullYear(), new Date().getMonth()+1);
     this.aloneBirthdayDays = this.birthdayDays;
-    this.dataService.getIniData().subscribe((data) => {
+    let sendDataBak = {};
+    sendDataBak['product'] = 'Travel';
+    sendDataBak['pack'] = '';
+    this.dataService.getIniData(sendDataBak).subscribe((data) => {
       this.cityList = data.cityList;
       this.areaList = data.areaList;
       this.toLoadArea('init');

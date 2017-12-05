@@ -524,5 +524,12 @@ span.priceSpanNT {
     white-space: normal!important;
     display: block;
   }
+  .formContainer {
+    margin-top: 80px;
+  }
 }
 
+#flagInsuredPPlFlag {
+  position:relative;
+  top: -85px;
+}

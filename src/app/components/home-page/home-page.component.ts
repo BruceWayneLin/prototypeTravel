@@ -77,6 +77,8 @@ export class HomePageComponent implements OnInit {
   resetBackCountry: any;
   trackNum: string;
   theDayBeginingNeedToRun: number;
+  pakNum: any = '';
+  product: any = {};
 
   @ViewChild('eleTest')  el:ElementRef;
   @ViewChild('noNeedArea') nNA:ElementRef;
@@ -118,12 +120,20 @@ export class HomePageComponent implements OnInit {
   };
   ngOnInit() {
     this.CusDetailContent = true;
+    this.product['product'] = 'Travel';
 
     var Url = window.location.href;
     var turnBakUrl = this.toGetDataFromUrl(Url);
     if(turnBakUrl){
-      this.trackNum = turnBakUrl['__track'][0];
+      if(turnBakUrl['__track']){
+        this.trackNum = turnBakUrl['__track'][0];
+      }
+      if(turnBakUrl['pack']){
+        this.pakNum = turnBakUrl['pack'][0];
+      }
     }
+    this.product['pack'] = this.pakNum;
+
     if(new Date().getDay() == 0 && !this.modifiedClicked){
       var tmr = new Date().setDate(new Date().getDate() + 1);
       this.firstMon = this.getMonday(new Date(tmr));
@@ -142,6 +152,7 @@ export class HomePageComponent implements OnInit {
 
         let sendDataBak = {};
         sendDataBak['product'] = 'Travel';
+        sendDataBak['pack'] = this.pakNum;
         sendDataBak['startDate'] = this.startTravelDay;
         this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
           this.cusPackageList = item['cusPackageList'];
@@ -192,7 +203,7 @@ export class HomePageComponent implements OnInit {
         if(this.diffDays && this.startTravelDay && this.endTravelDay){
           this.tableShowHidden = true;
         }
-        this.dataService.getIniData().subscribe((posts) => {
+        this.dataService.getIniData(this.product).subscribe((posts) => {
           this.countries = posts.countryList;
           this.toGetCountryList(this.countries);
           this.changeCountries('');
@@ -200,7 +211,7 @@ export class HomePageComponent implements OnInit {
       })
     }
 
-    this.dataService.getIniData().subscribe((posts) => {
+    this.dataService.getIniData(this.product).subscribe((posts) => {
       var array = [];
       posts.bannerList.forEach((item) => {
         let objImage = {};
@@ -276,6 +287,7 @@ export class HomePageComponent implements OnInit {
       this.toGetCountryList(this.countries);
     });
     this.changeCountries('');
+
   }
 
   toGetCusPkgPrice() {
@@ -524,13 +536,13 @@ export class HomePageComponent implements OnInit {
     document.querySelector('#flagSix').scrollIntoView();
 
     if(this.pkgCustomGo){
-      this.selPkgH2 = '自訂方案';
+      this.selPkgH2 = '挑不到想要的?點我自己選';
       this.pkgCustomTxt = '回建議方案挑選';
       this.toGetCustomPackageContent(this.defaultCustomerPkg);
     } else {
       this.selPkgH2 = '選擇方案';
       this.pkgCustomTxt = '自訂投保方案';
-      this.dataService.getIniData().subscribe((posts) => {
+      this.dataService.getIniData(this.product).subscribe((posts) => {
         posts.packageList.filter(val => val && val.isDefaultPackage).map(value =>
             this.selectedPackage = value
         );
@@ -655,7 +667,7 @@ export class HomePageComponent implements OnInit {
 
         document.querySelector('#flagFour').scrollIntoView();
       } else {
-        if(this.startTravelDay){
+        if(this.startTravelDay) {
           if(this.startTravelDay == $event.target.value){
             var modal = document.getElementById('myModal');
             modal.style.display = "block";
@@ -667,6 +679,7 @@ export class HomePageComponent implements OnInit {
 
             let sendDataBak = {};
             sendDataBak['product'] = 'Travel';
+            sendDataBak['pack'] = this.pakNum;
             sendDataBak['startDate'] = this.startTravelDay;
             if(!this.pkgCustomGo){
               this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
@@ -704,28 +717,35 @@ export class HomePageComponent implements OnInit {
                 });
               });
             }
+            console.log(this.startTravelDay);
+            console.log(this.endTravelDay);
+            this.endTravelDay = $event.target.value;
 
-            document.querySelector('#flagFive').scrollIntoView();
+            if (this.startTravelDay && this.endTravelDay) {
+                console.log(this.endTravelDay);
+
+                document.querySelector('#flagFive').scrollIntoView();
             this.textOfSelectingDays = '您的旅遊期間';
             this.tableShowHidden = true;
-            this.endTravelDay = $event.target.value;
             let oneDay = 24*60*60*1000;
             let firstDate = new Date(this.startTravelDay);
             let secondDate = new Date(this.endTravelDay);
             console.log(firstDate);
             console.log(secondDate);
-            let diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay))) + 1;
-
-            if(isNaN(this.diffDays)){
-              this.diffDays = 0;
-            }else{
+              let diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay))) + 1;
               this.diffDays = diffDays;
+              if(this.pkgCustomGo == false){
+                  this.getPriceServiceData();
+              } else {
+                  this.toGetCusPkgPrice();
+              }
             }
-            if(this.pkgCustomGo == false){
-              this.getPriceServiceData();
-            } else {
-              this.toGetCusPkgPrice();
-            }
+            // if(isNaN(this.diffDays)){
+            //   this.diffDays = 0;
+            // }else{
+            //
+            // }
+
           }
         }
       }
@@ -1024,6 +1044,7 @@ export class HomePageComponent implements OnInit {
 
   modifiedPlaces() {
     this.isDoneSelectedPlaces = false;
+    this.selectedCountry = '';
   }
 
   changeCountries(item) {
@@ -1627,12 +1648,14 @@ export class HomePageComponent implements OnInit {
 
   iDLikeToGoInsuredBtn(){
     if(!this.selectedCountry){
-      var modal = document.getElementById('myModal');
+        this.dataService.idToGoFlow = 'flagOne';
+        var modal = document.getElementById('myModal');
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('請選擇國家');
-      document.querySelector('#flagOne').scrollIntoView();
-      // var body = $("html, body");
+        document.querySelector('#myModal').scrollIntoView();
+
+        // var body = $("html, body");
       // if(window.innerWidth <= 500){
       //   body.stop().animate({scrollTop:320}, 200, 'swing', function() {
       //   });
@@ -1642,12 +1665,14 @@ export class HomePageComponent implements OnInit {
       // }
       return false;
     } else if(!this.purposeGo){
-      var modal = document.getElementById('myModal');
+        this.dataService.idToGoFlow = 'flagTwo';
+        var modal = document.getElementById('myModal');
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('目的');
-      document.querySelector('#flagTwo').scrollIntoView();
-      // var body = $("html, body");
+        document.querySelector('#myModal').scrollIntoView();
+
+        // var body = $("html, body");
       // if(window.innerWidth <= 500){
       //   body.stop().animate({scrollTop:390}, 200, 'swing', function() {
       //   });
@@ -1659,12 +1684,15 @@ export class HomePageComponent implements OnInit {
     } else if(!this.transportation){
 
     }else if(!this.startTravelDay){
-      var modal = document.getElementById('myModal');
+        document.querySelector('#myModal').scrollIntoView();
+        this.dataService.idToGoFlow = 'flagFour';
+        var modal = document.getElementById('myModal');
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('請選擇出發日期');
-      document.querySelector('#flagFour').scrollIntoView();
-      // var body = $("html, body");
+        document.querySelector('#myModal').scrollIntoView();
+
+        // var body = $("html, body");
       // if(window.innerWidth <= 500){
       //   body.stop().animate({scrollTop:1210}, 200, 'swing', function() {
       //   });
@@ -1673,12 +1701,16 @@ export class HomePageComponent implements OnInit {
       //   });
       // }
     } else if(!this.endTravelDay){
-      var modal = document.getElementById('myModal');
+        document.querySelector('#myModal').scrollIntoView();
+        this.dataService.idToGoFlow = 'flagFour';
+
+        var modal = document.getElementById('myModal');
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('請選擇回國日期');
-      document.querySelector('#flagFour').scrollIntoView();
-      // var body = $("html, body");
+        document.querySelector('#myModal').scrollIntoView();
+
+        // var body = $("html, body");
       // if(window.innerWidth <= 500){
       //   body.stop().animate({scrollTop:1210}, 200, 'swing', function() {
       //   });

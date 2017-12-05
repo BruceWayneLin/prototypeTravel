@@ -31,6 +31,7 @@ export class DataServiceService {
   backFromConfirm: boolean;
   loading: boolean =  false;
   noGoWithYourFdsFlag: boolean;
+  idToGoFlow: any;
   backFromNextPage:boolean = false;
 
     constructor(
@@ -39,9 +40,9 @@ export class DataServiceService {
     ) {
 
     }
-  getIniData() {
+  getIniData(val) {
       this.loading = false;
-      return this.http.get('/CareLineTravel/travel-mbr/journey/initData?product=Travel'
+      return this.http.get('/CareLineTravel/travel-mbr/journey/initData?product='+val['product']+'&pack='+val['pack']
     ).map(res => {
         return res.json();
     });
@@ -194,17 +195,15 @@ export class DataServiceService {
             objSendBak['orderNumber'] = this.orderNumberForSave;
             return this.http.post('/CareLineTravel/travel-mbr/journey/getDataWhenBackFromConfirmPage', objSendBak).map(res => {
                 if(res.json().isEx){
-                    this.loading = false;
-                    var msgs = res.json().msgs;
-                    var modal = document.getElementById('myModal');
-                    modal.style.display = "block";
-                    this.AlertTXT = msgs;
-                    // for(let i = 0; i < msgs.length; i ++){
-                    //     var modal = document.getElementById('myModal');
-                    //     modal.style.display = "block";
-                    //     this.AlertTXT = [];
-                    //     this.AlertTXT.push(msgs[i]);
-                    // }
+                    if(res.json().kickout){
+                        this.route.navigate(['/']);
+                    }else{
+                        this.loading = false;
+                        var msgs = res.json().msgs;
+                        var modal = document.getElementById('myModal');
+                        modal.style.display = "block";
+                        this.AlertTXT = msgs;
+                    }
                 } else {
                     this.loading = false;
                     return res.json();
@@ -219,17 +218,15 @@ export class DataServiceService {
         objSendBak['orderNumber'] = this.orderNumberForSave;
         return this.http.post('/CareLineTravel/travel-mbr/journey/getData4FailPayment', objSendBak).map(res => {
             if(res.json().isEx){
-                this.loading = false;
-                var msgs = res.json().msgs;
-                var modal = document.getElementById('myModal');
-                modal.style.display = "block";
-                this.AlertTXT = msgs;
-                // for(let i = 0; i < msgs.length; i ++){
-                //     var modal = document.getElementById('myModal');
-                //     modal.style.display = "block";
-                //     this.AlertTXT = [];
-                //     this.AlertTXT.push(msgs[i]);
-                // }
+                if(res.json().kickout){
+                    this.route.navigate(['/']);
+                }else{
+                    this.loading = false;
+                    var msgs = res.json().msgs;
+                    var modal = document.getElementById('myModal');
+                    modal.style.display = "block";
+                    this.AlertTXT = msgs;
+                }
             } else {
                 this.loading = false;
                 return res.json();
@@ -241,17 +238,15 @@ export class DataServiceService {
         this.loading = true;
         return this.http.post('/CareLineTravel/travel-mbr/journey/filterPackage', value).map(res => {
             if(res.json().isEx){
-                this.loading = false;
-                var msgs = res.json().msgs;
-                var modal = document.getElementById('myModal');
-                modal.style.display = "block";
-                this.AlertTXT = msgs;
-                // for(let i = 0; i < msgs.length; i ++){
-                //     var modal = document.getElementById('myModal');
-                //     modal.style.display = "block";
-                //     this.AlertTXT = [];
-                //     this.AlertTXT.push(msgs[i]);
-                // }
+                if(res.json().kickout){
+                    this.route.navigate(['/']);
+                }else{
+                    this.loading = false;
+                    var msgs = res.json().msgs;
+                    var modal = document.getElementById('myModal');
+                    modal.style.display = "block";
+                    this.AlertTXT = msgs;
+                }
             } else {
                 this.loading = false;
                 return res.json();
@@ -277,16 +272,15 @@ export class DataServiceService {
                  this.loading = false;
                  let replyObj = JSON.parse(item);
                  if(replyObj.isEx){
-                     var msgs = replyObj.msgs;
-                     var modal = document.getElementById('myModal');
-                     modal.style.display = "block";
-                     this.AlertTXT = msgs;
-                     // for (let i = 0; i < msgs.length; i++) {
-                     //     var modal = document.getElementById('myModal');
-                     //     modal.style.display = "block";
-                     //     this.AlertTXT = [];
-                     //     this.AlertTXT.push(msgs[i]);
-                     // }
+                     if(replyObj.kickout){
+                         this.route.navigate(['/']);
+                     }else{
+                         this.loading = false;
+                         var msgs = replyObj.msgs;
+                         var modal = document.getElementById('myModal');
+                         modal.style.display = "block";
+                         this.AlertTXT = msgs;
+                     }
                  }
              }
           });
@@ -295,15 +289,17 @@ export class DataServiceService {
 
   getConfirmInfo() {
       this.loading = true;
-      console.log(this.orderNumberForSave);
-
-      let objSendBak = {};
-      objSendBak['orderNumber'] = this.orderNumberForSave;
-      return this.http.post('/CareLineTravel/travel-mbr/journey/getData4ConfirmPage', objSendBak).map(res => {
-          this.loading = false;
-          console.log(res.json());
-          return res.json();
-      });
+      if(this.orderNumberForSave) {
+          let objSendBak = {};
+          objSendBak['orderNumber'] = this.orderNumberForSave;
+          return this.http.post('/CareLineTravel/travel-mbr/journey/getData4ConfirmPage', objSendBak).map(res => {
+              this.loading = false;
+              console.log(res.json());
+              return res.json();
+          });
+      }else{
+          this.route.navigate(['/index']);
+      }
   }
 
   confirmPaying(){
@@ -320,17 +316,15 @@ export class DataServiceService {
           } else {
               let replyObj = JSON.parse(item);
               if(replyObj.isEx){
-                  this.loading = false;
-                  var msgs = replyObj.msgs;
-                  var modal = document.getElementById('myModal');
-                  modal.style.display = "block";
-                  this.AlertTXT = msgs;
-                  // for (let i = 0; i < msgs.length; i++) {
-                  //     var modal = document.getElementById('myModal');
-                  //     modal.style.display = "block";
-                  //     this.AlertTXT = [];
-                  //     this.AlertTXT.push(msgs[i]);
-                  // }
+                  if(replyObj.kickout){
+                      this.route.navigate(['/']);
+                  }else{
+                      this.loading = false;
+                      var msgs = replyObj.msgs;
+                      var modal = document.getElementById('myModal');
+                      modal.style.display = "block";
+                      this.AlertTXT = msgs;
+                  }
               }
           }
       });

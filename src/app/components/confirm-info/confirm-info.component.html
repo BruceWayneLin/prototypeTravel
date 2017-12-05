@@ -64,6 +64,7 @@
   <div class="container-fluid">
     <div class="col-lg-12 text-left" style="padding:0px;">
       <div class="titleForm">
+        <div id="flagInsuredPPlFlag"></div>
         <h2 id="thisFocusDiv" style="padding:10px; padding-bottom:20px;padding-left:0px;">投保內容</h2>
       </div>
     </div>
@@ -224,7 +225,7 @@
     <div class="container">
       <div class="col-lg-12 text-center">
         <div class="col-xs-12 col-sm-6 col-lg-6">
-          <button class="form-control lastSubMit" (click)="getBakInfo()" routerLink="/memberCreate" style="background-color:white;color:black;">上一步</button>
+          <button class="form-control lastSubMit" (click)="getBakInfo()" id="goingCheckInfoBack" routerLink="/memberCreate" style="background-color:white;color:black;">上一步</button>
         </div>
         <div class="col-xs-12 col-sm-6 col-lg-6">
         <button class="form-control lastSubMit" (click)="confirmPaying()">訂單確認，付款去</button>
