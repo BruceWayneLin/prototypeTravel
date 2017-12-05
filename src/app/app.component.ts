@@ -32,11 +32,6 @@ export class AppComponent {
     return this.loading;
   }
 
-    ifItsLoading(){
-        this.loading = this.dataService.loading;
-        return this.loading;
-    }
-
   cancelThisModal(id){
     if(id){
         document.querySelector('#'+id).scrollIntoView();

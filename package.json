@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.config.json",
+    "sync:layout": "rm -rf src/assets/layout && cp -R ../cl-layout/src/assets/layout src/assets/layout",
+    "start": "npm run sync:layout && ng serve --proxy-config proxy.config.json",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
