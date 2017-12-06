@@ -53,7 +53,7 @@ export class ConfirmInfoComponent implements OnInit {
       this.applicantMobile = info['apMobile'];
       this.applicantPid = info['apPid'];
       this.applicantAddr = info['apAddressFull'];
-      this.applicantBth = info['apBirthday']['year'] + '-' + (info['apBirthday']['month'].length == 2? info['apBirthday']['month'] : '0'+info['apBirthday']['month']) + '-' + (info['apBirthday']['day'].length == 1? '0'+info['apBirthday']['day']:info['apBirthday']['day']);
+      this.applicantBth = info['apBirthday']['year'] + '-' + info['apBirthday']['month'] + '-' + info['apBirthday']['day'];
       this.applicantEmail = info['apEmail'];
       this.insuredDateStart = info['odStartDate']['year'] + '-' + info['odStartDate']['month'] + '-' + info['odStartDate']['day'];
       this.insuredDateEnd = info['odEndDate']['year'] + '-' + info['odEndDate']['month'] + '-' + info['odEndDate']['day'];

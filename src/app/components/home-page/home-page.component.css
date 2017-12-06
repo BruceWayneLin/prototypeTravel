@@ -64,7 +64,7 @@
 }
 
 .packageTit h2 {
-  margin-ㄔㄣ: 20px;
+  margin-top: 20px;
 }
 
 .packageTit ul {
@@ -1225,7 +1225,7 @@ header {
 
 @media screen and (max-width: 1200px) and (min-width: 768px){
   .purposeLabelCol3 span {
-    left: 10%!important;
+    left: 10%;
   }
   #land, #country {
     width: 25%;
@@ -1339,6 +1339,7 @@ header {
     top: -57px!important;
     float:right;
     display: inline-block;
+    pointer-events: none!important;
   }
 }
 
@@ -1361,4 +1362,15 @@ header {
 
 .checkBtnTxt {
   font-size: 18px;
+}
+
+@media screen and (max-width: 991px) and (min-width: 770px) {
+  #detailDivShift {
+    width: 174px;
+  }
+}
+
+.immediateH2:hover {
+  text-decoration: underline;
+  text-decoration: #e84466;
 }

@@ -164,7 +164,7 @@ export class MemberCreateComponent implements OnInit {
   emailChange(email){
   }
 
-  changedData(year = null, month = null, day = null){
+  changedData(year=null, month=null, day=null){
     this.checkBirthday(year, month, day);
     this.dataService.clearData = false;
   }
@@ -184,13 +184,21 @@ export class MemberCreateComponent implements OnInit {
         } else {
           this.aloneNameFirstChinese = true;
         }
-      } else if (value && id == ''){
+      } else if (value || id == ''){
         if (value.match(/[\u4E00-\u9FFF\u3400-\u4DFF\uF900-\uFAFF]+/g)) {
           return false;
         } else {
           return true;
         }
       }
+    }
+  }
+
+  toGoDownWindow(){
+    this.dataService.toGoDown = true;
+    try {
+      sessionStorage.setItem('bak', JSON.stringify(true))
+    } catch (e) {
     }
   }
 
@@ -233,6 +241,7 @@ export class MemberCreateComponent implements OnInit {
 
   personalSelectChange(){
     if(this.personalInfoSelect !== '本人') {
+      this.checkVal();
       this.applicantAloneLockInput = false;
       this.applicantAloneLastName = '';
       this.applicantAloneFirstName = '';
@@ -241,11 +250,15 @@ export class MemberCreateComponent implements OnInit {
       this.applicantAloneBirthMonth = '';
       this.applicantAloneBirthDay = '';
     } else {
+      this.checkVal();
       this.aloneLastNameEmpty = false;
       this.aloneFirstNameEmpty = false;
       this.alonePidEmpty = false;
       this.alonePidTypeWrong = false;
       this.aloneBdEmpty = false;
+      this.alonePidWrong = false;
+      this.alonePidTypeWrong = false;
+
       this.applicantAloneLockInput = true;
       this.applicantAloneLastName = this.lastName;
       this.applicantAloneFirstName = this.firstName;
@@ -253,10 +266,6 @@ export class MemberCreateComponent implements OnInit {
       this.applicantAloneBirthYear = this.pBirthYear;
       this.applicantAloneBirthMonth = this.pBirthMonth;
       this.applicantAloneBirthDay = this.pBirthDay;
-      this.aloneLastNameEmpty = false;
-      this.aloneFirstNameEmpty = false;
-      this.alonePidEmpty = false;
-
     }
   }
 
@@ -278,41 +287,52 @@ export class MemberCreateComponent implements OnInit {
     if (!year && !month && !day) {
 
     } else if(year && month && day) {
-      let currentDay = new Date().getDate();
-      let currentMonth = new Date().getMonth() + 1;
-      let currentYear = new Date().getFullYear();
-      let maxYear = new Date().getFullYear() - this.applicantAgeMax //old;
-      let minYear = new Date().getFullYear() - this.applicantAgeMin //young;
-      if(this.pBirthYear && this.pBirthMonth){
-        this.birthdayDays = this.birthDays(this.pBirthYear, this.pBirthMonth);
-      }
-      if(year == maxYear ){
-
-        if((this.pBirthYear <= maxYear && this.pBirthMonth <= currentMonth && this.pBirthDay <= currentDay)) {
-          this.personalAgeOver = true;
-        } else {
-          this.personalAgeOver = false;
-        }
-      } else if (year == minYear) {
-
-        if((this.pBirthYear >= minYear && this.pBirthMonth >= currentMonth && this.pBirthDay >= currentDay)) {
-          this.personalAgeOver = true;
-        } else {
-          this.personalAgeOver = false;
-        }
-       } else if (year < maxYear && year > minYear) {
-        if(year < maxYear && this.pBirthMonth < currentMonth && this.pBirthDay < currentDay){
-          this.personalAgeOver = false;
-        }
-        if((year > minYear && this.pBirthMonth > currentMonth) || (year > minYear && this.pBirthMonth == currentMonth && this.pBirthDay < currentDay)){
-          this.personalAgeOver = false;
-        } else {
-          this.personalAgeOver = true;
-        }
-      }
-
-      if((year > maxYear && month > currentMonth && day > currentDay) && (year < minYear && month > currentMonth)){
+      let personAge2 = this.calculate_age(this.pBirthMonth, this.pBirthDay, this.pBirthYear);
+      console.log(this.pBirthYear);
+      console.log(this.pBirthMonth);
+      console.log(this.pBirthDay);
+      console.log('要保人2', personAge2);
+      console.log('要保人最老要保年齡', this.applicantAgeMax);
+      console.log('要保人最低年齡', this.applicantAgeMin);
+      if(personAge2 > this.applicantAgeMax || personAge2 < this.applicantAgeMin){
+        this.personalAgeOver = true;
+      } else {
         this.personalAgeOver = false;
+
+        //   let currentDay = new Date().getDate();
+      //   let currentMonth = new Date().getMonth() + 1;
+      //   let currentYear = new Date().getFullYear();
+      //   let maxYear = new Date().getFullYear() - this.applicantAgeMax //old;
+      //   let minYear = new Date().getFullYear() - this.applicantAgeMin //young;
+      //   if (this.pBirthYear && this.pBirthMonth) {
+      //     this.birthdayDays = this.birthDays(this.pBirthYear, this.pBirthMonth);
+      //   }
+      //   if (year == maxYear) {
+      //     if ((this.pBirthYear <= maxYear && this.pBirthMonth <= currentMonth && this.pBirthDay <= currentDay)) {
+      //       this.personalAgeOver = true;
+      //     } else {
+      //       this.personalAgeOver = false;
+      //     }
+      //   } else if (year == minYear) {
+      //
+      //     if ((this.pBirthYear >= minYear && this.pBirthMonth >= currentMonth && this.pBirthDay >= currentDay)) {
+      //       this.personalAgeOver = true;
+      //     } else {
+      //       this.personalAgeOver = false;
+      //     }
+      //   } else if (year < maxYear && year > minYear) {
+      //     if (year < maxYear && this.pBirthMonth < currentMonth && this.pBirthDay < currentDay) {
+      //       this.personalAgeOver = false;
+      //     }
+      //     if ((year > minYear && this.pBirthMonth > currentMonth) || (year > minYear && this.pBirthMonth == currentMonth && this.pBirthDay < currentDay)) {
+      //       this.personalAgeOver = false;
+      //     } else {
+      //       this.personalAgeOver = true;
+      //     }
+      //   }
+      //   if ((year > maxYear && month > currentMonth && day > currentDay) && (year < minYear && month > currentMonth)) {
+      //     this.personalAgeOver = false;
+      //   }
       }
     } else {
       this.personalAgeOver = false;
@@ -408,24 +428,27 @@ export class MemberCreateComponent implements OnInit {
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('您必須先填寫完以上資料');
-      var body = $("html, body");
-      body.stop().animate({scrollTop:0}, 200, 'swing', function() {
-      });
+      document.querySelector('#myModal .modal-content').scrollIntoView();
+      this.dataService.idToGoFlow = 'flagForEmpty';
+      // document.querySelector('#flagForEmpty').scrollIntoView();
       this.firstTimeClickHaoA = false;
       return false;
     }else{
       if(val && this.firstTimeClickHaoA){
-        var modal = document.getElementById('myConfirmModal');
-        modal.style.display = "block";
-        $('.modal').css({
-          'height': $(document).height(),
-          'padding': '15% 0',
-          'text-align': 'center'
-        });
-        if(window.innerWidth <= 500){
-        }else{
-        }
-        document.getElementById('myConfirmModal').scrollIntoView({block: 'start', behavior: 'smooth'});
+        this.ModelClick(true);
+        // var modal = document.getElementById('myConfirmModal');
+        // modal.style.display = "block";
+        // $('.modal').css({
+        //   'height': $(document).height(),
+        //   'padding': '15% 0',
+        //   'text-align': 'center'
+        // });
+        // document.querySelector('#myConfirmModal .modal-content').scrollIntoView();
+        // if(window.innerWidth <= 500){
+        // }else{
+        // }
+        // above modal area
+        // document.getElementById('myConfirmModal').scrollIntoView({block: 'start', behavior: 'smooth'});
       }else if(!val && this.firstTimeClickHaoA){
         var modal = document.getElementById('myConfirmModal2');
         modal.style.display = "block";
@@ -434,6 +457,7 @@ export class MemberCreateComponent implements OnInit {
           'padding': '15% 0',
           'text-align': 'center'
         });
+        document.querySelector('#myConfirmModal2 .modal-content').scrollIntoView();
         if(window.innerWidth <= 500){
           // $('.modal-content').css({
           //   'margin-top': '200%'
@@ -443,7 +467,7 @@ export class MemberCreateComponent implements OnInit {
         }
         $('.modal-content').css({
         });
-        document.getElementById('myConfirmModal2').scrollIntoView({block: 'start', behavior: 'smooth'});
+        // document.getElementById('myConfirmModal2').scrollIntoView({block: 'start', behavior: 'smooth'});
       }
       if(!this.firstTimeClickHaoA){
         if(this.dataService.backFromConfirm && this.dataService.noGoWithYourFdsFlag !== undefined){
@@ -460,7 +484,7 @@ export class MemberCreateComponent implements OnInit {
             }
             document.getElementById('myConfirmModal').scrollIntoView({block: 'start', behavior: 'smooth'});
           }else if(!val && this.firstTimeClickHaoA){
-            var modal = document.getElementById('myConfirmModal2');
+            var modal = document.getElementById('myConfirmModal2 .modal-content');
             modal.style.display = "block";
             $('.modal').css({
               'height': $(document).height(),
@@ -476,7 +500,7 @@ export class MemberCreateComponent implements OnInit {
             }
             $('.modal-content').css({
             });
-            document.getElementById('myConfirmModal2').scrollIntoView({block: 'start', behavior: 'smooth'});
+            document.getElementById('myConfirmModal2 .modal-content').scrollIntoView({block: 'start', behavior: 'smooth'});
           }
         }else{
           this.GoingWithFds(val);
@@ -507,9 +531,8 @@ export class MemberCreateComponent implements OnInit {
           modal.style.display = "block";
           this.dataService.AlertTXT = [];
           this.dataService.AlertTXT.push('您必須先填寫完以上資料');
-          var body = $("html, body");
-          body.stop().animate({scrollTop:0}, 200, 'swing', function() {
-          });
+          document.querySelector('#myModal .modal-content').scrollIntoView();
+          this.dataService.idToGoFlow = 'flagForEmpty';
           this.firstTimeClickHaoA = false;
           return false;
         }else{
@@ -518,6 +541,8 @@ export class MemberCreateComponent implements OnInit {
           this.personalSelectChange();
           this.toGoWithYourFdsClick = false;
           this.hiddenAtBegining = false;
+          document.querySelector('#addInsuredAdd').scrollIntoView();
+
         }
       }else{
         if(!this.ans){
@@ -529,6 +554,7 @@ export class MemberCreateComponent implements OnInit {
           this.personalSelectChange();
           this.toGoWithYourFdsClick = false;
           this.hiddenAtBegining = false;
+          document.querySelector('#addInsuredAdd').scrollIntoView();
         }
       }
     }else{
@@ -551,10 +577,9 @@ export class MemberCreateComponent implements OnInit {
           modal.style.display = "block";
           this.dataService.AlertTXT = [];
           this.dataService.AlertTXT.push('您必須先填寫完以上資料');
-          var body = $("html, body");
           this.firstTimeClickHaoA = false;
-          body.stop().animate({scrollTop: 0}, 200, 'swing', function () {
-          });
+          this.dataService.idToGoFlow = 'flagForEmpty';
+          document.querySelector('#myModal .modal-content').scrollIntoView();
 
           return false;
         }else{
@@ -564,10 +589,12 @@ export class MemberCreateComponent implements OnInit {
           this.btnClickToGoFds = true;
           this.owlAnanOne = false;
           this.dataService.owlAnanOne = false;
+          document.querySelector('.pointAddPPlNum').scrollIntoView();
         }
         }else{
         if(!this.ans){
           this.noGoWithYourFds = false;
+          document.querySelector('.pointAddPPlNum').scrollIntoView();
           return false;
         }else{
           this.noGoWithYourFds = true;
@@ -577,6 +604,7 @@ export class MemberCreateComponent implements OnInit {
           this.btnClickToGoFds = true;
           this.owlAnanOne = false;
           this.dataService.owlAnanOne = false;
+          document.querySelector('#addInsuredAdd').scrollIntoView();
         }
       }
 
@@ -780,8 +808,7 @@ export class MemberCreateComponent implements OnInit {
 
   calculate_age(birth_month,birth_day,birth_year)
   {
-    let today_date = new Date(this.countBrthDayFromSelectedBtn);
-    console.log(today_date);
+    let today_date = new Date();
     let today_year = today_date.getFullYear();
     let today_month = today_date.getMonth();
     let today_day = today_date.getDate();
@@ -845,7 +872,7 @@ export class MemberCreateComponent implements OnInit {
           this.birthYears();
 
           let personAge = this.calculate_age(this.pBirthMonth, this.pBirthDay, this.pBirthYear);
-          if(personAge <= item.companySetting['applicantAgeMin']){
+          if(personAge < item.companySetting['applicantAgeMin']){
             this.applicantAgeMin = item.companySetting['applicantAgeMin'] - item.companySetting['applicantAgeMin'];
             this.applicantSelectBirth();
             this.applicantAgeMin = item.companySetting['applicantAgeMin'];
@@ -915,6 +942,9 @@ export class MemberCreateComponent implements OnInit {
                   this.applicantAloneLockInput = false;
                 }
                 this.personalInfoSelect = item['relation'];
+                if(this.personalInfoSelect !== '本人'){
+                  this.applicantAloneLockInput = false;
+                }
                 this.applicantAloneLastName = item['lastName'];
                 this.applicantAloneFirstName = item['firstName'];
                 this.applicantAlonePid = item['pid'];
@@ -969,7 +999,7 @@ export class MemberCreateComponent implements OnInit {
           this.birthYears();
 
           let personAge = this.calculate_age(this.pBirthMonth, this.pBirthDay, this.pBirthYear);
-          if(personAge <= item.companySetting['applicantAgeMin']){
+          if(personAge < item.companySetting['applicantAgeMin']){
             this.applicantAgeMin = item.companySetting['applicantAgeMin'] - item.companySetting['applicantAgeMin'];
             this.applicantSelectBirth();
             this.applicantAgeMin = item.companySetting['applicantAgeMin'];
@@ -1094,8 +1124,9 @@ export class MemberCreateComponent implements OnInit {
           this.birthYears();
 
           let personAge = this.calculate_age(this.pBirthMonth, this.pBirthDay, this.pBirthYear);
-
-          if(personAge <= item.companySetting['applicantAgeMin']){
+          console.log('要保人', personAge);
+          console.log('要保人最低要保年齡', item.companySetting['applicantAgeMin']);
+          if(personAge < item.companySetting['applicantAgeMin']){
             this.applicantAgeMin = item.companySetting['applicantAgeMin'] - item.companySetting['applicantAgeMin'];
             this.applicantSelectBirth();
             this.applicantAgeMin = item.companySetting['applicantAgeMin'];
@@ -1200,11 +1231,12 @@ export class MemberCreateComponent implements OnInit {
   applicantSelectBirth() {
     var date = new Date(this.countBrthDayFromSelectedBtn);
     let endAge = this.applicantAgeMax - this.applicantAgeMin;
+    console.log('endage', endAge);
     let limitAge = date.getFullYear() - this.applicantAgeMin;
     var returnVal = [];
     returnVal.push(limitAge);
-    for (var i = 0; i <= endAge; i++) {
-      if(i < endAge){
+    for (var i = 0; i <= (endAge+1); i++) {
+      if(i < (endAge+1)){
         limitAge--;
         returnVal.push(limitAge);
       } else {

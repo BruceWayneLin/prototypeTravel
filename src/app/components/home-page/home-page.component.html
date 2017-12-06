@@ -16,7 +16,10 @@
       <div class="immediatelyGo" >
 
       </div>
-      <h2 style="margin-bottom:20px;margin-top:15px;cursor:pointer;" (click)="clickWannaInsuredBtn('', '')">這次旅行去哪呢 ?(什麼去哪？你來錯網站測試了！！我是ＱＡＴ)
+      <h2 style="margin-bottom:20px;margin-top:15px;cursor:pointer;" (click)="clickWannaInsuredBtn('', '')">
+        <a class="immediateH2" href="#" onclick="return false;" style="color:#e84466;text-decoration: underline;">
+        這次旅行去哪呢 ?(什麼去哪？你來錯網站測試了！！我是ＱＡＴ)
+        </a>
         <div style="cursor:pointer;width:20px;display:inline-block;">
         <i class="fa fa-chevron-circle-down" style="color:#dddddd"></i>
         </div>
@@ -33,10 +36,11 @@
 <div class="row">
   <div class="container oneCon">
     <div class="place app-index col-lg-12 text-center">
-      <h2>地點</h2>
+      <h2>這次旅行去哪呢？</h2>
       <ng-container *ngIf="isDoneSelectedPlaces">
           <div class="col-lg-12">
-            <span class="spanOfSelectedCountry">{{selectedCountries.name}}-{{selectedCountryStr}}</span>
+            <!--{{selectedCountries.name}}-->
+            <span class="spanOfSelectedCountry">{{selectedCountryStr}}</span>
             <button class="form-control modifiedDays" (click)="modifiedPlaces()">更改地點</button>
           </div>
       </ng-container>
@@ -110,8 +114,8 @@
         <div class="col-xs-12 col-sm-2"></div>
         <div class="col-xs-12 col-sm-8">
           <div class="col-xs-3 purposeLabelCol3 text-center" *ngFor="let purpose of purposeList; let i = index;">
+            <input type="radio" id="purposePurLabel" [(ngModel)]="purposeGo" name="purposePurLabel" class="form-control purposeBtn{{+ i}}" (click)="toTogglePurposeBtn('purposeBtn'+i, purpose)" value="{{purpose.name}}"  />
             <label class="purposeLabel text-center">
-              <input type="radio" id="purposePurLabel" [(ngModel)]="purposeGo" name="purposePurLabel" class="form-control purposeBtn{{+ i}}" (click)="toTogglePurposeBtn('purposeBtn'+i, purpose)" value="{{purpose.name}}"  />
               <span><i class="checkBtn fa fa-check" aria-hidden="true"></i> {{purpose.name}}</span>
             </label>
           </div>
@@ -163,24 +167,38 @@
         <table id="calendarTable" class="table">
           <tbody>
           <ng-container *ngFor="let item of createRange(theDayBeginingNeedToRun); let i = index;">
-              <ng-container *ngIf="checkShoudShowTitle((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'))">
+              <ng-container *ngIf="(firstMon | amAdd:i : 'days' | amDateFormat: 'DD') == '01' && (firstMon | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD') <= (firstMon | amAdd:numberOfgetDayFromBkendLastSun: 'days' | amDateFormat: 'YYYY-MM-DD') || (firstMon | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD') == (firstMon | amDateFormat: 'YYYY-MM-DD') && (firstMon | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD') <= (firstMon | amAdd:numberOfgetDayFromBkendLastSun: 'days' | amDateFormat: 'YYYY-MM-DD')">
                 <h3 class="text-center calendarSecH3">{{ firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY' }}年{{ returnMonth(firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD') }}月</h3>
-              </ng-container>
-              <ng-container class="weekDayTr" *ngIf="checkShoudShowTitle((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'))">
-                <td class="weekDayText text-center" *ngFor="let number of [1,2,3,4,5,6,7]; let x = index;">
-                  {{firstMon | amLocale: 'zh-TW' | amAdd:x : 'days' | amDateFormat: 'dddd'}}
+                <td class="weekDayText text-center">
+                  星期日
                 </td>
-              </ng-container>
-              <ng-container *ngIf="checkShoudShowTitle((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'))">
-                <td *ngFor="let number of getDayArr((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'), (firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD')); ">
+                <td class="weekDayText text-center">
+                  星期一
+                </td>
+                <td class="weekDayText text-center">
+                  星期二
+                </td>
+                <td class="weekDayText text-center">
+                  星期三
+                </td>
+                <td class="weekDayText text-center">
+                  星期四
+                </td>
+                <td class="weekDayText text-center">
+                  星期五
+                </td>
+                <td class="weekDayText text-center">
+                  星期六
+                </td>
+                <td id="emptyTd" class="text-center" *ngFor="let number of getDayArr((firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'), (firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD')); ">
                 </td>
               </ng-container>
               <td class="text-center" [ngClass]="toHiddenDate(btnStartDay.value) ? 'calDayNone' : ''">
                 <button [hidden]="toHiddenDate(btnStartDay.value)" #btnStartDay [disabled]="buttonToDisabled(btnStartDay.value) || buttonToDisabledTwo(btnStartDay.value)" id="{{'calendarDayButton'+i}}" (click)="onClickMe($event, 'calendarDayButton'+ i, i)" value="{{firstMon | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'}}">
-                <h4><i class="checkBtn fa fa-check hidden" aria-hidden="true"></i></h4>
+                  <h4><i class="checkBtn fa fa-check hidden" aria-hidden="true"></i></h4>
                   {{firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'DD'}}
-                <h4><span class="checkBtnTxt hidden">出發日期</span></h4>
-                <h4 *ngIf="buttonToDisabledTwo(btnStartDay.value)"><span class="typhoonDay">颱風日</span></h4>
+                  <h4><span class="checkBtnTxt hidden">出發日期</span></h4>
+                  <h4 *ngIf="buttonToDisabledTwo(btnStartDay.value)"><span class="typhoonDay">颱風日</span></h4>
                 </button>
               </td>
           </ng-container>
@@ -296,7 +314,6 @@
 
     <ng-container *ngIf="pkgCustomGo">
       <div id="titlePkg" class="packageTit place app-index col-lg-12 text-center" #eleTest [ngClass]="{'noBottom': paddingBottonZero}">
-
         <div id="mobileCusPkg">
           <div id="paddingSpe" class="row">
             <div class="col-xs-12 text-center">
@@ -304,6 +321,7 @@
                 <label style="font-size:18px;">死亡殘廢</label>
                 <a (click)="toShowCusDetailContent('changefa')"><span class="shanshiContent">詳細內容</span></a>
                 <i (click)="toShowCusDetailContent('changefa')" id="changefa" ngClass="{{toggleClazForAngle == false ? 'fa fa-angle-down': 'fa fa-angle-up'}}"></i>
+                <i class="fa fa-angle-down dropDown" style="font-size:36px;top:42px!important;z-index:999;"></i>
                 <select class="form-control text-center input-md" #selectedCusPkgddd (change)="toGetCustomPackageContent(selectedCusPkgddd.value)">
                   <option>請選擇方案金額</option>
                   <option [selected]="package['isDefaultPackage']" [value]="package['packageId']" *ngFor="let package of cusPackageList; let i = index;">{{package['packageName']}}</option>
@@ -335,6 +353,7 @@
                   <span class="shanshiContent">詳細內容</span>
                   <i class="fa fa-angle-down"></i>
                 </a>
+                <i class="fa fa-angle-down dropDown" style="font-size:36px;top:42px!important;z-index:999;"></i>
                 <select (change)="amountBtnClick(x, seconItem['amountList'][x], seconItem['insItemCode'], thisSelect.value, thisSelect)" #thisSelect class="form-control text-center input-md">
                   <option value="dunNeed" *ngIf="!returnIfNoNeedIsNeed(seconItem['textWhenNotPickList'])">不需要</option>
                   <option [selected]="item['isDefaultOption']" [ngValue]="seconItem" *ngFor="let item of seconItem['amountList']">

@@ -146,6 +146,7 @@ h2.formTitTxt{
   font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
   width: 95%;
   display: inline-block;
+  text-align: left;
 }
 
 .square {
@@ -389,13 +390,15 @@ span.formSubTxt {
 }
 
 @media screen and (max-width: 1200px) {
+  .rules h2, .rules .agreement {
+    font-size: 15px;
+  }
   #insuredOneCard {
     height: 410px;
   }
   .roundDiv {
     width: 100%;
     height:100%;
-    margin-top: 60px;
   }
 
   .agreement {
@@ -403,7 +406,7 @@ span.formSubTxt {
   }
   .rules h2 {
     padding-left: 0px;
-    font-size: 14px;
+    /*font-size: 14px;*/
   }
   .goingCheckInfo {
     width: 100%;
@@ -649,6 +652,41 @@ div.row.memberTitle {
   font-size: 30px;
 }
 
+#mobileTxtBirth {
+  display: none;
+  margin-bottom: 5px;
+}
+
+.mobileTxtBirth {
+  font-size: 18px;
+  color: grey;
+  padding: 15px;
+}
+
+@media screen and (max-width: 1200px){
+  .txtBirth {
+    display: none;
+  }
+  .birthContain .col-xs-1 {
+    display:none;
+  }
+  .birthContain .col-xs-3 {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  .birthContain .col-xs-3 {
+    margin-left:2%!important;
+  }
+  #mobileTxtBirth {
+    display: initial!important;
+    margin-bottom: 0px;
+  }
+  .mobileTxtBirth {
+    padding-bottom: 0px;
+    padding-left: 0px;
+  }
+}
+
 @media screen and (max-width: 500px){
   .titleSpan {
     white-space: nowrap;
@@ -675,7 +713,9 @@ div.row.memberTitle {
     pointer-events:none!important;
     top: 18px;
     font-size: 18px;
-    left: 47px;
+    left: 0px;
+    display: block;
+    width: 100%;
   }
   /*#MobileChoicesHaoNoHao input:checked {*/
     /*background-color: #e84466;*/
@@ -710,10 +750,10 @@ div.row.memberTitle {
   .agreement {
     position: relative;
     left: 30px;
-    top: -25%;
+    top:-20px;
   }
   .roundDiv {
-    height: 110px;
+    /*height: 110px;*/
   }
   .goingCheckInfo {
     margin-bottom: 15px!important;
@@ -722,7 +762,9 @@ div.row.memberTitle {
     padding: 0px;
   }
   #MobileChoicesHaoNoHao .widthFdsSpanTwo{
-    left: 57px!important;
+    left: 0px;
+    display: block;
+    width: 100%;
   }
   .container.rules{
     position: relative;
@@ -796,6 +838,10 @@ div.row.memberTitle {
     width: 85%!important;
     margin-left: 8%;
   }
+  .container.soyiren h2 {
+    font-size: 18px!important;
+    margin-bottom: 0px!important;
+  }
 }
 
 @media screen and (max-width: 1240px) {
@@ -828,6 +874,10 @@ div.row.memberTitle {
   .insuredBtnArea {
     padding-left: 0px!important;
     padding-right: 0px!important;
+  }
+  #addInsuredAdd {
+    width: 63%;
+    margin: 0 auto;
   }
 }
 
@@ -1010,7 +1060,7 @@ div.row.memberTitle {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 999!important; /* Sit on top */
+  z-index: 1000!important; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -1038,6 +1088,19 @@ div.row.memberTitle {
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
   top: 40px!important;
+}
+
+@media screen and (max-width:414px) {
+  .modal-content {
+    top: 40%!important;
+  }
+}
+
+@media screen and (max-width:770px) {
+  #aggreeToUpdate {
+    top: -15px;
+    position:relative;
+  }
 }
 
 .modal ul {
@@ -1082,3 +1145,125 @@ div.row.memberTitle {
   }
 }
 
+@media screen and (max-width: 770px) and (min-width: 575px) {
+  .paddingExtra.personalContent .col-sm-6, .row.personalContentDiv .col-sm-6{
+    min-width: 100%!important;
+  }
+  #choicesHaoNoHao {
+    width: 100%;
+    margin-top: 100px;
+  }
+  #choiceOne {
+    left: 0%;
+  }
+  #choiceTwo {
+    left: 55%;
+  }
+  #haoma {
+    position: relative;
+    left: -37%;
+  }
+  .firstNameDiv {
+    padding-left: 0px;
+  }
+  .insuredBoxAlone {
+    margin-top: 15%;
+  }
+  #personalAreaPlaceForMobile .col-xs-12 {
+  }
+  .firstColPArea {
+    padding-top: 40px!important;
+  }
+  #personalAreaPlaceForMobile .col-xs-12 .col-xs-4{
+    padding:0px;
+    width: 100%;
+  }
+  .roundDiv.text-center {
+    margin-top: 10px;
+  }
+  .agreement {
+    width: 90%!important;
+  }
+}
+
+.firstColPArea {
+  padding-top: 70px;
+}
+
+.col-xs-12.firstColPArea .col-xs-4 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#rule1 {
+  padding-left:0px;
+}
+
+@media screen and (max-width: 1200px){
+  #rule1 {
+    padding-left: 10%;
+  }
+  #mobileTxtBirth {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  #personalAreaPlaceForMobile #mobileTxtBirth {
+    padding-left: 15px;
+  }
+  .col-sm-6.birthContain .col-xs-5, .col-xs-12.pull-right.birthContain {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  #specialBirthColxs.col-xs-3{
+    margin-left: 4%!important;
+  }
+}
+
+.dropDown {
+  position: absolute;
+  top: 13px;
+  left: 66%;
+  color: #ddd;
+  pointer-events:none!important;
+}
+
+button.form-control.btn-sm {
+  display: block;
+  width: 30%;
+  float: right;
+  margin-right: 10%;
+}
+
+button.form-control.btn-sm span{
+  padding-right: 0px;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 1110px) {
+  #changeSizeOneOne {
+    width: 100%;
+  }
+  button.form-control.btn-sm {
+    margin-right: 15%;
+  }
+}
+@media screen and (max-width: 570px) {
+  #haoma span {
+    left: -140%;
+  }
+  #haoma h4 {
+    left: -160%;
+  }
+  span.formSubTxt{
+    text-align:center;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  #haoma span {
+    left: -190%;
+  }
+  #haoma h4 {
+    left: -265%;
+  }
+}
