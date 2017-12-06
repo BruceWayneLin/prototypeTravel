@@ -1119,6 +1119,9 @@ input, input:before, input:after {
   input[type=radio] + span {
     top: 70px;
   }
+  label[for="aggreeToUpdate"] {
+    border:none!important;
+  }
 }
 
 input[type="radio"]:checked + label span {
@@ -1144,4 +1147,7 @@ button:focus {
 .form-control:focus {
   outline: none!important;
   border-color:#cccccc!important;
+}
+.insItemUl {
+  margin-left: 0px!important;
 }

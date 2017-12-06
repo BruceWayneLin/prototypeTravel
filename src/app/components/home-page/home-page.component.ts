@@ -186,13 +186,12 @@ export class HomePageComponent implements OnInit {
               }
             });
           });
-          document.querySelector('#flagSix').scrollIntoView();
+
           if(this.pkgCustomGo == false){
             this.getPriceServiceData();
           } else {
             this.toGetCusPkgPrice();
           }
-          document.querySelector('#flagSix').scrollIntoView();
         });
 
         this.diffDays = item['datePeriod'];
@@ -311,7 +310,20 @@ export class HomePageComponent implements OnInit {
   }
 
   toCompatibilityUse(){
+  }
 
+  ngAfterViewInit() {
+    alert('hi')
+    try {
+      var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
+      if(goDownFlag || this.dataService.toGoDown){
+        setTimeout(function(){
+          document.querySelector('#flagSix').scrollIntoView();
+        }, 100);
+        sessionStorage.removeItem('bak');
+      }
+    } catch (e) {
+    }
   }
 
   toGetCusPkgPrice() {
@@ -690,7 +702,6 @@ export class HomePageComponent implements OnInit {
             }
           });
         }, 100);
-
         document.querySelector('#flagFour').scrollIntoView();
       } else {
       if(this.startTravelDay) {
@@ -727,7 +738,7 @@ export class HomePageComponent implements OnInit {
                 this.fireInTheHole(this.selectedPackage['packageId'] - 1);
                 this.tableList = this.selectedPackage['table'];
                 console.log('table', this.tableList);
-
+                // document.querySelector('#flagFive').scrollIntoView();
                 this.cusPackageList = item.cusPackageList;
                 this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
                   var objBack = {};
@@ -747,9 +758,7 @@ export class HomePageComponent implements OnInit {
             this.endTravelDay = $event.target.value;
 
             if (this.startTravelDay && this.endTravelDay) {
-                console.log(this.endTravelDay);
-
-                document.querySelector('#flagFive').scrollIntoView();
+            document.querySelector('#flagFive').scrollIntoView({block: 'start', behavior: 'smooth'});
             this.textOfSelectingDays = '您的旅遊期間';
             this.tableShowHidden = true;
             let oneDay = 24*60*60*1000;
@@ -1165,7 +1174,33 @@ export class HomePageComponent implements OnInit {
       }
     }else{
       var todayPlusStartDayLimitAndDisaster = new Date().setDate(new Date().getDate() + this.startDayLimit);
-      if(new Date(todayPlusStartDayLimitAndDisaster).getDay() == 6 && new Date(value) >= new Date(todayPlusStartDayLimitAndDisaster)){
+      var lastPlustStartDayLimited = new Date().setDate(new Date().getDate() + this.startDayLimit);
+      var lastDayNeedToHide;
+      switch (new Date(lastPlustStartDayLimited).getDay()){
+        case 0:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 6);
+          break;
+        case 1:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 5);
+          break;
+        case 2:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 4);
+          break;
+        case 3:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 3);
+          break;
+        case 4:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 2);
+          break;
+        case 5:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 1);
+          break;
+        case 6:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 0);
+          break;
+        default:
+      }
+      if(new Date(todayPlusStartDayLimitAndDisaster).getDay() == 6 && new Date(value) >= new Date(todayPlusStartDayLimitAndDisaster) || new Date(value) > new Date(lastDayNeedToHide)){
         return true;
       }
     }
@@ -1180,33 +1215,8 @@ export class HomePageComponent implements OnInit {
     //   }
 
     // else{
-    //   var yesterday = new Date().setDate(new Date(this.getMonday(new Date())).getDate()-1);
-    //   var lastPlustStartDayLimited = new Date().setDate(new Date().getDate() + this.startDayLimit);
-    //   var lastDayNeedToHide;
-    //   switch (new Date(lastPlustStartDayLimited).getDay()){
-    //     case 0:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 6);
-    //       break;
-    //     case 1:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 5);
-    //       break;
-    //     case 2:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 4);
-    //       break;
-    //     case 3:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 3);
-    //       break;
-    //     case 4:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 2);
-    //       break;
-    //     case 5:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 1);
-    //       break;
-    //     case 6:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 0);
-    //       break;
-    //     default:
-    //   }
+      var yesterday = new Date().setDate(new Date(this.getMonday(new Date())).getDate()-1);
+
     //   let yes = new Date(new Date().setDate(new Date().getDate()-1));
     //   if(new Date().getDate() == 1){
     //    if(new Date(value) < new Date(yes)){

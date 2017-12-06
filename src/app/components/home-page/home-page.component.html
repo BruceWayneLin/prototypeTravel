@@ -18,7 +18,7 @@
       </div>
       <h2 style="margin-bottom:20px;margin-top:15px;cursor:pointer;" (click)="clickWannaInsuredBtn('', '')">
         <a class="immediateH2" href="#" onclick="return false;" style="color:#e84466;text-decoration: underline;">
-        這次旅行去哪呢 ?(什麼去哪？你來錯網站測試了！！我是ＱＡＴ)
+          點我試算保費
         </a>
         <div style="cursor:pointer;width:20px;display:inline-block;">
         <i class="fa fa-chevron-circle-down" style="color:#dddddd"></i>
@@ -114,8 +114,8 @@
         <div class="col-xs-12 col-sm-2"></div>
         <div class="col-xs-12 col-sm-8">
           <div class="col-xs-3 purposeLabelCol3 text-center" *ngFor="let purpose of purposeList; let i = index;">
-            <input type="radio" id="purposePurLabel" [(ngModel)]="purposeGo" name="purposePurLabel" class="form-control purposeBtn{{+ i}}" (click)="toTogglePurposeBtn('purposeBtn'+i, purpose)" value="{{purpose.name}}"  />
             <label class="purposeLabel text-center">
+              <input type="radio" id="purposePurLabel" [(ngModel)]="purposeGo" name="purposePurLabel" class="form-control purposeBtn{{+ i}}" (click)="toTogglePurposeBtn('purposeBtn'+i, purpose)" value="{{purpose.name}}"  />
               <span><i class="checkBtn fa fa-check" aria-hidden="true"></i> {{purpose.name}}</span>
             </label>
           </div>

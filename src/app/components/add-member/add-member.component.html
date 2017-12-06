@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="col-xs-11" style="padding-right:0px;">
-            <i class="fa fa-angle-down dropDown" style="font-size:36px;left:80%;!important;z-index:999;"></i>
+            <i class="fa fa-angle-down dropDown" style="font-size:36px;left:90%;!important;z-index:999;"></i>
             <select #fistRelationship="ngModel" [(ngModel)]="firstCardRelationship" (change)="changedRelationship(firstCardRelationship.value, 1)" class="form-control btn-sm" [ngClass]="{'inValidInput': fistRelationship.touched && !fistRelationship.valid || firstRelationshipInvalid || firstCardValidFail || firstRelatedRepeat}" required>
               <option value="">請選擇</option>
               <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
@@ -108,7 +108,7 @@
               </div>
             </div>
             <div class="col-xs-11" style="padding-right:0px;">
-              <i class="fa fa-angle-down dropDown" style="font-size:36px;left:80%;!important;z-index:999;"></i>
+              <i class="fa fa-angle-down dropDown" style="font-size:36px;left:90%;!important;z-index:999;"></i>
               <select [(ngModel)]="secondCardRelationship" (change)="checkRelationShipRepeat(secondRelationship.value, 2)" #secondRelationship="ngModel" class="form-control btn-sm" [ngClass]="{inValidInput: secondRelationship.touched && !secondRelationship.valid || secondRelationshipInvalid || secondRelatedRepeat}" required>
                 <option value="">與要保人關係</option>
                 <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>

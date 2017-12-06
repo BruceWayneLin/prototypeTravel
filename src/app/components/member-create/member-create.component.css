@@ -423,6 +423,10 @@ span.formSubTxt {
   }
 }
 
+.insuredBtnArea input {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 500px) {
   .insuredPersonalInfo {
     margin-top: 60px;
@@ -493,7 +497,6 @@ span.formSubTxt {
 
 .insuredBtnArea label {
   font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
-  cursor: pointer;
   width: 100px;
   position: relative;
   top: 0px;
