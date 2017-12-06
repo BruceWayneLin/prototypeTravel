@@ -15,16 +15,16 @@ import { MemberCreateComponent } from './components/member-create/member-create.
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ConfirmInfoComponent } from './components/confirm-info/confirm-info.component';
 
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/switchMap';
+// import 'rxjs/add/operator/do';
+// import 'rxjs/add/operator/filter';
+// import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/distinctUntilChanged';
+// import 'rxjs/add/observable/of';
+// import 'rxjs/add/operator/catch';
+// import 'rxjs/add/operator/debounceTime';
+// import 'rxjs/add/operator/switchMap';
 
 // import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMockDbService } from './mock-packageList';
@@ -35,7 +35,8 @@ import { AddMemberComponent } from './components/add-member/add-member.component
 import { FailPaymentComponent } from './components/fail-payment/fail-payment.component';
 import { LoadingModule } from 'ngx-loading';
 import { LayoutModule } from 'cl-layout/src/app/shared/layout/layout.module';
-// import 'cl-layout/thirdparty-library';
+import 'cl-layout/thirdparty-library';
+import { CarelineProjectType } from 'cl-layout/src/app/shared/layout/careline-layout-config';
 
 export const routes : Routes = [
   {
@@ -105,7 +106,9 @@ export const routes : Routes = [
   ],
   imports: [
     BrowserModule,
-    LayoutModule,
+    LayoutModule.forRoot({
+      carelineProjectType : CarelineProjectType.travel
+    }),
     // BreadcrumbsModule,
     ReactiveFormsModule,
     LoadingModule,

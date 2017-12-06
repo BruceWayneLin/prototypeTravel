@@ -897,9 +897,9 @@ input, input:before, input:after {
     top: 10px!important;
   }
   html, body {
-    max-height: 100%;
-    position: relative;
-    -webkit-transform: translate3d(0,0,0);
+    /* max-height: 100%; */
+    /* position: relative; */
+    /* -webkit-transform: translate3d(0,0,0); */
   }
 
   html, body {
@@ -993,10 +993,6 @@ input, input:before, input:after {
 
 #closebtn {
   white-space: nowrap!important;
-}
-
-.side-panel {
-  display:none!important;
 }
 
 .owl-theme.sliding.owl-carousel.owl-loaded.owl-drag {

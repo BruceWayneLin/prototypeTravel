@@ -7,11 +7,18 @@ function bindEventOfDispalyDetail() {
   // elements
   let firstDetail$ = $('.detail:eq(0)');
   let salesInfos$ = $('.salesInfo');
-
+  let navbarToggler = $('.navbar-toggler:eq(0)');
 
 
   // funtions
   let handlerIn = function (target) {
+    const navbarTogglerStyles = getComputedStyle(navbarToggler[0]);
+    const isMobile = navbarTogglerStyles.display !== 'none';
+    if(isMobile){
+      firstDetail$.hide();
+      return;
+    }
+
     let iconWidth = 25;
 
     var firstImgStartX = target.currentTarget.offsetLeft;
@@ -22,7 +29,7 @@ function bindEventOfDispalyDetail() {
     firstDetail$.find('.' + classPrefix)
       .each(function (index, salesInfo) {
         var salesInfo$ = $(salesInfo);
-        if (salesInfo$.hasClass( classPrefix + '-' + dataType)) {
+        if (salesInfo$.hasClass(classPrefix + '-' + dataType)) {
           salesInfo$.show();
         } else {
           salesInfo$.hide();
@@ -66,16 +73,36 @@ function bindEventOfDispalyDetail() {
 
     var hiddenRules = [
       isLeaveFormDetailBlock,
-      isMoveOutScopeOfNavItem
+      // isMoveOutScopeOfNavItem
     ];
-
+    var isHidden = false;
     hiddenRules.forEach(function (hiidenRule) {
-      var isHidden = hiidenRule() === true;
+      isHidden = hiidenRule() === true;
       if (isHidden) {
+        isHidden = true;
         firstDetail$.hide();
         return;
       }
-    })
+    });
+
+    // var isShow = !isHidden;
+    // if (isShow) {
+    //   var currentMouseEvent;
+    //   const docOnMouseOverEveent = $(document).mousemove(function (e) {
+    //     currentMouseEvent = e;
+    //   });
+    //   const reCheckMousePositionBufferTime = 500;
+    //   setTimeout(() => {
+    //     const isOverMoveY = currentMouseEvent.clientY > (firstDetail$.height() + firstDetail$.position().top);
+    //     if(isOverMoveY){
+    //       firstDetail$.stop(true, false).slideUp();
+    //     }
+    //     // console.log('isOverflowY', isOverMoveY);
+    //     docOnMouseOverEveent.unbind();
+    //   }, reCheckMousePositionBufferTime);
+    // }
+
+
   };
 
 
@@ -171,7 +198,7 @@ function bindClickEventOfTogglerIcon() {
 //   });
 // }
 
-function closeTogglerBlockWhenClickedBody(param){
+function closeTogglerBlockWhenClickedBody(param) {
   $(document).ready(function () {
     $(document).click(function (event) {
       param.navbarCollapse$.collapse('hide');
@@ -190,7 +217,7 @@ $(document).ready(function () {
   //   navbarCollapse$:navbarCollapse$
   // });
   closeTogglerBlockWhenClickedBody({
-    navbarCollapse$:navbarCollapse$
+    navbarCollapse$: navbarCollapse$
   });
 
 });
