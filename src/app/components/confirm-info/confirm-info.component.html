@@ -116,7 +116,7 @@
       <!-- regular accordion -->
       <accordion>
         <ng-container *ngFor="let item of insuredList; let i = index;">
-          <i class="fa  fa-chevron-circle-down" aria-hidden="true" style="pointer-events: none;" (click)="toTriggerCloseA()"></i>
+          <i class="fa fa-chevron-circle-down" aria-hidden="true" style="pointer-events: none;" (click)="toTriggerCloseA()"></i>
           <accordion-group class="clickAccordion" heading="{{' '+item['inLastName']+item['inFirstName']+' '+item['inPackageName']+' NT$'+item['inRate']}}">
             <div class="row packageInfo">
               <div class="container">

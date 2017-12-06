@@ -1,5 +1,6 @@
 .image-center img {
   margin: 25px auto;
+  height: auto;
 }
 
 .imgH2 h2 {
@@ -12,7 +13,8 @@
 img.img-responsive {
   margin: 0px auto;
   margin-bottom: 20px;
-  height: 200px;
+  height: auto;
+  /*height: 200px;*/
 }
 
 h2 {
@@ -73,7 +75,7 @@ button.goingMemberArea {
 }
 
 .firstRow {
-  margin-top: 80px;
+  margin-top: 0px;
 }
 
 @media screen and (max-width: 500px){

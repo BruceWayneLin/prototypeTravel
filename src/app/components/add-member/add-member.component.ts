@@ -735,6 +735,7 @@ export class AddMemberComponent implements OnInit {
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
                 this.firstCardInsuredPrice = item.rate;
+                this.firstCardWarningWord = item.tipText;
                 this.memberCom.finalPrice();
             }
           });
@@ -770,6 +771,7 @@ export class AddMemberComponent implements OnInit {
             console.log('ageMax', item.ageMax);
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
                 this.secondCardInsuredPrice = item.rate;
+                this.secondCardWarningWord = item.tipText;
                 this.memberCom.finalPrice();
             }
           });
@@ -800,7 +802,8 @@ export class AddMemberComponent implements OnInit {
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
                 this.thirdCardInsuredPrice = item.rate;
-                this.memberCom.finalPrice();
+                this.thirdCardWarningWord = item.tipText;
+              this.memberCom.finalPrice();
             }
           });
         } else if (!this.thirdCardYear && !this.thirdCardMonth && !this.thirdCardDay) {
@@ -830,7 +833,8 @@ export class AddMemberComponent implements OnInit {
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
                 this.fourthCardInsuredPrice = item.rate;
-                this.memberCom.finalPrice();
+                this.fourthCardWarningWord = item.tipText;
+              this.memberCom.finalPrice();
             }
           });
         } else if (!this.fourthCardYear && !this.fourthCardMonth && !this.fourthCardDay) {
@@ -860,7 +864,8 @@ export class AddMemberComponent implements OnInit {
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
                 this.fifthCardInsuredPrice = item.rate;
-                this.memberCom.finalPrice();
+                this.fifthCardWarningWord = item.tipText;
+              this.memberCom.finalPrice();
             }
           });
         } else if (!this.fifthCardYear && !this.fifthCardMonth && !this.fifthCardDay) {
@@ -890,7 +895,8 @@ export class AddMemberComponent implements OnInit {
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
                 this.sixthCardInsuredPrice = item.rate;
-                this.memberCom.finalPrice();
+                this.sixthCardWarningWord = item.tipText;
+              this.memberCom.finalPrice();
             }
           });
         } else if (!this.sixthCardYear && !this.sixthCardMonth && !this.sixthCardDay) {
@@ -1673,6 +1679,7 @@ export class AddMemberComponent implements OnInit {
   firstRelatedRepeat: boolean = false;
   firstPidWrongWords: string = '身分證格式錯誤。';
   firstBdayArr: any;
+  firstCardWarningWord: string;
 
   // second card
   secondCardInsuredPrice: number = 0;
@@ -1695,7 +1702,7 @@ export class AddMemberComponent implements OnInit {
   secondRelatedRepeat: boolean = false;
   secondPidWrongWords: string = '身分證格式錯誤。';
   secondBdayArr: any;
-
+  secondCardWarningWord: string;
 
   // third card
   thirdCardInsuredPrice: number = 0;
@@ -1718,7 +1725,7 @@ export class AddMemberComponent implements OnInit {
   thirdRelatedRepeat: boolean = false;
   thirdPidWrongWords: string = '身分證格式錯誤。';
   thirdBdayArr: any;
-
+  thirdCardWarningWord: string;
 
   // fourth card
   fourthCardInsuredPrice: number = 0;
@@ -1741,7 +1748,7 @@ export class AddMemberComponent implements OnInit {
   fourthRelatedRepeat: boolean = false;
   fourthPidWrongWords: string = '身分證格式錯誤。';
   fourthBdayArr: any;
-
+  fourthCardWarningWord: string;
 
   // fifth card
   fifthCardInsuredPrice: number = 0;
@@ -1764,7 +1771,7 @@ export class AddMemberComponent implements OnInit {
   fifthRelatedRepeat: boolean = false;
   fifthPidWrongWords: string = '身分證格式錯誤。';
   fifthBdayArr: any;
-
+  fifthCardWarningWord: string;
 
   // sixth card
   sixthCardInsuredPrice: number = 0;
@@ -1787,5 +1794,6 @@ export class AddMemberComponent implements OnInit {
   sixthRelatedRepeat: boolean = false;
   sixthPidWrongWords: string = '身分證格式錯誤。';
   sixthBdayArr: any;
+  sixthCardWarningWord: string;
 
 }

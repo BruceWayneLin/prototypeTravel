@@ -6,13 +6,13 @@
       <div class="row tobeHide">
         <div class="col-xs-6"></div>
         <div class="col-xs-6">
-          <div class="col-xs-8 priceTotalDiv">
+          <div class="col-xs-12 priceTotalDiv">
             <div class="text-center priceHead">
               <span class="pull-left">應收保費總計:</span>
               <h3>NT${{finalPrice | number : '1.0'}}</h3>
             </div>
           </div>
-          <div class="col-xs-4"></div>
+          <!--<div class="col-xs-4"></div>-->
         </div>
       </div>
       <!--// first Card-->
@@ -24,6 +24,7 @@
             </div>
           </div>
           <div class="col-xs-11" style="padding-right:0px;">
+            <i class="fa fa-angle-down dropDown" style="font-size:36px;left:80%;!important;z-index:999;"></i>
             <select #fistRelationship="ngModel" [(ngModel)]="firstCardRelationship" (change)="changedRelationship(firstCardRelationship.value, 1)" class="form-control btn-sm" [ngClass]="{'inValidInput': fistRelationship.touched && !fistRelationship.valid || firstRelationshipInvalid || firstCardValidFail || firstRelatedRepeat}" required>
               <option value="">請選擇</option>
               <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
@@ -89,6 +90,7 @@
           <div class="bthInValid">
           <div class="inValid text-left" *ngIf="firstYear.touched && !firstYear.valid && firstMonth.touched && !firstMonth.valid && firstDay.touched && !firstDay.valid || firstCardValidFail || firstBdEmpty">此欄位為必填。</div>
           <div class="inValid text-left" *ngIf="firstBdOverAge">{{'本站僅提供滿'+ insuredMinAge +'歲(含)以上，'+ insuredMaxAge +'歲(含)以下投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
+          <div id="warningWord" class="inValid text-left" *ngIf="!firstBdOverAge"><span>{{firstCardWarningWord}}</span></div>
           </div>
         </div>
         </div>
@@ -106,6 +108,7 @@
               </div>
             </div>
             <div class="col-xs-11" style="padding-right:0px;">
+              <i class="fa fa-angle-down dropDown" style="font-size:36px;left:80%;!important;z-index:999;"></i>
               <select [(ngModel)]="secondCardRelationship" (change)="checkRelationShipRepeat(secondRelationship.value, 2)" #secondRelationship="ngModel" class="form-control btn-sm" [ngClass]="{inValidInput: secondRelationship.touched && !secondRelationship.valid || secondRelationshipInvalid || secondRelatedRepeat}" required>
                 <option value="">與要保人關係</option>
                 <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
@@ -171,6 +174,7 @@
             <div class="bthInValid">
             <div class="inValid text-left" *ngIf="secondYear.touched && !secondYear.valid && secondMonth.touched && !secondMonth.valid && secondDay.touched && !secondDay.valid || secondBdEmpty">此欄位為必填。</div>
             <div class="inValid text-left" *ngIf="secondBdOverAge">{{'本站僅提供滿'+ insuredMinAge +'歲(含)以上，'+ insuredMaxAge +'歲(含)以下投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
+            <div id="warningWord" class="inValid text-left" *ngIf="!secondBdOverAge"><span>{{secondCardWarningWord}}</span></div>
             </div>
           </div>
         </div>
@@ -188,6 +192,7 @@
             </div>
           </div>
           <div class="col-xs-11" style="padding-right:0px;">
+            <i class="fa fa-angle-down dropDown" style="font-size:36px;left:90%;!important;z-index:999;"></i>
             <select name="" [(ngModel)]="thirdCardRelationship" (change)="checkRelationShipRepeat(thirdRelationship.value, 3)" #thirdRelationship="ngModel" class="form-control btn-sm" [ngClass]="{inValidInput: thirdRelationship.touched && !thirdRelationship.valid || thirdCardValidFail || thirdRelationshipInvalid || thirdRelatedRepeat}" [disabled]="!thirdCardLock" required>
               <option value="">與要保人關係</option>
               <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
@@ -253,6 +258,7 @@
           <div class="bthInValid">
           <div class="inValid text-left" *ngIf="thirdYear.touched && !thirdYear.valid && thirdMonth.touched && !thirdMonth.valid && thirdDay.touched && !thirdDay.valid || thirdCardValidFail || thirdBdEmpty">此欄位為必填。</div>
           <div class="inValid text-left" *ngIf="thirdBdOverAge">{{'本站僅提供滿'+ insuredMinAge +'歲(含)以上，'+ insuredMaxAge +'歲(含)以下投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
+          <div id="warningWord" class="inValid text-left" *ngIf="!thirdBdOverAge"><span>{{thirdCardWarningWord}}</span></div>
           </div>
         </div>
         </div>
@@ -270,6 +276,7 @@
           </div>
         </div>
         <div class="col-xs-11" style="padding-right:0px;">
+          <i class="fa fa-angle-down dropDown" style="font-size:36px;left:90%;!important;z-index:999;"></i>
           <select [disabled]="!fourthCardLock" [(ngModel)]="fourthCardRelationship" (change)="checkRelationShipRepeat(fourthRelation.value, 4)" #fourthRelation="ngModel" class="form-control btn-sm" [ngClass]="{inValidInput: fourthRelation.touched && !fourthRelation.valid || fourthCardValidFail || fourthRelationshipInvalid || fourthRelatedRepeat}" required>
             <option value="">與要保人關係</option>
             <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
@@ -335,6 +342,7 @@
           <div class="bthInValid">
           <div class="inValid text-left" *ngIf="fourthYear.touched && !fourthYear.valid && fourthMonth.touched && !fourthMonth.valid && fourthDay.touched && !fourthDay.valid || fourthCardValidFail || fourthBdEmpty">此欄位為必填。</div>
           <div class="inValid text-left" *ngIf="fourthBdOverAge">{{'本站僅提供滿'+ insuredMinAge +'歲(含)以上，'+ insuredMaxAge +'歲(含)以下投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
+          <div id="warningWord" class="inValid text-left" *ngIf="!fourthBdOverAge"><span>{{fourthCardWarningWord}}</span></div>
           </div>
         </div>
         </div>
@@ -352,6 +360,7 @@
           </div>
         </div>
         <div class="col-xs-11" style="padding-right:0px;">
+          <i class="fa fa-angle-down dropDown" style="font-size:36px;left:90%;!important;z-index:999;"></i>
           <select [disabled]="!fifthCardLock" [(ngModel)]="fifthCardRelationship" (change)="checkRelationShipRepeat(fifthRelation.value, 5)" #fifthRelation="ngModel" class="form-control btn-sm" [ngClass]="{inValidInput: fifthRelation.touched && !fifthRelation.valid || fifthCardValidFail || fifthRelationshipInvalid || fifthRelatedRepeat}" required>
             <option value="">與要保人關係</option>
             <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
@@ -417,6 +426,7 @@
           <div class="bthInValid">
           <div class="inValid text-left" *ngIf="fifthYear.touched && !fifthYear.valid && fifthMonth.touched && !fifthMonth.valid && fifthDay.touched && !fifthDay.valid || fifthCardValidFail || fifthBdEmpty">此欄位為必填。</div>
           <div class="inValid text-left" *ngIf="fifthBdOverAge">{{'本站僅提供滿'+ insuredMinAge +'歲(含)以上，'+ insuredMaxAge +'歲(含)以下投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
+          <div id="warningWord" class="inValid text-left" *ngIf="!fifthBdOverAge"><span>{{fifthCardWarningWord}}</span></div>
           </div>
         </div>
         </div>
@@ -434,6 +444,7 @@
             </div>
           </div>
           <div class="col-xs-11" style="padding-right:0px;">
+            <i class="fa fa-angle-down dropDown" style="font-size:36px;left:90%;!important;z-index:999;"></i>
             <select [disabled]="!sixthCardLock" [(ngModel)]="sixthCardRelationship" (change)="checkRelationShipRepeat(sixthRelation.value, 6)" #sixthRelation="ngModel" class="form-control btn-sm" [ngClass]="{inValidInput: sixthRelation.touched && !sixthRelation.valid || sixthCardValidFail || sixthRelationshipInvalid || sixthRelatedRepeat}" required>
               <option value="">與要保人關係</option>
               <option [ngValue]="item.value" *ngFor="let item of relationShip; let i = index;">{{item.text}}</option>
@@ -499,6 +510,7 @@
             <div class="bthInValid">
             <div class="inValid text-left" *ngIf="sixthYear.touched && !sixthYear.valid && sixthMonth.touched && !sixthMonth.valid && sixthDay.touched && !sixthDay.valid || sixthCardValidFail || sixthBdEmpty">此欄位為必填。</div>
             <div class="inValid text-left" *ngIf="sixthBdOverAge">{{'本站僅提供滿'+ insuredMinAge +'歲(含)以上，'+ insuredMaxAge +'歲(含)以下投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
+            <div id="warningWord" class="inValid text-left" *ngIf="!sixthBdOverAge"><span>{{sixthCardWarningWord}}</span></div>
             </div>
           </div>
         </div>

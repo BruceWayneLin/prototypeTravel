@@ -79,6 +79,7 @@ export class HomePageComponent implements OnInit {
   theDayBeginingNeedToRun: number;
   pakNum: any = '';
   product: any = {};
+  numberOfgetDayFromBkendLastSun: number = 0;
 
   @ViewChild('eleTest')  el:ElementRef;
   @ViewChild('noNeedArea') nNA:ElementRef;
@@ -119,6 +120,7 @@ export class HomePageComponent implements OnInit {
     return parms;
   };
   ngOnInit() {
+    this.toCompatibilityUse();
     this.CusDetailContent = true;
     this.product['product'] = 'Travel';
 
@@ -138,18 +140,17 @@ export class HomePageComponent implements OnInit {
       var tmr = new Date().setDate(new Date().getDate() + 1);
       this.firstMon = this.getMonday(new Date(tmr));
     }else{
-      if(this.modifiedClicked){
-        this.testDay = new Date();
-        this.firstMon = this.getMonday(new Date());
+      if(new Date().getDay() == 0){
+        var tmr = new Date().setDate(new Date().getDate() + 1);
+        this.firstMon = this.getMonday(new Date(tmr));
       }else{
         this.firstMon = this.getMonday(new Date());
       }
     }
     if(this.dataService.orderNumberForSave){
-
       this.dataService.getCustomerHomePage().subscribe((item)=>{
         this.startTravelDay = item['dateFrom'];
-
+        document.querySelector('#flagSix').scrollIntoView();
         let sendDataBak = {};
         sendDataBak['product'] = 'Travel';
         sendDataBak['pack'] = this.pakNum;
@@ -185,11 +186,13 @@ export class HomePageComponent implements OnInit {
               }
             });
           });
+          document.querySelector('#flagSix').scrollIntoView();
           if(this.pkgCustomGo == false){
             this.getPriceServiceData();
           } else {
             this.toGetCusPkgPrice();
           }
+          document.querySelector('#flagSix').scrollIntoView();
         });
 
         this.diffDays = item['datePeriod'];
@@ -208,6 +211,14 @@ export class HomePageComponent implements OnInit {
           this.toGetCountryList(this.countries);
           this.changeCountries('');
         });
+        try {
+          var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
+          if(goDownFlag || this.dataService.toGoDown){
+            document.querySelector('#flagSix').scrollIntoView();
+            sessionStorage.removeItem('bak');
+          }
+        } catch (e) {
+        }
       })
     }
 
@@ -263,10 +274,12 @@ export class HomePageComponent implements OnInit {
       }
 
       var d = new Date();
-      var n = d.getDay()+1;
+      var n = d.getDay();
 
       this.getDayFromBkend = (posts.productSetting['startDateLimit'] + n);
       this.theDayBeginingNeedToRun = this.getDayFromBkend + 10;
+      this.startDayPlusLastDayNum = this.theDayBeginingNeedToRun;
+
       this.startDayLimit = posts.productSetting['startDateLimit'];
       this.ifTheStartIsPlusOneMoreDay = posts.productSetting['start'];
 
@@ -279,14 +292,25 @@ export class HomePageComponent implements OnInit {
       posts.disabledDateList.forEach((item) => {
         this.disabledReason.push(item.reason);
       });
+      this.numberOfgetDayFromBkendLastSun = this.getDayFromBkend;
       // console.log(posts.disabledDateList);
-
       console.log(posts);
       this.favCountry = posts['favCountry'] == null? [] : posts['favCountry'];
       this.travelPeriodLimit = posts.productSetting['travelPeriodLimit'];
       this.toGetCountryList(this.countries);
+      try {
+        var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
+        if(goDownFlag || this.dataService.toGoDown){
+          document.querySelector('#flagSix').scrollIntoView();
+          sessionStorage.removeItem('bak');
+        }
+      } catch (e) {
+      }
     });
     this.changeCountries('');
+  }
+
+  toCompatibilityUse(){
 
   }
 
@@ -536,12 +560,12 @@ export class HomePageComponent implements OnInit {
     document.querySelector('#flagSix').scrollIntoView();
 
     if(this.pkgCustomGo){
-      this.selPkgH2 = '挑不到想要的?點我自己選';
+      this.selPkgH2 = '自訂方案';
       this.pkgCustomTxt = '回建議方案挑選';
       this.toGetCustomPackageContent(this.defaultCustomerPkg);
     } else {
       this.selPkgH2 = '選擇方案';
-      this.pkgCustomTxt = '自訂投保方案';
+      this.pkgCustomTxt = '挑不到想要的?點我自己選';
       this.dataService.getIniData(this.product).subscribe((posts) => {
         posts.packageList.filter(val => val && val.isDefaultPackage).map(value =>
             this.selectedPackage = value
@@ -579,19 +603,20 @@ export class HomePageComponent implements OnInit {
 
   theDaysMissed: number;
   theTimeClicked: number = 2;
+  startDayPlusLastDayNum: any;
   toShowMoreDaysFun() {
     this.theTimeClicked++;
     if(this.theTimeClicked == this.totalTimesTimes){
       this.getDayFromBkend = this.travelPeriodLimit;
       this.selectTravelDayIsDone = false;
       this.toShowMoreDays = false;
-      this.textOfOverDays = '出國超過' + this.travelPeriodLimit + '天？';
+      this.textOfOverDays = '超過' + this.travelPeriodLimit + '天後出發？';
     }else{
       let testDayAddOneMonth = new Date(new Date().getFullYear(), new Date().getMonth()+this.theTimeClicked, 0);
       let day = 1000*60*60*24;
       var diffDays2 = Math.round(Math.abs((new Date().getTime() - new Date(testDayAddOneMonth).getTime())/(day)));
       if(this.theTimeClicked == 5){
-          this.getDayFromBkend = this.travelPeriodLimit;
+        this.getDayFromBkend = this.travelPeriodLimit;
       }else{
         this.getDayFromBkend = diffDays2;
       }
@@ -607,16 +632,20 @@ export class HomePageComponent implements OnInit {
     this.tableShowHidden = false;
     this.selectTravelDayIsDone = false;
     this.modifiedClicked = true;
-    // this.testDay = new Date();
-    // this.firstMon = this.getMonday(new Date());
+    if(new Date().getDay() == 0){
+      var tmr = new Date().setDate(new Date().getDate() + 1);
+      this.firstMon = this.getMonday(new Date(tmr));
+    }else{
+      this.firstMon = this.getMonday(new Date());
+    }
     this.startTravelDay = '';
     this.endTravelDay = '';
     this.theTimeClicked = 2;
-    this.theDayBeginingNeedToRun = this.getDayFromBkend + 10;
     this.toShowMoreDays = !this.toShowMoreDays;
     this.getDayFromBkend = this.startDayLimit;
+    this.theDayBeginingNeedToRun = this.getDayFromBkend + 10;
 
-    this.textOfOverDays = '出國超過' + this.getDayFromBkend + '天？';
+    this.textOfOverDays = '超過' + this.getDayFromBkend + '天後出發？';
 
     // let countWeek = function(){
     //   var date = new Date(),
@@ -643,14 +672,11 @@ export class HomePageComponent implements OnInit {
         this.textOfSelectingDays = '請點選旅程出發日與返回日';
         this.startTravelDay = $event.target.value;
         // this.testDay = this.startTravelDay;
-        let testDayAddOneMonth = new Date(new Date().getFullYear(), new Date().getMonth()+2, 0);
-        let day = 1000*60*60*24;
-        // if(this.modifiedClicked){
-        //   var diffDays = Math.round(Math.abs((new Date(this.testDay).getTime() - new Date(testDayAddOneMonth).getTime())/(day)));
-        //   this.getDayFromBkend = diffDays;
-        // }
-        // this.firstMon = this.getMonday(new Date(this.startTravelDay));
-        this.theDayBeginingNeedToRun = this.travelPeriodLimit + 50;
+        // let testDayAddOneMonth = new Date(new Date().getFullYear(), new Date().getMonth()+2, 0);
+        // let day = 1000*60*60*24;
+      this.firstMon = new Date(this.startTravelDay);
+      this.theDayBeginingNeedToRun = this.travelPeriodLimit + this.getDayFromBkend + 10;
+
         this.totalTimesTimes = Math.round(this.travelPeriodLimit/30);
         // this.getDayFromBkend = diffDays;
         this.selectTravelDayIsDone = true;
@@ -663,20 +689,19 @@ export class HomePageComponent implements OnInit {
               $(this).find('.checkBtnTxt').removeClass('hidden');
             }
           });
-        }, 300);
+        }, 100);
 
         document.querySelector('#flagFour').scrollIntoView();
       } else {
-        if(this.startTravelDay) {
+      if(this.startTravelDay) {
           if(this.startTravelDay == $event.target.value){
             var modal = document.getElementById('myModal');
             modal.style.display = "block";
             this.dataService.AlertTXT = [];
-            this.dataService.AlertTXT.push('返回日不可與出發日同一天');
-            document.querySelector('#flagFour').scrollIntoView();
+            this.dataService.AlertTXT.push('出發日、返回日不可為同一天');
+            document.querySelector('#myModal').scrollIntoView();
             return false;
           } else {
-
             let sendDataBak = {};
             sendDataBak['product'] = 'Travel';
             sendDataBak['pack'] = this.pakNum;
@@ -740,12 +765,6 @@ export class HomePageComponent implements OnInit {
                   this.toGetCusPkgPrice();
               }
             }
-            // if(isNaN(this.diffDays)){
-            //   this.diffDays = 0;
-            // }else{
-            //
-            // }
-
           }
         }
       }
@@ -881,6 +900,7 @@ export class HomePageComponent implements OnInit {
   }
 
   clickWannaInsuredBtn(value, link) {
+    console.log(link);
     if(link){
       window.location.href = link;
     }
@@ -907,17 +927,6 @@ export class HomePageComponent implements OnInit {
   }
 
   toGetShowContentOfPkg(id, number, objClick){
-    // if(!this.doNotNeedToShow && $('.noNeedClassForWord' + number).is(':visible')){
-    //   $('.noNeedClassForWord'+number).slideUp('fast');
-    //   $('.amtBtnClickToShow'+number).slideDown('fast');
-    // }else{
-    //   $('.amtBtnClickToShow'+number).slideDown('fast');
-    //   $('.needClassForWord'+number).slideDown('fast');
-    //   $('.noNeedClassForWord'+number).slideUp('fast');
-    // }
-    // alert();
-
-    // $('.noNeedClassForWord' + number).slideUp('fast');
     setTimeout(function(){
     }, 300);
     for(let i = 0; i <= $('#paddingSpe i').length; i ++) {
@@ -1025,13 +1034,6 @@ export class HomePageComponent implements OnInit {
     })
     this.selectedCountryStr = a;
     document.querySelector('#flagTwo').scrollIntoView();
-
-    // var body = $("html, body");
-    // if(window.innerWidth <= 500){
-    // }else{
-      // body.stop().animate({scrollTop:930}, 200, 'swing', function() {
-      // });
-    // }
   }
 
   isLastDay(dt) {
@@ -1072,13 +1074,6 @@ export class HomePageComponent implements OnInit {
     return prefixes[0 | date.getDate() / 7];
   }
 
-  // getSunday(sun) {
-  //   sun = new Date(sun);
-  //   let day = sun.getDay(),
-  //     diff = sun.getDate() - day + (day == 0 ? -6:0); // adjust when day is sunday
-  // return new Date(sun.setDate(diff));
-  // }
-
   lastDay:any;
   todayWhichWeek(monthDayCheck){
     var date = new Date(monthDayCheck);
@@ -1113,24 +1108,13 @@ export class HomePageComponent implements OnInit {
   }
 
   toHiddenDate(value){
-    if(this.startTravelDay){
-       var oneDay = 24*60*60*1000;
-       var nextMonthLastDay = new Date(new Date(this.startTravelDay).getFullYear(), new Date(this.startTravelDay).getMonth() + this.theTimeClicked, 0);
-       let startDayPlusLimitedDay = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit - 1);
-
+    if (this.startTravelDay) {
+      var oneDay = 24 * 60 * 60 * 1000;
+      var nextMonthLastDay = new Date(new Date(this.startTravelDay).getFullYear(), new Date(this.startTravelDay).getMonth() + this.theTimeClicked, 0);
       var startDayPlusLastDayNum = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit);
-
-       if(this.theTimeClicked == this.totalTimesTimes){
-         startDayPlusLastDayNum = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit);
-       }else{
-         var getDayBetween =  Math.round(Math.abs((new Date(nextMonthLastDay).getTime() - new Date(this.startTravelDay).getTime())/(oneDay)));
-         startDayPlusLastDayNum = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + getDayBetween);
-         var getDayBtnDays = new Date(nextMonthLastDay).setDate(new Date(nextMonthLastDay).getDate()+1);
-       }
-
-      var toGetLastWeekend = function(){
+      var toGetLastWeekend = function () {
         var lastDayNeedToHide
-        switch (new Date(startDayPlusLastDayNum).getDay()){
+        switch (new Date(startDayPlusLastDayNum).getDay()) {
           case 0:
             lastDayNeedToHide = 6;
             break;
@@ -1154,364 +1138,135 @@ export class HomePageComponent implements OnInit {
             break;
           default:
         }
-      return lastDayNeedToHide
+        return lastDayNeedToHide
       }
-
       var getSunDayOfTheWeek = new Date(startDayPlusLastDayNum).setDate(new Date(startDayPlusLastDayNum).getDate() + toGetLastWeekend());
-      var theDayOfStartDaySun = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() - new Date(this.startTravelDay).getDay());
-      if(new Date(value) > new Date(getSunDayOfTheWeek) || new Date(value) < new Date(theDayOfStartDaySun) || (new Date(value) > new Date(getDayBtnDays))){
+
+      if (this.theTimeClicked == this.totalTimesTimes) {
+        startDayPlusLastDayNum = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit);
+        // let firstEndDay = new Date(this.firstMon).setDate(new Date(this.firstMon).getDate() + this.getDayFromBkend);
+        // console.log(new Date(firstEndDay));
+
+        let timeDiff = Math.abs(new Date(startDayPlusLastDayNum).getTime() - new Date(this.startTravelDay).getTime());
+        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        this.numberOfgetDayFromBkendLastSun = diffDays
+      } else {
+        var getDayBetween = Math.round(Math.abs((new Date(nextMonthLastDay).getTime() - new Date(this.startTravelDay).getTime()) / (oneDay)));
+        startDayPlusLastDayNum = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + getDayBetween);
+        var getDayBtnDays = new Date(nextMonthLastDay).setDate(new Date(nextMonthLastDay).getDate() + 1);
+        let timeDiff = Math.abs(new Date(startDayPlusLastDayNum).getTime() - new Date(this.startTravelDay).getTime());
+        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        this.numberOfgetDayFromBkendLastSun = diffDays
+      }
+      if (new Date(value) > new Date(getSunDayOfTheWeek) || (new Date(value) > new Date(getDayBtnDays))) {
         return true;
-      }else{
+      } else {
         return false;
       }
     }else{
-      // let yesterday = new Date(new Date().setDate(new Date().getDate()-1));
-       var yesterday = new Date().setDate(new Date(this.getMonday(new Date())).getDate()-1);
-       // console.log(new Date(yesterday));
-     //
-     //  if(new Date(value) < yesterday){
-     //  return true;
-     // }
-      var yesterday = new Date().setDate(new Date(this.getMonday(new Date())).getDate()-1);
-      var lastPlustStartDayLimited = new Date().setDate(new Date().getDate() + this.startDayLimit);
-      var lastDayNeedToHide;
-      switch (new Date(lastPlustStartDayLimited).getDay()){
-        case 0:
-          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 6);
-          break;
-        case 1:
-          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 5);
-          break;
-        case 2:
-          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 4);
-          break;
-        case 3:
-          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 3);
-          break;
-        case 4:
-          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 2);
-          break;
-        case 5:
-          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 1);
-          break;
-        case 6:
-          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 0);
-          break;
-        default:
-      }
-
-     if(new Date().getDate() == 1){
-       if(new Date(value) < new Date()){
-         return true;
-       }else if (new Date(value) > new Date(lastDayNeedToHide)){
-         return true;
-       }
-     }else if (new Date(value) > new Date(lastDayNeedToHide)){
-      return true;
-     }else if(new Date(value) < new Date(yesterday)){
+      var todayPlusStartDayLimitAndDisaster = new Date().setDate(new Date().getDate() + this.startDayLimit);
+      if(new Date(todayPlusStartDayLimitAndDisaster).getDay() == 6 && new Date(value) >= new Date(todayPlusStartDayLimitAndDisaster)){
         return true;
-     }else{
-        if(new Date().getDay() == 6){
-          let tmr = new Date(new Date().setDate(new Date().getDate()+1));
-          if(new Date(value) <= new Date(tmr)){
-            return true;
-          }else{
-            return false;
-          }
-        }
       }
     }
 
-
-
-
-    // let date = new Date(this.testDay);
-    // if(this.startTravelDay){
-    //   if(!this.modifiedClicked){
-    //     this.getDayFromBkend = this.travelPeriodLimit + this.disabledDays.length/2;
-    //   }
-    //   let theDaylimited = new Date(new Date(this.testDay).setDate(date.getDate() + this.getDayFromBkend));
-    //   let theLimitedLastDay = new Date(theDaylimited.setDate(theDaylimited.getDate() + (7 - theDaylimited.getDay()) % 7));
     //
-    //   if(new Date(this.testDay).getDay() == 6 ){
-    //     let dt = new Date(new Date(this.firstMon).setDate(new Date(this.firstMon).getDate() + 7));
-    //     if(new Date(value) <= dt){
-    //       return true
-    //     }
-    //   }
-    //   if(new Date(value) >= new Date(theLimitedLastDay)){
-    //     return true
-    //   }
-    //   if(this.modifiedClicked){
-    //     let theDaylimited = new Date(new Date(this.testDay).setDate(new Date(this.testDay).getDate()+1 + this.travelPeriodLimit));
-    //     let d = theDaylimited;
-    //     let theDayLimited2 = new Date(d.getFullYear(), d.getMonth(), d.getDate() - d.getDay() + 7);
-    //     if(new Date(value) >= new Date(theDayLimited2) || new Date(value) == new Date(theLimitedLastDay) || new Date(value) < new Date(this.getMonday(this.startTravelDay))){
-    //       return true;
-    //     }
-    //     // console.log('1',theDayLimited2);
-    //     // console.log('2',theDaylimited);
-    //     // console.log('3', theLimitedLastDay);
-    //     // console.log('4', theDaylimited);
+
+    //
+    //   if(new Date(value) > new Date(getSunDayOfTheWeek) || new Date(value) < new Date(theDayOfStartDaySun) || (new Date(value) > new Date(getDayBtnDays))){
+    //     return true;
     //   }else{
-    //     if(new Date(value) < new Date(this.firstMon) || new Date(value) < new Date(this.getMonday(this.startTravelDay))){
-    //       return true;
-    //     }else{
-    //       return false;
-    //     }
+    //     return false;
     //   }
-    // }else{
-    //   this.getDayFromBkend = this.startDayLimit + this.disabledDays.length/2 -1;
-    //   if(this.modifiedClicked){
-    //     this.testDay = new Date();
-    //     this.firstMon = this.getMonday(new Date(this.testDay));
-    //     date = new Date(this.testDay);
-    //     var theDaylimited = new Date(new Date(this.testDay).setDate(date.getDate() + this.getDayFromBkend));
-    //     if(this.disabledDays.length >= 0){
-    //       var theLimitedLastDay = new Date(theDaylimited.setDate(theDaylimited.getDate()-1 + (21 - theDaylimited.getDay()) % 14));
-    //     }else{
-    //       var theLimitedLastDay = new Date(theDaylimited.setDate(theDaylimited.getDate()-1 + (7 - theDaylimited.getDay()) % 7));
-    //     }
-    //     if(new Date(this.testDay).getDay() == 6 ){
-    //       let dt = new Date(new Date(this.firstMon).setDate(new Date(this.firstMon).getDate() + 7));
-    //       if(new Date(value) <= dt){
-    //         return true
-    //       }
-    //     }
-    //     if(new Date(value) >= new Date(theLimitedLastDay) || new Date(value) <= new Date(this.firstMon)){
-    //       return true
-    //     }
-    //     if(this.modifiedClicked){
-    //       let theDaylimited = new Date(new Date(this.testDay).setDate(new Date(this.testDay).getDate()+1 + this.travelPeriodLimit));
-    //       if(new Date(value) > new Date(theDaylimited)){
+
+    // else{
+    //   var yesterday = new Date().setDate(new Date(this.getMonday(new Date())).getDate()-1);
+    //   var lastPlustStartDayLimited = new Date().setDate(new Date().getDate() + this.startDayLimit);
+    //   var lastDayNeedToHide;
+    //   switch (new Date(lastPlustStartDayLimited).getDay()){
+    //     case 0:
+    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 6);
+    //       break;
+    //     case 1:
+    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 5);
+    //       break;
+    //     case 2:
+    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 4);
+    //       break;
+    //     case 3:
+    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 3);
+    //       break;
+    //     case 4:
+    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 2);
+    //       break;
+    //     case 5:
+    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 1);
+    //       break;
+    //     case 6:
+    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 0);
+    //       break;
+    //     default:
+    //   }
+    //   let yes = new Date(new Date().setDate(new Date().getDate()-1));
+    //   if(new Date().getDate() == 1){
+    //    if(new Date(value) < new Date(yes)){
+    //      return true;
+    //    }else if (new Date(value) > new Date(lastDayNeedToHide)){
+    //      return true;
+    //    }
+    //  }else if (new Date(value) > new Date(lastDayNeedToHide)){
+    //   return true;
+    //  }else if(new Date(value) < new Date(yesterday)){
+    //     return true;
+    //  }else{
+    //     if(new Date().getDay() == 6){
+    //       let tmr = new Date(new Date().setDate(new Date().getDate()+1));
+    //       if(new Date(value) < new Date(tmr)){
     //         return true;
+    //       }else{
+    //         return false;
     //       }
-    //     }
-    //   }else{
-    //     var tmr = new Date(this.testDay).setDate(new Date(this.testDay).getDate() + 1);
-    //     // this.getDayFromBkend = this.startDayLimit + this.disabledDays.length/2 -1;
-    //     var dayDate = date.getDate();
-    //     var lastDay = this.isLastDay(new Date(this.testDay));
-    //     // this.lastDay = (new Date(2017, 11, 0).getDate()+1);
-    //     this.getRemanningDays();
-    //     // var yes = date.setDate(date.getDate() - 1);
-    //     // var throwingMon = this.firstMon;
-    //     // var todayWeekDay = new Date(this.testDay).getDay();
-    //     var theDaylimited = new Date(new Date(this.testDay).setDate(date.getDate() + this.getDayFromBkend));
-    //     if(this.disabledDays.length >= 0){
-    //       var theLimitedLastDay = new Date(theDaylimited.setDate(theDaylimited.getDate() + (21 - theDaylimited.getDay()) % 14));
-    //     }else{
-    //       var theLimitedLastDay = new Date(theDaylimited.setDate(theDaylimited.getDate() + (7 - theDaylimited.getDay()) % 7));
-    //     }
-    //     if(new Date(this.testDay).getDay() == 6 ){
-    //       let dt = new Date(new Date(this.firstMon).setDate(new Date(this.firstMon).getDate() + 7));
-    //       if(new Date(value) <= dt){
-    //         return true
-    //       }
-    //     }
-    //     if(new Date(value) >= new Date(theLimitedLastDay)){
-    //       return true
     //     }
     //   }
-    //
-    //   // var tmr = new Date(this.testDay).setDate(new Date(this.testDay).getDate() + 1);
-    //   // this.getDayFromBkend = this.startDayLimit;
-    //   // var dayDate = date.getDate();
-    //   // var lastDay = this.isLastDay(new Date(this.testDay));
-    //   // // this.lastDay = (new Date(2017, 11, 0).getDate()+1);
-    //   // this.getRemanningDays();
-    //   // // var yes = date.setDate(date.getDate() - 1);
-    //   // // var throwingMon = this.firstMon;
-    //   // // var todayWeekDay = new Date(this.testDay).getDay();
-    //   // let theDaylimited = new Date(new Date(this.testDay).setDate(date.getDate() + this.getDayFromBkend));
-    //   // let theLimitedLastDay = new Date(theDaylimited.setDate(theDaylimited.getDate() + (7 - theDaylimited.getDay()) % 7));
-    //
-    //
-    //
-    //   // if(new Date(this.testDay).getDay() == 6){
-    //   //  if (new Date(value) <= new Date(tmr)) {
-    //   //    return true;
-    //   //  }
-    //   // }else if(new Date(this.testDay).getDay() == 0){
-    //   //   if (new Date(value) < new Date(this.testDay)) {
-    //   //     return true;
-    //   //   }
-    //   // }else if(this.checkLastDayOfMonth()){
-    //   //   if (new Date(value) <= new Date(this.getMonday(this.testDay))) {
-    //   //     return true;
-    //   //   }
-    //   // }
-    //
-    //   // if(dayDate == 1 || lastDay){
-    //   //   if(todayWeekDay == 0 || todayWeekDay == 6){
-    //   //     this.startTravelDayOn = false;
-    //   //     if((new Date(value) < new Date(tmr))){
-    //   //       return true;
-    //   //     }
-    //   //   }else{
-    //   //     if(new Date(value) <= new Date(tmr)){
-    //   //       this.startTravelDayOn = false;
-    //   //       return true;
-    //   //     }
-    //   //   }
-    //   // }else{
-    //   //   if(todayWeekDay <= 6){
-    //   //     if(new Date(this.testDay).getDay() == 6){
-    //   //       if (new Date(value) <= new Date(tmr)) {
-    //   //         return true;
-    //   //       }
-    //   //     }else if(new Date(this.testDay).getDay() == 0){
-    //   //       if (new Date(value) < new Date(this.testDay)) {
-    //   //         return true;
-    //   //       }
-    //   //     }
-    //   //   } else if (new Date(value) < new Date(tmr)) {
-    //   //     return true;
-    //   //   }
-    //   // }
-    //
     // }
-  }
-
-  getLastSunday(d){
-    d.setMonth(d.getMonth() + 1);
-    d.setDate(0);
-    var lastsunday = d.getDate() - (d.getDay());
-    return lastsunday
   }
 
   checkShoudShowTitle(val){
-    if(this.startTravelDay){
-      var oneDay = 24*60*60*1000;
-      var behindStartTravelDayHide = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate()-1 - new Date(this.startTravelDay).getDay());
-      var nextMonthLastDay = new Date(new Date(this.startTravelDay).getFullYear(), new Date(this.startTravelDay).getMonth() + this.theTimeClicked, 0);
-      var sunday = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() - new Date(this.startTravelDay).getDay());
-      var sundayMinusOneDay = new Date(sunday).setDate(new Date(sunday).getDate() - 1);
-      var getStartDayLastDay;
-      if(this.theTimeClicked == this.totalTimesTimes){
-        getStartDayLastDay = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit);
-      }else{
-        var getDayBetween =  Math.round(Math.abs((new Date(nextMonthLastDay).getTime() - new Date(this.startTravelDay).getTime())/(oneDay)));
-        getStartDayLastDay = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + getDayBetween);
-      }
-      if((new Date(val).getDate() == 1) || (new Date(val) <= new Date(sunday)) && new Date(val).getDay() == 0 && new Date(val) > new Date(sundayMinusOneDay)){
-        if(new Date(val) > new Date(getStartDayLastDay) || new Date(val) < new Date(behindStartTravelDayHide)){
-          return false;
-        }else{
-          return true;
-        }
-      }else{
-        return false;
-      }
-    }else{
-      var tmr = new Date().setDate(new Date().getDate() + 1);
-      var lastDayNoStartDay = new Date().setDate(new Date().getDate() + this.startDayLimit - 1);
-      if((new Date(val).getDate() == 1 || (new Date(val).getDay() == 0 && new Date(val) < new Date(tmr)))){
-        if(new Date().getDate() == 1){
-          if(new Date(val) < new Date(new Date().setDate(new Date().getDate() - new Date().getDay()))){
-            return true;
-          }
-        }else if(new Date(val) > new Date(lastDayNoStartDay)){
-          return false;
-        }else{
-          return true;
-        }
-      }else{
-        false;
-      }
-    }
-
-    // let theDaylimited = new Date(new Date(this.testDay).setDate(new Date(this.testDay).getDate() + this.getDayFromBkend));
-    // let theLimitedLastDay = new Date(theDaylimited.getFullYear(), theDaylimited.getMonth()+1, 0);
-    // let lastMinsWeek = new Date(theLimitedLastDay).setDate(new Date(theLimitedLastDay).getDate() - 7);
-    // let d = theDaylimited;
-    // let theDayLimited2 = new Date(d.getFullYear(), d.getMonth(), d.getDate() - d.getDay() + 7);
-    // if ((new Date(val).getDate() == 1) && new Date(val) < new Date(theDayLimited2) || (new Date(val).getDay() == 0 && new Date(val) < new Date(tmr)) && new Date(val) < new Date(theDayLimited2)){
-    //   if(this.startTravelDay){
-    //     let dt = new Date(this.startTravelDay).getDay();
-    //     let startDaySunday = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() - dt);
-    //     if(new Date(val) <= new Date(startDaySunday) || (new Date(val).getDate() == 1) && new Date(val) < new Date(theDayLimited2) || (new Date(val).getDay() == 0 && new Date(val) < new Date(tmr)) && new Date(val) < new Date(theDayLimited2)){
-    //       if((new Date(val).getDate() == 1) && new Date(val) >= new Date(lastMinsWeek) && new Date(val) < new Date(theDayLimited2)){
-    //         return false;
-    //       }else{
-    //         return true;
-    //       }
+    // if(this.startTravelDay){
+    //   var oneDay = 24*60*60*1000;
+    //   var behindStartTravelDayHide = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate()-1 - new Date(this.startTravelDay).getDay());
+    //   var nextMonthLastDay = new Date(new Date(this.startTravelDay).getFullYear(), new Date(this.startTravelDay).getMonth() + this.theTimeClicked, 0);
+    //   var sunday = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() - new Date(this.startTravelDay).getDay());
+    //   var sundayMinusOneDay = new Date(sunday).setDate(new Date(sunday).getDate() - 1);
+    //   var getStartDayLastDay;
+    //   if(this.theTimeClicked == this.totalTimesTimes){
+    //     getStartDayLastDay = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + this.travelPeriodLimit);
+    //   }else{
+    //     var getDayBetween =  Math.round(Math.abs((new Date(nextMonthLastDay).getTime() - new Date(this.startTravelDay).getTime())/(oneDay)));
+    //     getStartDayLastDay = new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + getDayBetween);
+    //   }
+    //   if((new Date(val).getDate() == 1) || (new Date(val) <= new Date(sunday)) && new Date(val).getDay() == 0 && new Date(val) > new Date(sundayMinusOneDay)){
+    //     if(new Date(val) > new Date(getStartDayLastDay) || new Date(val) < new Date(behindStartTravelDayHide)){
+    //       return false;
+    //     }else{
+    //       return true;
     //     }
     //   }else{
-    //     return true;
-    //   }
-    // }
-
-    // if(this.modifiedClicked){
-    //
-    //   if(this.startTravelDay && this.modifiedClicked){
-    //
-    //     // let theDaylimited = new Date(new Date(this.testDay).setDate(new Date(this.testDay).getDate() + this.travelPeriodLimit));
-    //     // let d = theDaylimited;
-    //     // let theDayLimited2 = new Date(d.getFullYear(), d.getMonth(), d.getDate() - d.getDay() + 7);
-    //     // if(new Date(val) == new Date(new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() - 1)) && new Date(val) < new Date(theDayLimited2)){
-    //     //   return true;
-    //     // }
-    //     // console.log(new Date(new Date(theDaySelected).setDate(new Date(theDaySelected).getDate() + 2)));
-    //
-    //   }
-    //
-    //   let theDaylimited = new Date(new Date(this.testDay).setDate(new Date(this.testDay).getDate() + this.travelPeriodLimit));
-    //   let d = theDaylimited;
-    //   let theDayLimited2 = new Date(d.getFullYear(), d.getMonth(), d.getDate() - d.getDay() + 7);
-    //   if(new Date(val) > new Date(theDayLimited2)){
-    //     // return false;
-    //   }
-    // }
-    // if(new Date(val) >= new Date(theLimitedLastDay)){
-    //   // return false;
-    // } else if(new Date(val).getDay() == 0 && new Date(val) < new Date(tmr)){
-    //   // if(this.startTravelDay){
-    //   //   let startpa= new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() - 14);
-    //   //   // let startfu= new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + 7);
-    //   //   var theDaySelected = new Date(this.getMonday(new Date(this.startTravelDay)));
-    //   //   if(new Date(val) < new Date(startpa)){
-    //   //     // return false;
-    //   //   }else if(new Date(val) >= new Date(startpa)){
-    //   //     return true;
-    //   //   }
-    //   // }else{
-    //   //   return true;
-    //   // }
-    // }else if (new Date(val).getDate() == 1){
-    //   if(new Date(val) > new Date(tmr)){
-    //     // if(this.startTravelDay){
-    //     //   let startpa= new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() - 7);
-    //     //   // let startfu= new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + 7);
-    //     //
-    //     //   if(new Date(val) < new Date(startpa)){
-    //     //     // return false;
-    //     //   }else if(new Date(val) >= new Date(startpa)){
-    //     //     return true;
-    //     //   }
-    //     // }else{
-    //     //   return true;
-    //     // }
-    //   }else if (new Date(val) < new Date(tmr)){
-    //     if(new Date(val).getDay() == 0){
-    //       if(this.startTravelDay){
-    //         let startpa= new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() - 7);
-    //         let startfu= new Date(this.startTravelDay).setDate(new Date(this.startTravelDay).getDate() + 7);
-    //
-    //         if(new Date(val) < new Date(startpa)){
-    //           // return false;
-    //         }else if(new Date(val) > new Date(startpa)){
-    //           return true;
-    //         }
-    //       }else{
-    //         return true;
-    //       }
-    //     }else{
-    //       // return false;
-    //     }
+    //     return false;
     //   }
     // }else{
-    //   // return false;
+    //   var tmr = new Date().setDate(new Date().getDate() + 1);
+    //   let sunday = new Date().setDate(new Date().getDate() - new Date().getDay());
+    //   var lastDayNoStartDay = new Date().setDate(new Date().getDate() + this.startDayLimit - 1);
+    //   if((new Date(val) < new Date(sunday) || new Date(val).getDate() == 1 || (new Date(val).getDay() == 0 && new Date(val) < new Date(tmr)))){
+    //     if(new Date(val) > new Date(lastDayNoStartDay) || new Date(val) < new Date(new Date().setDate(new Date().getDate() - new Date().getDay()))){
+    //       return false;
+    //     }else{
+    //       return true;
+    //     }
+    //   }else{
+    //     return false;
+    //   }
     // }
   }
 
@@ -1542,69 +1297,6 @@ export class HomePageComponent implements OnInit {
         return false;
       }
     }
-
-
-
-
-
-    // let today = new Date(this.testDay);
-    // let date = new Date(this.testDay);
-    // let tmr = date.setDate(today.getDate() + 1);
-    // var dayDate = date.getDate();
-    // var theDaylimited;
-    //
-    // if(this.modifiedClicked){
-    //   this.testDay = new Date();
-    //   this.firstMon = this.getMonday(new Date(this.testDay));
-    // }
-    //
-    // if(this.startTravelDay){
-    //   theDaylimited = new Date(new Date(this.testDay).setDate(new Date(this.testDay).getDate() + this.travelPeriodLimit));
-    // }else{
-    //   theDaylimited = new Date(new Date(this.testDay).setDate(new Date(this.testDay).getDate() + this.getDayFromBkend));
-    // }
-    //
-    // if(!this.startTravelDay){
-    //   let dayLimitedBegining = new Date(theDaylimited).setDate(new Date(theDaylimited).getDate() + 1);
-    //   if(new Date(calVal) > new Date(dayLimitedBegining) || new Date(calVal) <= new Date(this.testDay)){
-    //     return true;
-    //   }
-    // }
-    //
-    // if(this.startTravelDay){
-    //   if(this.modifiedClicked){
-    //     theDaylimited = new Date(new Date(this.testDay).setDate(new Date(this.testDay).getDate()+1 + this.travelPeriodLimit));
-    //     if(new Date(calVal) > new Date(theDaylimited)){
-    //       return true;
-    //     }
-    //   }else{
-    //     if(new Date(calVal) >= new Date(theDaylimited)){
-    //       return true;
-    //     }
-    //   }
-    // }
-    //
-    // if(dayDate == 1){
-    //   if(new Date(calVal) <= new Date(this.testDay)){
-    //     return true;
-    //   }else{
-    //     return false;
-    //   }
-    // }
-    // var lastDay = this.isLastDay(today);
-    //
-    //  if(lastDay){
-    //    this.startTravelDayOn = true;
-    //  }
-
-    // if(this.startTravelDay){
-    //   let monday = this.getMonday(this.startTravelDay);
-    //   var oneDay = 24*60*60*1000;
-    //   var diffDays = Math.round(Math.abs((monday.getTime() - startDaysDisabled.getTime())/(oneDay)));
-    //   this.theDaysMissed = diffDays;
-    // }
-    //
-
   }
 
   buttonToDisabledTwo(btnVal){
@@ -1653,16 +1345,7 @@ export class HomePageComponent implements OnInit {
       modal.style.display = "block";
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('請選擇國家');
-        document.querySelector('#myModal').scrollIntoView();
-
-        // var body = $("html, body");
-      // if(window.innerWidth <= 500){
-      //   body.stop().animate({scrollTop:320}, 200, 'swing', function() {
-      //   });
-      // }else{
-      //   body.stop().animate({scrollTop:490}, 200, 'swing', function() {
-      //   });
-      // }
+      document.querySelector('#myModal').scrollIntoView();
       return false;
     } else if(!this.purposeGo){
         this.dataService.idToGoFlow = 'flagTwo';
@@ -1671,15 +1354,6 @@ export class HomePageComponent implements OnInit {
       this.dataService.AlertTXT = [];
       this.dataService.AlertTXT.push('目的');
         document.querySelector('#myModal').scrollIntoView();
-
-        // var body = $("html, body");
-      // if(window.innerWidth <= 500){
-      //   body.stop().animate({scrollTop:390}, 200, 'swing', function() {
-      //   });
-      // }else{
-      //   body.stop().animate({scrollTop:660}, 200, 'swing', function() {
-      //   });
-      // }
       return false;
     } else if(!this.transportation){
 
@@ -1687,37 +1361,19 @@ export class HomePageComponent implements OnInit {
         document.querySelector('#myModal').scrollIntoView();
         this.dataService.idToGoFlow = 'flagFour';
         var modal = document.getElementById('myModal');
-      modal.style.display = "block";
-      this.dataService.AlertTXT = [];
-      this.dataService.AlertTXT.push('請選擇出發日期');
+        modal.style.display = "block";
+        this.dataService.AlertTXT = [];
+        this.dataService.AlertTXT.push('請選擇出發日期');
         document.querySelector('#myModal').scrollIntoView();
 
-        // var body = $("html, body");
-      // if(window.innerWidth <= 500){
-      //   body.stop().animate({scrollTop:1210}, 200, 'swing', function() {
-      //   });
-      // }else{
-      //   body.stop().animate({scrollTop:1225}, 200, 'swing', function() {
-      //   });
-      // }
     } else if(!this.endTravelDay){
         document.querySelector('#myModal').scrollIntoView();
         this.dataService.idToGoFlow = 'flagFour';
-
         var modal = document.getElementById('myModal');
-      modal.style.display = "block";
-      this.dataService.AlertTXT = [];
-      this.dataService.AlertTXT.push('請選擇回國日期');
+        modal.style.display = "block";
+        this.dataService.AlertTXT = [];
+        this.dataService.AlertTXT.push('請選擇回國日期');
         document.querySelector('#myModal').scrollIntoView();
-
-        // var body = $("html, body");
-      // if(window.innerWidth <= 500){
-      //   body.stop().animate({scrollTop:1210}, 200, 'swing', function() {
-      //   });
-      // }else{
-      //   body.stop().animate({scrollTop:1225}, 200, 'swing', function() {
-      //   });
-      // }
     }
 
     if(this.selectedCountry &&

@@ -30,6 +30,7 @@ export class DataServiceService {
   owlAnanFifth: boolean = true;
   backFromConfirm: boolean;
   loading: boolean =  false;
+  toGoDown:boolean = false;
   noGoWithYourFdsFlag: boolean;
   idToGoFlow: any;
   backFromNextPage:boolean = false;
@@ -59,16 +60,23 @@ export class DataServiceService {
     return this.http.post('/CareLineTravel/travel-mbr/journey/calRateByPackage', value)
       .map((result) => {
           if(result.json().isEx == true){
-              this.loading = false;
-              result.json().msgs.forEach((msg) => {
-                  if(msg == '[天數] 請輸入正整數') {
-                      document.querySelector('#flagFour').scrollIntoView();
+              if(result.json().kickout){
+                  this.route.navigate(['/']);
+              }else{
+                  if (result.json().data) {
+                      // Server 回傳錯誤
+                      if (result.json().data && result.json().data.errorFlagName) {
+                          var flagName = result.json().data.errorFlagName;
+                          this.idToGoFlow = flagName;
+                      }
                   }
+                  this.loading = false;
+                  var msgs = result.json().msgs;
                   var modal = document.getElementById('myModal');
                   modal.style.display = "block";
-                  this.AlertTXT = [];
-                  this.AlertTXT.push(msg);
-              });
+                  this.AlertTXT = msgs;
+                  document.querySelector('#myModal').scrollIntoView();
+              }
               return 0;
           } else {
               this.loading = false;
@@ -91,16 +99,23 @@ export class DataServiceService {
     return this.http.post('/CareLineTravel/travel-mbr/journey/calRateByCusPackage', value)
       .map((result) => {
         if(result.json().isEx == true){
-         result.json().msgs.forEach((msg) => {
-           this.loading = false;
-           if(msg == '[天數] 請輸入正整數') {
-               document.querySelector('#flagFour').scrollIntoView();
-               var modal = document.getElementById('myModal');
-               modal.style.display = "block";
-               this.AlertTXT = [];
-               this.AlertTXT.push(msg);
-           }
-         });
+            if(result.json().kickout){
+                this.route.navigate(['/']);
+            }else{
+                if (result.json().data) {
+                    // Server 回傳錯誤
+                    if (result.json().data && result.json().data.errorFlagName) {
+                        var flagName = result.json().data.errorFlagName;
+                        this.idToGoFlow = flagName;
+                    }
+                }
+                this.loading = false;
+                var msgs = result.json().msgs;
+                var modal = document.getElementById('myModal');
+                modal.style.display = "block";
+                this.AlertTXT = msgs;
+                document.querySelector('#myModal').scrollIntoView();
+            }
          return 0;
         } else {
           this.loading = false;
@@ -119,17 +134,23 @@ export class DataServiceService {
       // body.append('data', JSON.stringify(value));
       var i = this.http.post('/CareLineTravel/travel-mbr/journey/savePackage', value).map(res => {
           if (res.json().isEx) {
-              this.loading = false;
-              var msgs = res.json().msgs;
-              var modal = document.getElementById('myModal');
-              modal.style.display = "block";
-              this.AlertTXT = msgs;
-              // for (let i = 0; i < msgs.length; i++) {
-              //     var modal = document.getElementById('myModal');
-              //     modal.style.display = "block";
-              //     this.AlertTXT = [];
-              //     this.AlertTXT.push(msgs[i]);
-              // }
+              if(res.json().kickout){
+                  this.route.navigate(['/']);
+              }else{
+                  if (res.json().data) {
+                      // Server 回傳錯誤
+                      if (res.json().data && res.json().data.errorFlagName) {
+                          var flagName = res.json().data.errorFlagName;
+                          this.idToGoFlow = flagName;
+                      }
+                  }
+                  this.loading = false;
+                  var msgs = res.json().msgs;
+                  var modal = document.getElementById('myModal');
+                  modal.style.display = "block";
+                  this.AlertTXT = msgs;
+                  document.querySelector('#myModal').scrollIntoView();
+              }
               return false;
           } else {
               return res.json()['orderNumber'];
@@ -139,6 +160,7 @@ export class DataServiceService {
           var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
           if(!item){
           } else {
+              this.loading = true;
               this.orderNumber = item;
               window.location.href = '/CareLineTravel/travel-mbr/journey/loginMember?orderNumber=' + encodeURIComponent(this.orderNumber)+ '?' + timeStampInMs;
           }
@@ -155,11 +177,19 @@ export class DataServiceService {
                   if(res.json().kickout){
                       this.route.navigate(['/']);
                   }else{
+                      if (res.json().data) {
+                          // Server 回傳錯誤
+                          if (res.json().data && res.json().data.errorFlagName) {
+                              var flagName = res.json().data.errorFlagName;
+                              this.idToGoFlow = flagName;
+                          }
+                      }
                       this.loading = false;
                       var msgs = res.json().msgs;
                       var modal = document.getElementById('myModal');
                       modal.style.display = "block";
                       this.AlertTXT = msgs;
+                      document.querySelector('#myModal').scrollIntoView();
                   }
               } else {
                   this.loading = false;
@@ -174,11 +204,19 @@ export class DataServiceService {
                   if(res.json().kickout){
                       this.route.navigate(['/']);
                   }else{
+                      if (res.json().data) {
+                          // Server 回傳錯誤
+                          if (res.json().data && res.json().data.errorFlagName) {
+                              var flagName = res.json().data.errorFlagName;
+                              this.idToGoFlow = flagName;
+                          }
+                      }
                       this.loading = false;
                       var msgs = res.json().msgs;
                       var modal = document.getElementById('myModal');
                       modal.style.display = "block";
                       this.AlertTXT = msgs;
+                      document.querySelector('#myModal').scrollIntoView();
                   }
               } else {
                   this.loading = false;
@@ -203,6 +241,7 @@ export class DataServiceService {
                         var modal = document.getElementById('myModal');
                         modal.style.display = "block";
                         this.AlertTXT = msgs;
+                        document.querySelector('#myModal').scrollIntoView();
                     }
                 } else {
                     this.loading = false;
@@ -226,6 +265,7 @@ export class DataServiceService {
                     var modal = document.getElementById('myModal');
                     modal.style.display = "block";
                     this.AlertTXT = msgs;
+                    document.querySelector('#myModal').scrollIntoView();
                 }
             } else {
                 this.loading = false;
@@ -246,6 +286,7 @@ export class DataServiceService {
                     var modal = document.getElementById('myModal');
                     modal.style.display = "block";
                     this.AlertTXT = msgs;
+                    document.querySelector('#myModal').scrollIntoView();
                 }
             } else {
                 this.loading = false;
@@ -275,11 +316,19 @@ export class DataServiceService {
                      if(replyObj.kickout){
                          this.route.navigate(['/']);
                      }else{
+                         if (replyObj.json().data) {
+                             // Server 回傳錯誤
+                             if (replyObj.json().data && replyObj.json().data.errorFlagName) {
+                                 var flagName = replyObj.json().data.errorFlagName;
+                                 this.idToGoFlow = flagName;
+                             }
+                         }
                          this.loading = false;
                          var msgs = replyObj.msgs;
                          var modal = document.getElementById('myModal');
                          modal.style.display = "block";
                          this.AlertTXT = msgs;
+                         document.querySelector('#myModal').scrollIntoView();
                      }
                  }
              }
@@ -311,7 +360,7 @@ export class DataServiceService {
           return res.text();
       }).subscribe((item) => {
           if(item == 'ok'){
-              this.loading = false;
+              this.loading = true;
               window.location.href = '/CareLineTravel/travel-mbr/journey/goToPayment?orderNumber=' +  encodeURIComponent(this.orderNumberForSave);
           } else {
               let replyObj = JSON.parse(item);
@@ -319,11 +368,19 @@ export class DataServiceService {
                   if(replyObj.kickout){
                       this.route.navigate(['/']);
                   }else{
+                      if (replyObj.json().data) {
+                          // Server 回傳錯誤
+                          if (replyObj.json().data && replyObj.json().data.errorFlagName) {
+                              var flagName = replyObj.json().data.errorFlagName;
+                              this.idToGoFlow = flagName;
+                          }
+                      }
                       this.loading = false;
                       var msgs = replyObj.msgs;
                       var modal = document.getElementById('myModal');
                       modal.style.display = "block";
                       this.AlertTXT = msgs;
+                      document.querySelector('#myModal').scrollIntoView();
                   }
               }
           }

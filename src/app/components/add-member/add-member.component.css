@@ -337,7 +337,7 @@ input.memberFormInput.form-control.input-lg[disabled] {
     padding-bottom: 5px;
     position: relative;
     top: -70px;
-    width: 520px;
+    /*width: 520px;*/
 }
 
 .noneTit {
@@ -737,7 +737,20 @@ div.row.memberTitle {
     }
 }
 
+@media screen and (min-width:768px) {
+    .tobeHide .col-xs-6 {
+        width: 49%!important;
+    }
+}
 
-.tobeHide .col-xs-6 {
-    width: 49%!important;
+#warningWord {
+  color: #01a29a;
+}
+
+.dropDown {
+    position: absolute;
+    top: 13px;
+    left: 66%;
+    color: #ddd;
+    pointer-events:none!important;
 }

@@ -12,7 +12,7 @@ export class AppComponent {
   loading: boolean = false;
 
   constructor(
-    private dataService: DataServiceService
+    public dataService: DataServiceService
   ) {
   }
   ngOnInit() {
@@ -27,15 +27,11 @@ export class AppComponent {
     this.detectScrollAndHeaderChange();
   }
 
-  ifItsLoading(){
-    this.loading = this.dataService.loading;
-    return this.loading;
-  }
 
-    ifItsLoading(){
-        this.loading = this.dataService.loading;
-        return this.loading;
-    }
+  ifItsLoading(){
+      this.loading = this.dataService.loading;
+      return this.loading;
+  }
 
   cancelThisModal(id){
     if(id){
