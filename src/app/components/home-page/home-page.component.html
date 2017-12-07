@@ -286,7 +286,7 @@
       <ng-container *ngIf="!showPkgDestail">
         <div class="secondaryPackageCon col-xs-12">
           <div id="secondCol2" class="col-xs-2 text-center" *ngFor="let item of secondaryItems; let i = index;">
-            <img src="{{'assets/images/pkg/pkimg/' + item['insItemCode'] + '.png'}}" alt="" class="img-responsive img-center">
+            <img src="{{'assets/images/pkg/pkimg/' + item['pictureCode'] + '.png'}}" alt="" class="img-responsive img-center">
             <h3 class="imgSrcH3Item">
               {{item['insItemName']}}
             </h3>
@@ -433,7 +433,7 @@
           <ng-container *ngFor="let seconItem of cusSecondItemNa; let x = index;" #arrowUp>
             <div class="{{'row rowOfBtn'+x}}" id="rowOfBtn">
               <div class="col-xs-2">
-                <img src="{{'assets/images/pkg/pkimg/' + seconItem['insItemCode'] + '.png'}}" alt="" class="img-responsive img-center">
+                <img src="{{'assets/images/pkg/pkimg/' + seconItem['pictureCode'] + '.png'}}" alt="" class="img-responsive img-center">
               </div>
               <div class="col-xs-2 text-center" id="paddingSpe" style="padding-right:0px;">
                 <h2>{{seconItem['insItemName']}}</h2>

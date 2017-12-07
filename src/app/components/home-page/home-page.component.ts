@@ -119,6 +119,21 @@ export class HomePageComponent implements OnInit {
     }
     return parms;
   };
+
+  ngAfterViewInit() {
+    alert('hi')
+    try {
+      var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
+      if(goDownFlag || this.dataService.toGoDown){
+        setTimeout(function(){
+          document.querySelector('#flagSix').scrollIntoView();
+        }, 100);
+        sessionStorage.removeItem('bak');
+      }
+    } catch (e) {
+    }
+  }
+
   ngOnInit() {
     this.toCompatibilityUse();
     this.CusDetailContent = true;
@@ -167,6 +182,7 @@ export class HomePageComponent implements OnInit {
           );
           this.selectedPackageName = this.selectedPackage['packageName'];
           this.secondaryItems = this.selectedPackage['secondaryItems'];
+          this.toGetImgUrl(this.secondaryItems);
           this.pkgPrimary = this.selectedPackage['primaryItems'];
           this.featureDesc = this.selectedPackage['featureDesc'];
           this.toGetLogo(this.selectedPackage['companyCode']);
@@ -187,6 +203,7 @@ export class HomePageComponent implements OnInit {
             });
           });
 
+          this.toGetImgUrl(this.defaultCustomerPkg['secondaryItems']);
           if(this.pkgCustomGo == false){
             this.getPriceServiceData();
           } else {
@@ -250,6 +267,8 @@ export class HomePageComponent implements OnInit {
 
         this.selectedPackageName = this.selectedPackage['packageName'];
         this.secondaryItems = this.selectedPackage['secondaryItems'];
+        this.toGetImgUrl(this.secondaryItems);
+
         this.pkgPrimary = this.selectedPackage['primaryItems'];
         this.featureDesc = this.selectedPackage['featureDesc'];
         this.toGetLogo(this.selectedPackage['companyCode']);
@@ -270,6 +289,8 @@ export class HomePageComponent implements OnInit {
             }
           });
         });
+        this.toGetImgUrl(this.defaultCustomerPkg['secondaryItems']);
+
       }
 
       var d = new Date();
@@ -310,20 +331,6 @@ export class HomePageComponent implements OnInit {
   }
 
   toCompatibilityUse(){
-  }
-
-  ngAfterViewInit() {
-    alert('hi')
-    try {
-      var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
-      if(goDownFlag || this.dataService.toGoDown){
-        setTimeout(function(){
-          document.querySelector('#flagSix').scrollIntoView();
-        }, 100);
-        sessionStorage.removeItem('bak');
-      }
-    } catch (e) {
-    }
   }
 
   toGetCusPkgPrice() {
@@ -732,6 +739,8 @@ export class HomePageComponent implements OnInit {
 
                 this.selectedPackageName = this.selectedPackage['packageName'];
                 this.secondaryItems = this.selectedPackage['secondaryItems'];
+                this.toGetImgUrl(this.secondaryItems);
+
                 this.pkgPrimary = this.selectedPackage['primaryItems'];
                 this.featureDesc = this.selectedPackage['featureDesc'];
                 this.toGetLogo(this.selectedPackage['companyCode']);
@@ -816,8 +825,29 @@ export class HomePageComponent implements OnInit {
     $('#mainLongDetailDiv').slideToggle('fast');
   }
 
+  toGetImgUrl(val:any){
+    val.forEach((item) => {
+      item['pictureCode'] = item['insItemCode'];
+      if(item['pictureCode'] == 'ITEM_MEDICAL_DAY' ||
+          item['pictureCode'] == 'TAK005' ||
+          item['pictureCode'] == 'C_ITEM_MEDICAL'
+      ){
+        item['pictureCode'] = 'ITEM_MEDICAL_BILL'
+      }
+      if(item['pictureCode'] == 'ITEM_INCONVENIENT'){
+        item['pictureCode'] == 'TAK002'
+      }
+      if(item['pictureCode'] == 'ITEM_SUDDEN_SICK'){
+        item['pictureCode'] == 'TAK006'
+      }
+      if(item['pictureCode'] == 'C_DETAIL_RESCUE'){
+        item['pictureCode'] == 'TAK009'
+      }
+    })
+  }
+
   toGetCustomPackageContent(val) {
-    console.log(JSON.stringify(val));
+    // console.log(JSON.stringify(val));
     this.defaultCustomerPkg = val;
     if(val.length == 1){
       this.cusPackageList.forEach((item)=>{
@@ -838,6 +868,7 @@ export class HomePageComponent implements OnInit {
           });
           this.toGetCusPkgPrice();
           this.cusSecondItemNa = this.selectedCustomePkg['secondaryItems'];
+          this.toGetImgUrl(this.cusSecondItemNa);
           this.cusPrimaryItem = this.selectedCustomePkg['primaryItems'];
           if(this.pkgCustomGo){
             this.selectedPackageName = this.selectedCustomePkg['packageName'];
@@ -866,6 +897,7 @@ export class HomePageComponent implements OnInit {
 
       this.selectedCustomePkg = val;
       this.cusSecondItemNa = this.selectedCustomePkg['secondaryItems'];
+      this.toGetImgUrl(this.cusSecondItemNa);
       this.cusPrimaryItem = this.selectedCustomePkg['primaryItems'];
       if(this.pkgCustomGo){
         this.selectedPackageName = this.selectedCustomePkg['packageName'];
@@ -1002,6 +1034,7 @@ export class HomePageComponent implements OnInit {
       this.selectedPackage = val;
       this.selectedPackageName = val.packageName;
       this.secondaryItems = this.selectedPackage['secondaryItems'];
+      this.toGetImgUrl(this.secondaryItems);
       this.toGetLogo(this.selectedPackage['companyCode']);
       this.pkgPrimary = this.selectedPackage['primaryItems'];
       this.tableList = this.selectedPackage['table'];

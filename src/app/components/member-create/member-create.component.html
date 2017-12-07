@@ -243,49 +243,47 @@
                 <h4 style="color:#e84466;white-space: nowrap;position: relative;top: -22px;">*提醒您，購買保險需有血緣/婚姻關係喔</h4>
               </div>
             </div>
-            <!--<div id="changeSizeOneOne" class="col-xs-6" *ngIf="!windowSizeCheck()">-->
-                <!--<button class="form-control btn-sm" (click)="ToShowConfirmModal(false)"  [ngClass]="{inputRadioChecked: !noGoWithYourFds}">-->
-                <!--<span style="pointer-events: none;" class="" [ngClass]="{inputRadioCheckedTxt: !noGoWithYourFds}">先不用</span>-->
-                <!--</button>-->
-                <!--<button class="form-control btn-sm"  (click)="ToShowConfirmModal(true)"  [ngClass]="{inputRadioChecked: noGoWithYourFds}">-->
-                <!--<span style="pointer-events: none;" class="" [ngClass]="{inputRadioCheckedTxt: noGoWithYourFds}">好啊</span>-->
-                <!--</button>-->
-            <!--</div>-->
-            <div id="choicesHaoNoHao" class="pull-right"  *ngIf="!windowSizeCheck()">
-              <label id="choiceOne">
-                <input name="withFds" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(false)"  [ngClass]="{inputRadioChecked: !noGoWithYourFds}">
-                <span style="pointer-events: none;" class="widthFdsSpanOne" [ngClass]="{inputRadioCheckedTxt: !noGoWithYourFds}">先不用</span>
-              </label>
-              <label id="choiceTwo">
-                <input name="withFds"  type="radio" class="form-control btn-sm"  (click)="ToShowConfirmModal(true)"  [ngClass]="{inputRadioChecked: noGoWithYourFds}">
-                <span style="pointer-events: none;" class="widthFdsSpanTwo" [ngClass]="{inputRadioCheckedTxt: noGoWithYourFds}">好啊</span>
-              </label>
+            <div id="choicesHaoNoHao" class="pull-right">
+              <div id="choiceTwo">
+                <button name="withFds"  class="form-control btn-sm"  (click)="ToShowConfirmModal(true)" [ngClass]="{inputRadioChecked: noGoWithYourFds}">
+                  好啊
+                  <!--<span style="pointer-events: none;" class="widthFdsSpanTwo" [ngClass]="{inputRadioCheckedTxt: noGoWithYourFds}"></span>-->
+                </button>
+              </div>
+              <div id="choiceOne">
+                <button name="withFds"  class="form-control btn-sm" (click)="ToShowConfirmModal(false)" [ngClass]="{inputRadioChecked: !noGoWithYourFds}">
+                  先不用
+                <!--<span style="pointer-events: none;" class="widthFdsSpanOne" [ngClass]="{inputRadioCheckedTxt: !noGoWithYourFds}"></span>-->
+                </button>
+              </div>
             </div>
           </div>
           <div class="col-xs-1"></div>
         </div>
       </div>
-      <div class="col-xs-12" *ngIf="windowSizeCheck()">
-        <div id="MobileChoicesHaoNoHao" class="col-xs-12">
-          <div class="col-xs-6">
-            <label id="choiceMobileOne">
-            <input name="withFds2" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(false)" [ngClass]="{inputRadioChecked: !noGoWithYourFds}">
-              <span class="widthFdsSpanOne" style="" [ngClass]="{inputRadioCheckedTxt: !noGoWithYourFds}">
-                先不用
-              </span>
-            </label>
-          </div>
+      <!--<div class="col-xs-12">-->
+        <!--<div id="MobileChoicesHaoNoHao" class="col-xs-12">-->
+          <!--<div class="col-xs-6">-->
+            <!--<div id="choiceMobileOne" [ngClass]="{inputRadioChecked: !noGoWithYourFds}">-->
+            <!--<button name="withFds2" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(false)" [ngClass]="{inputRadioChecked: !noGoWithYourFds}">-->
+              <!--<span class="widthFdsSpanOne" style="" [ngClass]="{inputRadioCheckedTxt: !noGoWithYourFds}">-->
+                <!--先不用-->
+              <!--</span>-->
+            <!--</button>-->
+            <!--</div>-->
+          <!--</div>-->
 
-          <div class="col-xs-6">
-            <label id="choiceMobileTwo">
-            <input name="withFds2" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(true)" [ngClass]="{inputRadioChecked: noGoWithYourFds}">
-              <span class="widthFdsSpanTwo" [ngClass]="{inputRadioCheckedTxt: noGoWithYourFds}">
-                好啊
-              </span>
-            </label>
-          </div>
-        </div>
-      </div>
+          <!--<div class="col-xs-6">-->
+            <!--<div id="choiceMobileTwo">-->
+            <!--<button name="withFds2" type="radio" class="form-control btn-sm" (click)="ToShowConfirmModal(true)" [ngClass]="{inputRadioChecked: noGoWithYourFds}">-->
+              <!--<span class="widthFdsSpanTwo" [ngClass]="{inputRadioCheckedTxt: noGoWithYourFds}">-->
+                <!--好啊-->
+              <!--</span>-->
+            <!--</button>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
   </div>
 </div>
@@ -318,7 +316,7 @@
           </div>
 
           <div class="col-xs-12 pull-left">
-            <i class="fa fa-angle-down dropDown" style="font-size:36px;left:80%;!important;z-index:999;"></i>
+            <i class="fa fa-angle-down dropDown" id="topSpeArrow" style="font-size:36px;left:80%!important;!important;z-index:999;"></i>
             <select name="" [ngClass]="{inValidInput: aloneRela.touched && !aloneRela.valid}" #aloneRela="ngModel" (change)="personalSelectChange()" id="relationShipSelect" class="form-control" [(ngModel)]="personalInfoSelect" required>
               <option [ngValue]="item.value" *ngFor="let item of relationship;let i = index;">{{item.text}}</option>
             </select>

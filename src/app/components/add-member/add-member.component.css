@@ -170,6 +170,7 @@ h2.formTitTxt{
     height: 80px;
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
+    -moz-border-radius: 100px;
     border-radius: 100px;
     padding: 15px 50px;
     border: 1px solid #cccccc;
@@ -642,7 +643,7 @@ div.row.memberTitle {
         position: static!important;
     }
     #insuredOneCard {
-        height: 440px;
+        height: 470px;
         padding: 0px;
     }
     .bthInValid {
