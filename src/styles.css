@@ -657,12 +657,12 @@ header {
   }
 }
 
-div.owl-dots {
+/* div.owl-dots {
   position: relative;
   top: -50px;
-}
+} */
 
-.owl-theme .owl-nav .owl-next {
+/* .owl-theme .owl-nav .owl-next {
   background: url('/assets/images/arrowIcons/arrowRight.png')!important;
   top: 40%;
   right: 3%;
@@ -689,7 +689,7 @@ div.owl-dots {
   color: transparent!important;
   z-index:999;
   background-repeat: no-repeat!important;
-}
+} */
 
 input::-webkit-inner-spin-button {
   /* display: none; <- Crashes Chrome on hover */

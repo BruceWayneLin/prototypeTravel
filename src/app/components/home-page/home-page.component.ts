@@ -1,7 +1,7 @@
 import {Component, OnInit, AfterViewInit, ElementRef, ViewChild, ViewChildren, AfterViewChecked}  from '@angular/core';
 import { ActivatedRoute, RouterModule, Routes } from "@angular/router";
 import { DataServiceService } from '../../services/data-service.service';
-import { OwlCarousel } from 'ngx-owl-carousel';
+
 
 declare var jquery:any;
 declare var $ :any;
@@ -88,8 +88,6 @@ export class HomePageComponent implements OnInit {
   @ViewChild('aGotClick') aGotClick:ElementRef;
   @ViewChild('selectedItem') selectedItem:ElementRef;
   @ViewChild('thisSelect') thisSelect:ElementRef;
-
-  @ViewChild(OwlCarousel) owl:OwlCarousel;
 
   constructor(
     private dataService:DataServiceService
@@ -233,7 +231,6 @@ export class HomePageComponent implements OnInit {
         array.push(objImage);
       });
       this.images = array;
-      this.owl.refresh();
 
       this.countries = posts.countryList;
       console.log(this.countries);

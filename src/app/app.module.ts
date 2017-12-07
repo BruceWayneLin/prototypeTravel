@@ -14,7 +14,7 @@ import { SuiSelectModule } from 'ng2-semantic-ui';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ConfirmInfoComponent } from './components/confirm-info/confirm-info.component';
-
+import { OwlCarouselModule } from 'cl-layout/src/app/shared/tools/owl-carousel/owl-carousel.module';
 // import * as $ from 'jquery';
 
 // import 'rxjs/add/operator/do';
@@ -109,6 +109,7 @@ export const routes : Routes = [
     LayoutModule.forRoot({
       carelineProjectType : CarelineProjectType.travel
     }),
+    OwlCarouselModule,
     // BreadcrumbsModule,
     ReactiveFormsModule,
     LoadingModule,
