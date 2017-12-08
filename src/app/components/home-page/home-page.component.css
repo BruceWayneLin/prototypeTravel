@@ -1374,3 +1374,7 @@ header {
   text-decoration: underline;
   text-decoration: #e84466;
 }
+
+.shanshiContent {
+  padding-left:10%;
+}

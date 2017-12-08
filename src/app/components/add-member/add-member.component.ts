@@ -162,6 +162,7 @@ export class AddMemberComponent implements OnInit {
   checkPidByClick(idValue, index){
     let value = idValue.toUpperCase();
     this.checkDisable();
+
     switch(index){
       case 1:
         if(this.pidCheck(value)){
@@ -181,6 +182,11 @@ export class AddMemberComponent implements OnInit {
             this.firstPidEmpty = false;
           }else{
             this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -201,7 +207,12 @@ export class AddMemberComponent implements OnInit {
             this.secondPidWrongWords = '身份證不可重複。';
             this.secondPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
             this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -222,7 +233,12 @@ export class AddMemberComponent implements OnInit {
             this.thirdPidWrongWords = '身份證不可重複。';
             this.thirdPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
             this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -243,7 +259,12 @@ export class AddMemberComponent implements OnInit {
             this.fourthPidWrongWords = '身份證不可重複。';
             this.fourthPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
             this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -264,7 +285,12 @@ export class AddMemberComponent implements OnInit {
             this.fifthPidWrongWords = '身份證不可重複。';
             this.fifthPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
             this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -285,6 +311,11 @@ export class AddMemberComponent implements OnInit {
             this.sixthPidWrongWords = '身份證不可重複。';
             this.sixthPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
             this.sixthPidTypeWrong = false;
           }
         }
@@ -734,7 +765,7 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.firstCardInsuredPrice = item.rate;
+                this.firstCardInsuredPrice = this.numberWithCommas(item.rate);
                 this.firstCardWarningWord = item.tipText;
                 this.memberCom.finalPrice();
             }
@@ -770,7 +801,7 @@ export class AddMemberComponent implements OnInit {
             console.log('ageMin', item.ageMin);
             console.log('ageMax', item.ageMax);
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.secondCardInsuredPrice = item.rate;
+                this.secondCardInsuredPrice = this.numberWithCommas(item.rate);
                 this.secondCardWarningWord = item.tipText;
                 this.memberCom.finalPrice();
             }
@@ -801,7 +832,7 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.thirdCardInsuredPrice = item.rate;
+                this.thirdCardInsuredPrice = this.numberWithCommas(item.rate);
                 this.thirdCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -832,7 +863,7 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.fourthCardInsuredPrice = item.rate;
+                this.fourthCardInsuredPrice = this.numberWithCommas(item.rate);
                 this.fourthCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -863,7 +894,7 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.fifthCardInsuredPrice = item.rate;
+                this.fifthCardInsuredPrice = this.numberWithCommas(item.rate);
                 this.fifthCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -894,7 +925,7 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.sixthCardInsuredPrice = item.rate;
+                this.sixthCardInsuredPrice = this.numberWithCommas(item.rate);
                 this.sixthCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -1578,16 +1609,20 @@ export class AddMemberComponent implements OnInit {
     }
   }
 
+  numberWithCommas = (x) => {
+    let Xn = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return Xn
+  }
 
-  finalPrice: number;
+  finalPrice: any;
   countFinalPrice() {
-    let price  = (this.firstCardInsuredPrice +
+    let price  = this.firstCardInsuredPrice +
     this.secondCardInsuredPrice +
     this.thirdCardInsuredPrice +
     this.fourthCardInsuredPrice +
     this.fifthCardInsuredPrice +
-    this.sixthCardInsuredPrice);
-    this.finalPrice = price;
+    this.sixthCardInsuredPrice;
+    this.finalPrice = this.numberWithCommas(price);
   }
 
   toInitData(index) {

@@ -1289,10 +1289,10 @@ button.form-control.btn-sm span{
 
 @media screen and (max-width: 375px) {
   #haoma span {
-    left: -190%;
+    left: -250%;
   }
   #haoma h4 {
-    left: -265%;
+    left: -340%;
   }
 }
 
@@ -1305,4 +1305,13 @@ button.form-control.btn-sm span{
 
 #addInsuredAdd button {
   min-width: 90px!important;
+}
+
+@media screen and (min-width: 360px) and (max-width: 357px) {
+  #haoma span {
+    left: -250%!important;
+  }
+  #haoma h4 {
+    left: -337%!important;
+  }
 }

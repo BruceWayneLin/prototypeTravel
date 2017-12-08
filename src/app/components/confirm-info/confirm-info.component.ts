@@ -35,7 +35,7 @@ export class ConfirmInfoComponent implements OnInit {
   constructor(
       public dataService:DataServiceService
   ) {
-    $('html, body').animate({scrollTop: '0px'}, 0);
+    // $('html, body').animate({scrollTop: '0px'}, 0);
   }
 
   ngOnInit() {
@@ -64,6 +64,7 @@ export class ConfirmInfoComponent implements OnInit {
       this.odPeriodDays = info['odPeriodDays'];
       this.odRate = info['odRate'];
       this.dataService.purposeImageUrl = info['purposeImageUrl'];
+      document.querySelector('#flagTop').scrollIntoView();
     });
   }
 

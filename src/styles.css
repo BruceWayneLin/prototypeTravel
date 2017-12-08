@@ -1049,6 +1049,12 @@ input, input:before, input:after {
 
 /* firefox */
 @-moz-document url-prefix() {
+
+  @media screen and (max-width: 570px) {
+    #calendarTable td button {
+      font-size: 18px!important;
+    }
+  }
   input[type=radio]{
     visibility: hidden;
   }
@@ -1099,7 +1105,7 @@ input, input:before, input:after {
 
   }
   #calendarTable td {
-    width:13%!important;
+    width:12%!important;
     margin-left:3px;
   }
   #calendarTable #emptyTd {
@@ -1111,10 +1117,6 @@ input, input:before, input:after {
   table {
     width: 110%;
     max-width: 110%;
-  }
-  #choiceOne, #choiceTwo {
-    height: 50px!important;
-    top: 0px!important;
   }
   #choicesHaoNoHao span{
     top:15%!important;
@@ -1159,6 +1161,9 @@ input, input:before, input:after {
   label > input[type=radio]:checked {
     border: 1px solid #e84466!important;
   }
+  .shanshiContent {
+    padding-left:10%;
+  }
   @media screen and (max-width: 1200px) {
     #rowOfBtn .col-xs-2 {
       width: 10%!important;
@@ -1170,12 +1175,6 @@ input, input:before, input:after {
     }
   }
   @media screen and (max-width: 570px) {
-    #haoma .titleSpan {
-      left: -45%!important;
-    }
-    #haoma h4 {
-      left: -75%!important;
-    }
     #rule1 {
       padding-left: 0%!important;
     }
@@ -1183,18 +1182,9 @@ input, input:before, input:after {
       top: 40px!important;
     }
     #topSpeArrow {
-      top:22px
+      top:12px
     }
   }
-  @media screen and (max-width: 375px) {
-    #haoma .titleSpan {
-      left: -190%!important;
-    }
-    #haoma h4 {
-      left: -265%!important;
-    }
-  }
-
   .aggreeToUpdate {
     margin-left: 20px;
   }
@@ -1206,6 +1196,51 @@ input, input:before, input:after {
   }
   #topSpeArrow {
     top:12px
+  }
+  @media screen and (max-width: 414px) {
+    #calendarTable td {
+      width:12%!important;
+    }
+    #btnOfPackages .col-xs-4 {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+
+  @media screen and (min-width: 414px) and (max-width: 570px){
+    #haoma span {
+      left: 70%!important;
+    }
+    #haoma h4 {
+      left: 110%!important;
+    }
+  }
+  #mobileCusPkg label {
+    border: none;
+    height: auto;
+  }
+
+  @media screen and (max-width: 320px) {
+    #haoma span {
+      left: -100px!important;
+    }
+    #haoma h4 {
+      left: -120px!important;
+      font-size: 17px !important;
+    }
+    #choicesHaoNoHao {
+      width: 170%!important;
+      left: 35%!important;
+    }
+  }
+
+  @media screen and (min-width: 360px) and (max-width: 357px) {
+    #haoma span {
+      left: -250%!important;
+    }
+    #haoma h4 {
+      left: -337%!important;
+    }
   }
 }
 
@@ -1274,10 +1309,6 @@ input, input:before, input:after {
     width: 110%;
     max-width: 110%;
   }
-  #choiceOne, #choiceTwo {
-    height: 50px!important;
-    top: 0px!important;
-  }
   #choicesHaoNoHao span{
     top:15%!important;
   }
@@ -1332,12 +1363,6 @@ input, input:before, input:after {
     }
   }
   @media screen and (max-width: 570px) {
-    #haoma .titleSpan {
-      left: -45%!important;
-    }
-    #haoma h4 {
-      left: -75%!important;
-    }
     #rule1 {
       padding-left: 0%!important;
     }
@@ -1345,18 +1370,9 @@ input, input:before, input:after {
       top: 40px!important;
     }
     #topSpeArrow {
-      top:22px
+      top:12px
     }
   }
-  @media screen and (max-width: 375px) {
-    #haoma .titleSpan {
-      left: -190%!important;
-    }
-    #haoma h4 {
-      left: -265%!important;
-    }
-  }
-
   .aggreeToUpdate {
     margin-left: 20px;
   }
@@ -1367,7 +1383,24 @@ input, input:before, input:after {
     left: 0px;
   }
   #topSpeArrow {
-    top:12px
+    top:22px
+  }
+  @media screen and (max-width: 414px) {
+    #calendarTable td {
+      width:12%!important;
+    }
+  }
+  .shanshiContent {
+    padding-left:10%;
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  #calendarTable td {
+    width:13%!important;
+  }
+  select::-ms-expand {
+    display: none;
   }
 }
 
@@ -1436,10 +1469,6 @@ input, input:before, input:after {
     width: 110%;
     max-width: 110%;
   }
-  #choiceOne, #choiceTwo {
-    height: 50px!important;
-    top: 0px!important;
-  }
   #choicesHaoNoHao span{
     top:15%!important;
   }
@@ -1494,12 +1523,6 @@ input, input:before, input:after {
     }
   }
   @media screen and (max-width: 570px) {
-    #haoma .titleSpan {
-      left: -45%!important;
-    }
-    #haoma h4 {
-      left: -75%!important;
-    }
     #rule1 {
       padding-left: 0%!important;
     }
@@ -1507,18 +1530,9 @@ input, input:before, input:after {
       top: 40px!important;
     }
     #topSpeArrow {
-      top:22px
+      top:12px
     }
   }
-  @media screen and (max-width: 375px) {
-    #haoma .titleSpan {
-      left: -190%!important;
-    }
-    #haoma h4 {
-      left: -265%!important;
-    }
-  }
-
   .aggreeToUpdate {
     margin-left: 20px;
   }
@@ -1529,9 +1543,25 @@ input, input:before, input:after {
     left: 0px;
   }
   #topSpeArrow {
-    top:12px
+    top:22px
+  }
+  @media screen and (max-width: 414px) {
+    #calendarTable td {
+      width:12%!important;
+    }
+    #btnOfPackages .col-xs-4 {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+  .shanshiContent {
+    padding-left:10%;
   }
 }
 
-
+@media screen and (max-width: 500px) {
+  #topSpeArrow {
+    top:20px!important;
+  }
+}
 
