@@ -640,7 +640,7 @@ export class HomePageComponent implements OnInit {
       this.getDayFromBkend = this.travelPeriodLimit;
       this.selectTravelDayIsDone = false;
       this.toShowMoreDays = false;
-      this.textOfOverDays = '超過' + this.travelPeriodLimit + '天後出發？';
+      this.textOfOverDays = '出國超過' + this.travelPeriodLimit + '天？';
     }else{
       let testDayAddOneMonth = new Date(new Date().getFullYear(), new Date().getMonth()+this.theTimeClicked, 0);
       let day = 1000*60*60*24;

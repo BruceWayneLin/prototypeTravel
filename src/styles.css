@@ -583,12 +583,27 @@ button:active {
   box-shadow: none!important;
 }
 
+#accordionDiv .panel-heading:hover {
+  background: #fafafa!important;
+}
+
+#accordionDiv .panel-heading {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5)!important;
+}
+
+#accordionDiv .clickAccordion div.panel.panel-default.dropup .panel-heading {
+  box-shadow: none!important;
+}
+
 #accordionDiv .clickAccordion div.panel.panel-default.dropup {
   border: 1px solid #eee;
+  background: #fafafa!important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5)!important;
 }
 
 #accordionDiv .clickAccordion div.panel.panel-default.dropup .panel-heading{
   border: none;
+  background: #fafafa!important;
 }
 
 #accordionDiv .clickAccordion div.panel.panel-default.dropup {
@@ -821,14 +836,16 @@ div.text {
   }
   #accordionDiv div.panel.panel-default {
     padding: 0px;
-    width: 132%;
+    width: 116%;
     position: relative;
-    left: -17%;
+    left: -10%;
   }
   #accordionDiv {
     margin: 0px!important;
   }
-
+  #accordionDiv .panel-heading {
+    padding-right: 5%;
+  }
 }
 
 .spinner-three-bounce {
@@ -934,7 +951,7 @@ input, input:before, input:after {
   }
   #specialDropUpIdDiv .fa-chevron-circle-up {
     position: relative;
-    top: -25px;
+    top: -10px;
   }
   .panel-group .fa-chevron-circle-down{
     font-size: 25px!important;
@@ -1659,6 +1676,10 @@ input, input:before, input:after {
   #customerLogo {
     margin-left: -10%!important;
   }
+  .insuredTit {
+    padding-left: 15px!important;
+    padding-right: 15px!important;
+  }
 }
 /* ie  */
 @supports (-ms-ime-align:auto) {
@@ -1683,7 +1704,7 @@ input, input:before, input:after {
   #accordionDiv .clickAccordion div.panel.panel-default.dropup {
     margin-left: 7%!important;
   }
-  #accordionDiv .clickAccordion div.panel.panel-default.dropup i{
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup i {
     margin-top: 0px!important;
     margin-right: -21px!important;
   }
@@ -1695,16 +1716,19 @@ input, input:before, input:after {
   }
 
   #accordionDiv .clickAccordion div.panel.panel-default.dropup {
-    margin-left: 6% !important;
+    margin-left: 0% !important;
+    padding-top: 10px;
+    width: 375px;
   }
 
   .dropup .panel-title a {
-    left: -16px;
+    left: -10px;
+    top: 4px;
   }
 
   #accordionDiv .clickAccordion div.panel.panel-default.dropup i {
     margin-top: 0px !important;
-    margin-right: -61px !important;
+    margin-right: -66px !important;
   }
 
   #accordionDiv .clickAccordion div.panel.panel-default.dropup .panel-title{
@@ -1715,12 +1739,20 @@ input, input:before, input:after {
 
 @media screen and (max-width: 375px) {
   #accordionDiv .clickAccordion div.panel.panel-default.dropup i {
-    margin-right: -51px !important;
+    margin-right: -68px !important;
   }
   #accordionDiv .clickAccordion div.panel.panel-default.dropup {
-    width: 125%!important;
+    width: 116%!important;
   }
   #accordionDiv .clickAccordion div.panel.panel-default.dropup {
-    margin-left: 4% !important;
+    margin-left: 0px!important;
   }
+}
+
+@media screen and (max-width: 500px) {
+  #specialDropUpIdDiv .fa-chevron-circle-up {
+    position: relative;
+    top: -25px;
+  }
+
 }

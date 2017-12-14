@@ -326,19 +326,19 @@
           <div>
             <span class="pull-right"><img style="padding: 0px;top: 60px;"  *ngIf="aloneLastNameEmpty || aloneFirstNameEmpty" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
             <div class="col-xs-6 pull-left">
-              <input type="text" placeholder="姓" (click)="checkChineseName(aloneLastName.value, 'last')" [(ngModel)]="applicantAloneLastName" #aloneLastName="ngModel" class="form-control" [ngClass]="{inValidInput:aloneLastNameEmpty}"  [disabled]="applicantAloneLockInput" required>
+              <input type="text" placeholder="姓" (change)="checkChineseName(aloneLastName.value, 'last')" [(ngModel)]="applicantAloneLastName" #aloneLastName="ngModel" class="form-control" [ngClass]="{'inValidInput':aloneLastNameEmpty || aloneNameLastChinese}"  [disabled]="applicantAloneLockInput">
               <div class="inValid text-left" *ngIf="aloneLastNameEmpty">此欄位為必填。</div>
               <div class="inValid text-left" *ngIf="aloneNameLastChinese">姓名必須是中文。</div>
             </div>
             <div class="col-xs-6 pull-left">
-              <input type="text" placeholder="名" (click)="checkChineseName(aloneFirstName.value, 'first')" [(ngModel)]="applicantAloneFirstName" #aloneFirstName="ngModel" class="form-control" [ngClass]="{inValidInput:aloneFirstNameEmpty}" [disabled]="applicantAloneLockInput" required>
+              <input type="text" placeholder="名" (change)="checkChineseName(aloneFirstName.value, 'first')" [(ngModel)]="applicantAloneFirstName" #aloneFirstName="ngModel" class="form-control" [ngClass]="{'inValidInput':aloneFirstNameEmpty || aloneNameFirstChinese}" [disabled]="applicantAloneLockInput">
               <div class="inValid text-left" *ngIf="aloneFirstNameEmpty">此欄位為必填。</div>
               <div class="inValid text-left" *ngIf="aloneNameFirstChinese">姓名必須是中文。</div>
             </div>
           </div>
 
           <div class="col-xs-12 pull-right">
-            <input maxlength="10" type="text" placeholder="請輸入身分證" style="text-transform:uppercase" [(ngModel)]="applicantAlonePid" #alonePid="ngModel" (click)="checkAlonePid(alonePid.value)" class="form-control" [ngClass]="{inValidInput: alonePidWrong || alonePidTypeWrong || alonePidEmpty}" [disabled]="applicantAloneLockInput" required>
+            <input maxlength="10" type="text" placeholder="請輸入身分證" style="text-transform:uppercase" [(ngModel)]="applicantAlonePid" #alonePid="ngModel" (change)="checkAlonePid(alonePid.value)" class="form-control" [ngClass]="{inValidInput: alonePidWrong || alonePidTypeWrong || alonePidEmpty}" [disabled]="applicantAloneLockInput">
             <span class="pull-right"><img  *ngIf="alonePidWrong || alonePidTypeWrong || alonePidEmpty" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
             <div class="inValid text-left" *ngIf="alonePidTypeWrong">身分證格式錯誤。</div>
             <div class="inValid text-left" *ngIf="alonePidEmpty">此欄位為必填。</div>
@@ -353,26 +353,26 @@
               <span class="pull-right txtBirth" style="padding-top:15px;">生日</span>
             </div>
             <div class="col-xs-5">
-              <select [(ngModel)]="applicantAloneBirthYear" (change)="checkAloneBd()" [ngClass]="{inValidInput: birthdayYAE.touched && !birthdayYAE.valid || aloneBdWrong || aloneBdEmpty}"  (change)="changedData()" #birthdayYAE="ngModel" class="form-control" [disabled]="applicantAloneLockInput" required>
+              <select [(ngModel)]="applicantAloneBirthYear" (change)="checkAloneBd() && changedData()" [ngClass]="{inValidInput:aloneBdWrong || aloneBdEmpty}" #birthdayYAE="ngModel" class="form-control" [disabled]="applicantAloneLockInput">
                 <option value="">年</option>
                 <option *ngFor="let year of birthdayYears" value="{{year}}" selected>{{year}}</option>
               </select>
             </div>
             <div class="col-xs-3" style="">
-              <select [(ngModel)]="applicantAloneBirthMonth" (change)="checkAloneBd()" [ngClass]="{inValidInput: birthdayYAM.touched && !birthdayYAM.valid || aloneBdWrong || aloneBdEmpty}"  (change)="changedData()"  #birthdayYAM="ngModel" class="form-control" [disabled]="applicantAloneLockInput" required>
+              <select [(ngModel)]="applicantAloneBirthMonth" (change)="checkAloneBd() && changedData()" [ngClass]="{inValidInput:aloneBdWrong || aloneBdEmpty}"  #birthdayYAM="ngModel" class="form-control" [disabled]="applicantAloneLockInput">
                 <option value="">月</option>
                 <option *ngFor="let month of birthdayMonths" value="{{month}}" selected>{{month}}</option>
               </select>
             </div>
             <div class="col-xs-3">
-              <select  [(ngModel)]="applicantAloneBirthDay" (change)="checkAloneBd()" [ngClass]="{inValidInput: birthdayYAD.touched && !birthdayYAD.valid || aloneBdWrong || aloneBdEmpty}"  (change)="changedData()" #birthdayYAD="ngModel" class="form-control" [disabled]="applicantAloneLockInput" required>
+              <select  [(ngModel)]="applicantAloneBirthDay" (change)="checkAloneBd() && changedData()" [ngClass]="{inValidInput:aloneBdWrong || aloneBdEmpty}"  #birthdayYAD="ngModel" class="form-control" [disabled]="applicantAloneLockInput">
                 <option value="">日</option>
                 <option *ngFor="let day of aloneBirthdayDays" value="{{day}}" selected>{{day}}</option>
               </select>
             </div>
-            <span class="pull-right"><img  *ngIf="birthdayYAE.touched && !birthdayYAE.valid && birthdayYAM.touched && !birthdayYAM.valid &&  birthdayYAD.touched && !birthdayYAD.valid || aloneBdWrong || aloneBdEmpty" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
+            <span class="pull-right"><img  *ngIf="aloneBdWrong || aloneBdEmpty" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
             <div class="inValid" *ngIf="aloneBdWrong">{{'本站僅提供滿'+ insuredAgeMax +'歲(含)以上，'+ insuredAgeMin +'歲(含)以下投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
-            <div class="inValid text-left" *ngIf="birthdayYAE.touched && !birthdayYAE.valid && birthdayYAM.touched && !birthdayYAM.valid &&  birthdayYAD.touched && !birthdayYAD.valid || aloneBdEmpty">此欄位為必填。</div>
+            <div class="inValid text-left" *ngIf="aloneBdEmpty">此欄位為必填。</div>
           </div>
         </div>
         <div class="col-xs-2">
