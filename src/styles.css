@@ -578,9 +578,30 @@ button:active {
 
 #accordionDiv div.panel.panel-default {
   background-color: white!important;
-  border: none!important;
+  border: none;
   padding-left: 50px;
   box-shadow: none!important;
+}
+
+#accordionDiv .clickAccordion div.panel.panel-default.dropup {
+  border: 1px solid #eee;
+}
+
+#accordionDiv .clickAccordion div.panel.panel-default.dropup .panel-heading{
+  border: none;
+}
+
+#accordionDiv .clickAccordion div.panel.panel-default.dropup {
+  margin-left: 4%;
+}
+
+@media screen and (max-width: 500px) {
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 7%;
+    margin-right: 10%;
+    max-width: 465px;
+    width: 118%;
+  }
 }
 
 #accordionDiv .panel-heading {
@@ -590,7 +611,7 @@ button:active {
   text-align: left;
   cursor:pointer;
   font-weight: 200;
-  margin: auto 5%;
+  /*margin: auto 5%;*/
   padding-left: 3%;
 }
 
@@ -668,7 +689,6 @@ div.owl-dots {
   right: 3%;
   position: absolute;
   background-size: cover;
-  background-repeat: repeat;
   display: block;
   width: 60px;
   height: 104px;
@@ -682,7 +702,6 @@ div.owl-dots {
   left: 3%;
   position: absolute;
   background-size: cover;
-  background-repeat: repeat;
   display: block;
   width: 60px;
   height: 104px;
@@ -813,7 +832,7 @@ div.text {
 }
 
 .spinner-three-bounce {
-  background: url('/assets/images/dolls/loading.gif') 0px 0px !important;
+  background: url('/assets/images/dolls/loading.gif?v=1') 0px 0px !important;
   width: 150px!important;
   height: 150px!important;
   background-repeat: no-repeat!important;
@@ -909,10 +928,21 @@ input, input:before, input:after {
 }
 
 @media screen and (max-width: 500px){
+  .dropup h4.panel-title {
+    top: -15px!important;
+    position: relative!important;
+  }
+  #specialDropUpIdDiv .fa-chevron-circle-up {
+    position: relative;
+    top: -25px;
+  }
   .panel-group .fa-chevron-circle-down{
     font-size: 25px!important;
     top: 35px!important;
     z-index:999!important;
+  }
+  .panel.panel-default.dropup {
+    z-index: 1000;
   }
   .owl-theme .owl-nav .owl-prev, .owl-theme .owl-nav .owl-next {
     z-index:999!important;
@@ -964,6 +994,16 @@ input, input:before, input:after {
 .weekDayText, td {
   border-top: none!important;
   padding: 0px!important;
+}
+@media screen and (max-width:1024px){
+  .dropup .panel-title a {
+    padding-right: 5%;
+  }
+}
+@media screen and (min-width:1024px){
+  .dropup .panel-title a {
+    padding-right: 10%;
+  }
 }
 
 #closebtn {
@@ -1039,6 +1079,20 @@ input, input:before, input:after {
 
 #detailDivShift {
   width: 220px;
+}
+
+.dropup .panel-title a {
+  position: relative;
+  left: -40px;
+}
+
+@media screen and (max-width: 457px) {
+  calendarTable td button {
+    padding-left: 10px !important;
+  }
+  #calendarTable td h4{
+    left: 32%;
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -1242,6 +1296,12 @@ input, input:before, input:after {
       left: -337%!important;
     }
   }
+
+  @media screen and (max-width: 457px) {
+    .specialPkgLabel span {
+      left: -7px;
+    }
+  }
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -1404,6 +1464,22 @@ input, input:before, input:after {
   }
 }
 
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  select::-ms-expand {
+    display: none!important;
+  }
+  .col-xs-7.NoPaddingLeft#cutAmtBtn .specialPkgLabel.toCusBtn span {
+    left: 16%!important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(4) span{
+    left:21%!important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(6) span{
+    left:15%!important;
+  }
+}
+
 @supports (-ms-accelerator:true) {
   /* IE Edge 12+ CSS styles go here */
   input[type=radio]{
@@ -1543,7 +1619,13 @@ input, input:before, input:after {
     left: 0px;
   }
   #topSpeArrow {
-    top:22px
+    top:13px
+  }
+  #rowOfBtn .col-xs-2:nth-child(6) span {
+    left: 13%!important;
+  }
+  #deskCusPkg .col-xs-2:nth-child(4) span {
+    left: 20%!important;
   }
   @media screen and (max-width: 414px) {
     #calendarTable td {
@@ -1559,9 +1641,86 @@ input, input:before, input:after {
   }
 }
 
+#rowOfBtn .col-xs-2:nth-child(6) {
+  width:16%!important;
+}
+
+.col-xs-7.NoPaddingLeft#cutAmtBtn .specialPkgLabel.toCusBtn span {
+  left: 16%!important;
+}
+
 @media screen and (max-width: 500px) {
   #topSpeArrow {
     top:20px!important;
   }
+  #choicesHaoNoHao {
+    width: 150%!important;
+  }
+  #customerLogo {
+    margin-left: -10%!important;
+  }
+}
+/* ie  */
+@supports (-ms-ime-align:auto) {
+  .img-grey {
+
+  }
 }
 
+@media screen and (max-width: 1200px) {
+  #specialDropUpIdDiv {
+    left: -60px!important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 5%!important;
+  }
+}
+
+@media screen and (max-width: 993px) {
+  #specialDropUpIdDiv {
+    left: -60px!important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 7%!important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup i{
+    margin-top: 0px!important;
+    margin-right: -21px!important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #specialDropUpIdDiv {
+    left: -60px !important;
+  }
+
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 6% !important;
+  }
+
+  .dropup .panel-title a {
+    left: -16px;
+  }
+
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup i {
+    margin-top: 0px !important;
+    margin-right: -61px !important;
+  }
+
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup .panel-title{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup i {
+    margin-right: -51px !important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    width: 125%!important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 4% !important;
+  }
+}

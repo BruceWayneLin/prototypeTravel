@@ -583,8 +583,15 @@ div.row.memberTitle {
 }
 
 .img-grey {
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
+  /*-webkit-filter: grayscale(100%); !* Safari 6.0 - 9.0 *!*/
+  /*-moz-filter: grayscale(100%);*/
+  /*-ms-filter: grayscale(100%);*/
+  /*-o-filter: grayscale(100%);*/
+  /*filter: gray; !* IE6-9 *!*/
+  /*-webkit-filter: grayscale(1); !* Google Chrome, Safari 6+ & Opera 15+ *!*/
+  /*filter: grayscale(1);*/
+  background: url('../../../assets/images/dolls/ananGrey.png') no-repeat center!important;
+  background-size: contain!important;
 }
 
 @media screen and (max-width:1266px) {
@@ -910,13 +917,13 @@ div.row.memberTitle {
     top: -28px;
   }
   .agreement {
-    top: -40px;
+    top: -21px;
   }
   .checkBoxDiv, .noChecked {
     position: relative !important;
     top: 45px !important;
   }
-  .titleForm h2{
+  .titleForm h2 {
     margin-top: 20px;
   }
 }
@@ -1008,6 +1015,12 @@ div.row.memberTitle {
   #personalAreaPlaceForMobile .col-xs-12 .col-xs-4{
     padding:0px;
     width: 40%;
+  }
+  .insuredBoxAlone {
+    margin-top:8%!important;
+  }
+  .dropDown {
+    margin-right: 3%;
   }
 }
 
@@ -1250,7 +1263,7 @@ div.row.memberTitle {
 .dropDown {
   position: absolute;
   top: 13px;
-  left: 66%;
+  left: 75%;
   color: #ddd;
   pointer-events:none!important;
 }
@@ -1287,12 +1300,12 @@ button.form-control.btn-sm span{
   }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 375px) and (min-width: 360px){
   #haoma span {
     left: -250%;
   }
   #haoma h4 {
-    left: -340%;
+    left: -285%;
   }
 }
 
@@ -1307,11 +1320,40 @@ button.form-control.btn-sm span{
   min-width: 90px!important;
 }
 
-@media screen and (min-width: 360px) and (max-width: 357px) {
+@media screen and (min-width: 320px) and (max-width: 360px) {
   #haoma span {
     left: -250%!important;
   }
   #haoma h4 {
     left: -337%!important;
+  }
+}
+
+.ananDivImg {
+  background: url('../../../assets/images/dolls/anan.png') no-repeat center;
+  background-repeat: no-repeat;
+  height: 65px;
+  width: 45px;
+  background-position-x: 0px;
+  background-size: contain;
+  position: relative;
+  top: -5px;
+}
+
+.annaDiv {
+  max-width: 50px;
+  display: inline-block;
+  width: 100%;
+}
+
+@media screen and (max-width: 375px) {
+  #rule1 {
+    padding-left: 0px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .errImg {
+    display:none;
   }
 }

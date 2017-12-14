@@ -784,9 +784,8 @@ owl-carousel img {
   position: relative;
   z-index: 222;
   border: 1px solid #ccc;
-  height: 81%;
   background-color: white;
-  width: 930px;
+  width: 107%;
   left: -31px;
   padding-top: 12px;
   margin-bottom: 7px;
@@ -892,7 +891,7 @@ header {
 }
 
 #cutAmtBtn.col-xs-7.NoPaddingLeft .specialPkgLabel.toCusBtn  span {
-  left: 18%!important;
+  left: 18%;
 }
 
 #feltNotEnoRow {
@@ -945,7 +944,10 @@ header {
   #mobileAmt {
     margin-left: 0px!important;
   }
-  #calendarTable td button{
+}
+
+@media screen and (max-width: 500px) and (min-width: 458px) {
+  #calendarTable td button {
     padding-left: 15px!important;
   }
 }
@@ -1296,11 +1298,11 @@ header {
     left: 8%!important;
   }
   #btnOfPackages .specialPkgLabel input:checked + span {
-    left:18%!important;
+    left:18%;
     font-size:18px!important;
   }
   #btnOfPackages .specialPkgLabel span {
-    left: 18%!important;
+    left: 18%;
     top: 15px!important;
   }
   .specialPkgLabel.toCusBtn  span, .specialPkgLabel input:checked + span {
@@ -1377,4 +1379,37 @@ header {
 
 .shanshiContent {
   padding-left:10%;
+}
+
+#rowOfBtn .col-xs-2:nth-child(6) span {
+  left: 10%;
+}
+
+#cusAmtBtn.col-xs-1 .amtName {
+  left: 13%;
+}
+
+#cutAmtBtn.col-xs-7.NoPaddingLeft div.col-xs-3:nth-child(4) .specialPkgLabel.toCusBtn span.amtName {
+  left: 20%!important;
+}
+
+@media screen and (max-width:1040px) and (min-width:1000px) {
+  #btnOfPackages .col-xs-4:nth-child(3) .specialPkgLabel span {
+    left:24%!important;
+  }
+  #btnOfPackages .col-xs-4:nth-child(1) .specialPkgLabel span {
+    left:27%!important;
+  }
+}
+
+@media screen and (max-width:770px) and (min-width:730px) {
+  #btnOfPackages .specialPkgLabel input[type="radio"]:checked + span {
+    left:22%!important;
+  }
+  #btnOfPackages .col-xs-4:nth-child(3) .specialPkgLabel input[type="radio"]:checked + span {
+     left:19%!important;
+   }
+  #btnOfPackages .col-xs-4:nth-child(3) .specialPkgLabel span {
+    left:14%!important;
+  }
 }

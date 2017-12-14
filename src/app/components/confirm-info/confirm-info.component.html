@@ -120,6 +120,9 @@
           <i class="fa fa-chevron-circle-down" aria-hidden="true" style="pointer-events: none;" (click)="toTriggerCloseA()"></i>
           <accordion-group class="clickAccordion" heading="{{' '+item['inLastName']+item['inFirstName']+' '+item['inPackageName']+' NT$'+item['inRate']}}">
             <div class="row packageInfo">
+              <div id="specialDropUpIdDiv" class="col-xs-12 text-right" style="z-index:999;left: -8%;top:-41px;">
+                <i class="fa fa-chevron-circle-up" aria-hidden="true" (click)="doSomethingOnClose()"></i>
+              </div>
               <div class="container">
                 <div class="col-lg-12 text-left">
                   <h2 class="touBaouTit">被保險人</h2>

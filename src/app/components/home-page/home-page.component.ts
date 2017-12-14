@@ -120,20 +120,6 @@ export class HomePageComponent implements OnInit {
     return parms;
   };
 
-  ngAfterViewInit() {
-    alert('hi')
-    try {
-      var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
-      if(goDownFlag || this.dataService.toGoDown){
-        setTimeout(function(){
-          document.querySelector('#flagSix').scrollIntoView();
-        }, 100);
-        sessionStorage.removeItem('bak');
-      }
-    } catch (e) {
-    }
-  }
-
   ngOnInit() {
     this.toCompatibilityUse();
     this.CusDetailContent = true;
@@ -290,7 +276,16 @@ export class HomePageComponent implements OnInit {
           });
         });
         this.toGetImgUrl(this.defaultCustomerPkg['secondaryItems']);
-
+        try {
+          var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
+          if(goDownFlag || this.dataService.toGoDown){
+            setTimeout(function(){
+              document.querySelector('#flagSix').scrollIntoView();
+            }, 1000);
+            // sessionStorage.removeItem('bak');
+          }
+        } catch (e) {
+        }
       }
 
       var d = new Date();
@@ -321,13 +316,28 @@ export class HomePageComponent implements OnInit {
       try {
         var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
         if(goDownFlag || this.dataService.toGoDown){
-          document.querySelector('#flagSix').scrollIntoView();
-          sessionStorage.removeItem('bak');
+          setTimeout(function(){
+            document.querySelector('#flagSix').scrollIntoView();
+          }, 1000);
         }
       } catch (e) {
       }
     });
     this.changeCountries('');
+  }
+
+  ngAfterViewInit(){
+    // alert('hi')
+    try {
+      var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
+      if(goDownFlag || this.dataService.toGoDown){
+        setTimeout(function(){
+          document.querySelector('#flagSix').scrollIntoView();
+        }, 100);
+        sessionStorage.removeItem('bak');
+      }
+    } catch (e) {
+    }
   }
 
   toCompatibilityUse(){
@@ -591,6 +601,7 @@ export class HomePageComponent implements OnInit {
         );
         this.selectedPackageName = this.selectedPackage['packageName'];
         this.secondaryItems = this.selectedPackage['secondaryItems'];
+        this.toGetImgUrl(this.secondaryItems);
         this.pkgPrimary = this.selectedPackage['primaryItems'];
         this.featureDesc = this.selectedPackage['featureDesc'];
         this.toGetLogo(this.selectedPackage['companyCode']);
@@ -660,7 +671,7 @@ export class HomePageComponent implements OnInit {
     this.startTravelDay = '';
     this.endTravelDay = '';
     this.theTimeClicked = 2;
-    this.toShowMoreDays = !this.toShowMoreDays;
+    this.toShowMoreDays = false;
     this.getDayFromBkend = this.startDayLimit;
     this.theDayBeginingNeedToRun = this.getDayFromBkend + 10;
 
@@ -690,11 +701,11 @@ export class HomePageComponent implements OnInit {
     if(this.selectTravelDayIsDone === false && !this.startTravelDay){
         this.textOfSelectingDays = '請點選旅程出發日與返回日';
         this.startTravelDay = $event.target.value;
+        this.firstMon = new Date(this.startTravelDay);
         // this.testDay = this.startTravelDay;
         // let testDayAddOneMonth = new Date(new Date().getFullYear(), new Date().getMonth()+2, 0);
         // let day = 1000*60*60*24;
-      this.firstMon = new Date(this.startTravelDay);
-      this.theDayBeginingNeedToRun = this.travelPeriodLimit + this.getDayFromBkend + 10;
+        this.theDayBeginingNeedToRun = this.travelPeriodLimit + this.getDayFromBkend + 10;
 
         this.totalTimesTimes = Math.round(this.travelPeriodLimit/30);
         // this.getDayFromBkend = diffDays;
@@ -767,7 +778,31 @@ export class HomePageComponent implements OnInit {
             this.endTravelDay = $event.target.value;
 
             if (this.startTravelDay && this.endTravelDay) {
-            document.querySelector('#flagFive').scrollIntoView({block: 'start', behavior: 'smooth'});
+              console.log(window.innerWidth);
+              if(window.innerWidth >= 1700){
+                $('html, body').animate({scrollTop: 1700}, 1500, function(){
+                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
+                });
+              }else if(window.innerWidth >= 1366){
+                $('html, body').animate({scrollTop: 1530}, 1500, function(){
+                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
+                });
+              }else if(window.innerWidth <= 1366){
+                $('html, body').animate({scrollTop: 1280}, 1500, function(){
+                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
+                });
+              }else if(window.innerWidth <= 780){
+                $('html, body').animate({scrollTop: 1230}, 1500, function(){
+                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
+                });
+              }else if(window.innerWidth <= 500){
+                $('html, body').animate({scrollTop: 1150}, 1500, function(){
+                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
+                });
+              }
+
+
+
             this.textOfSelectingDays = '您的旅遊期間';
             this.tableShowHidden = true;
             let oneDay = 24*60*60*1000;

@@ -109,7 +109,7 @@ h2.formTitTxt{
 #insuredOneCard{
     border-style:dotted;
     height: 100%;
-    min-height: 411px;
+    min-height: 480px;
 }
 
 .plusBtn {
@@ -289,7 +289,10 @@ input.memberFormInput.form-control.input-lg[disabled] {
     text-align: center;
     padding-right: 10px;
     padding-left: 10px;
-    width: 45px;;
+    width: 45px;
+    position: relative;
+    top: -10px;
+    margin-top: 10px;
 }
 
 .circleDiv p {
@@ -393,6 +396,7 @@ span.formSubTxt {
         white-space: initial!important;
         position:relative;
         left:-10px;
+        top: -25px;
     }
     .row.addPPlMinusPlus {
         margin-top: 50px;
@@ -601,7 +605,7 @@ div.row.memberTitle {
 }
 
 #insuredOneCard .col-sm-12, #insuredOneCard .col-lg-12, #insuredOneCard .insuredBirthEx {
-    min-height: 85px!important;
+    /*min-height: 85px!important;*/
 }
 
 .insuredPriceDivH4 h4 {
@@ -643,7 +647,7 @@ div.row.memberTitle {
         position: static!important;
     }
     #insuredOneCard {
-        height: 470px;
+        height: 510px;
         padding: 0px;
     }
     .bthInValid {
@@ -670,11 +674,20 @@ div.row.memberTitle {
     }
     .insuredPriceDivH4 {
         position: relative;
-        top: -45px;
+        top: -45px!important;
     }
     #mobileTxtBirth {
         display: initial!important;
         margin-bottom: 5px;
+    }
+}
+
+@media screen and (max-width:768px){
+    .insuredPriceDivH4 {
+        top: 3px!important;
+    }
+    #insuredOneCard {
+        min-height: 500px!important;
     }
 }
 
@@ -711,6 +724,10 @@ div.row.memberTitle {
     .col-lg-12.text-center.pid {
         position: static!important;
     }
+    .insuredInfoAppend {
+        padding-right:0px!important;
+        padding-left:0px!important;
+    }
 }
 
 @media screen and (max-width: 990px) and (min-width: 768px) {
@@ -731,7 +748,6 @@ div.row.memberTitle {
         padding-left:0px;
     }
     .insuredBirthEx .inValid{
-        padding-left: 0px!important;
     }
     #insuredOneCard{
         height: 100%!important;
@@ -750,8 +766,49 @@ div.row.memberTitle {
 
 .dropDown {
     position: absolute;
-    top: 13px;
-    left: 66%;
+    top: 55%;
+    left: 85%;
     color: #ddd;
     pointer-events:none!important;
+}
+
+.bthInValid.col-xs-1 {
+    width: 100%;
+    text-align: left;
+    top: -10px;
+    padding-left: 0px;
+}
+
+.col-lg-12.text-center.pid {
+    display: inline-block;
+}
+
+.bthInValid .inValid.text-left {
+    padding: 15px;
+}
+
+.col-xs-11 {
+    width: 100%!important;
+    padding: 0px;
+}
+
+#insuredOneCard .col-sm-12, #insuredOneCard .col-lg-12 {
+    min-height: 90px!important;
+}
+
+#insuredOneCard .insuredTit.col-sm-12.text-left {
+    min-height: 125px!important;
+}
+
+#insuredOneCard .insuredBirthEx {
+    min-height: 110px!Important;
+}
+
+@media screen and (max-width:500px) {
+    #firstDropDown {
+      top: 45%;
+    }
+    .insuredBirthEx .col-xs-3 {
+      width: 28%!important;
+    }
 }

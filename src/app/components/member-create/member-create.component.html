@@ -71,7 +71,7 @@
           <span class="formSubTxt">請填寫中文姓名，以保障您的權益</span>
         </div>
         <div class="col-sm-6">
-            <input required maxlength="50" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[a-z]{2,3}$" [ngClass]="{'inValidInput': emailElm.touched && !emailElm.valid}" class="memberFormInput form-control input-lg emailInput" [(ngModel)]="email" #emailElm="ngModel" (change)="emailChange(email)" type="text" placeholder="電子信箱 *" [disabled]="checkEmailDis">
+            <input required maxlength="50" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,3}$" [ngClass]="{'inValidInput': emailElm.touched && !emailElm.valid}" class="memberFormInput form-control input-lg emailInput" [(ngModel)]="email" #emailElm="ngModel" (change)="emailChange(email)" type="text" placeholder="電子信箱 *" [disabled]="checkEmailDis">
             <span class="pull-right"><img  *ngIf="emailElm.touched && !emailElm.valid" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
           <div class="inValid" *ngIf="emailElm.touched && !emailElm.valid">email格式不正確。</div>
         </div>
@@ -135,7 +135,7 @@
           </div>
           <span class="pull-right"><img  *ngIf="birthdayYEl.touched && !birthdayYEl.valid && birthdayMEl.touched && !birthdayMEl.valid &&  birthdayDEl.touched && !birthdayDEl.valid || personalAgeOver" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
           <div class="inValid" *ngIf="birthdayYEl.touched && !birthdayYEl.valid && birthdayMEl.touched && !birthdayMEl.valid &&  birthdayDEl.touched && !birthdayDEl.valid">生日不正確。</div>
-          <div class="inValid" *ngIf="personalAgeOver">{{'本站僅提供滿'+ applicantAgeMin +'歲(含)以上，'+ applicantAgeMax +'歲(含)以下投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
+          <div class="inValid" *ngIf="personalAgeOver">{{'要保人須為'+ applicantAgeMin +'歲(含)以上，'+ applicantAgeMax +'歲(含)以下，被保險人可為'+ insuredAgeMin +'歲~' + insuredAgeMax + '歲(含)以下，有任何問題請來電免費客服專線0800-234-088。'}}</div>
         </div>
       </div>
       <div class="col-xs-12">
@@ -326,19 +326,19 @@
           <div>
             <span class="pull-right"><img style="padding: 0px;top: 60px;"  *ngIf="aloneLastNameEmpty || aloneFirstNameEmpty" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
             <div class="col-xs-6 pull-left">
-              <input type="text" placeholder="姓" (change)="checkChineseName(aloneLastName.value, 'last')" [(ngModel)]="applicantAloneLastName" #aloneLastName="ngModel" class="form-control" [ngClass]="{inValidInput:aloneLastNameEmpty}"  [disabled]="applicantAloneLockInput" required>
+              <input type="text" placeholder="姓" (click)="checkChineseName(aloneLastName.value, 'last')" [(ngModel)]="applicantAloneLastName" #aloneLastName="ngModel" class="form-control" [ngClass]="{inValidInput:aloneLastNameEmpty}"  [disabled]="applicantAloneLockInput" required>
               <div class="inValid text-left" *ngIf="aloneLastNameEmpty">此欄位為必填。</div>
               <div class="inValid text-left" *ngIf="aloneNameLastChinese">姓名必須是中文。</div>
             </div>
             <div class="col-xs-6 pull-left">
-              <input type="text" placeholder="名" (change)="checkChineseName(aloneFirstName.value, 'first')" [(ngModel)]="applicantAloneFirstName" #aloneFirstName="ngModel" class="form-control" [ngClass]="{inValidInput:aloneFirstNameEmpty}" [disabled]="applicantAloneLockInput" required>
+              <input type="text" placeholder="名" (click)="checkChineseName(aloneFirstName.value, 'first')" [(ngModel)]="applicantAloneFirstName" #aloneFirstName="ngModel" class="form-control" [ngClass]="{inValidInput:aloneFirstNameEmpty}" [disabled]="applicantAloneLockInput" required>
               <div class="inValid text-left" *ngIf="aloneFirstNameEmpty">此欄位為必填。</div>
               <div class="inValid text-left" *ngIf="aloneNameFirstChinese">姓名必須是中文。</div>
             </div>
           </div>
 
           <div class="col-xs-12 pull-right">
-            <input maxlength="10" type="text" placeholder="請輸入身分證" style="text-transform:uppercase" [(ngModel)]="applicantAlonePid" #alonePid="ngModel" (change)="checkAlonePid(alonePid.value)" class="form-control" [ngClass]="{inValidInput: alonePidWrong || alonePidTypeWrong || alonePidEmpty}" [disabled]="applicantAloneLockInput" required>
+            <input maxlength="10" type="text" placeholder="請輸入身分證" style="text-transform:uppercase" [(ngModel)]="applicantAlonePid" #alonePid="ngModel" (click)="checkAlonePid(alonePid.value)" class="form-control" [ngClass]="{inValidInput: alonePidWrong || alonePidTypeWrong || alonePidEmpty}" [disabled]="applicantAloneLockInput" required>
             <span class="pull-right"><img  *ngIf="alonePidWrong || alonePidTypeWrong || alonePidEmpty" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
             <div class="inValid text-left" *ngIf="alonePidTypeWrong">身分證格式錯誤。</div>
             <div class="inValid text-left" *ngIf="alonePidEmpty">此欄位為必填。</div>
@@ -413,21 +413,27 @@
       </div>
       <div class="col-xs-7 appendDollArea">
         <div class="annaDiv">
-          <img src="assets/images/dolls/anan.png" alt="" class="anan img-responsive" [ngClass]="{'img-grey': owlAnanOne}">
+          <div alt="" class="anan ananDivImg img-responsive" [ngClass]="{'img-grey': owlAnanOne}">
+          </div>
         </div>
         <div class="annaDiv">
-          <img src="assets/images/dolls/anan.png" alt="" class="anan img-responsive" [ngClass]="{'img-grey': owlAnanTwo}">
+          <div alt="" class="anan ananDivImg img-responsive" [ngClass]="{'img-grey': owlAnanTwo}">
+          </div>
         </div>
         <div class="annaDiv">
-          <img src="assets/images/dolls/anan.png" alt="" class="anan img-responsive" [ngClass]="{'img-grey': owlAnanThree}">
+          <div alt="" class="anan ananDivImg img-responsive" [ngClass]="{'img-grey': owlAnanThree}">
+          </div>
         </div>
         <div class="annaDiv">
-          <img src="assets/images/dolls/anan.png" alt="" class="anan img-responsive" [ngClass]="{'img-grey': owlAnanFour}">
+          <div alt="" class="anan ananDivImg img-responsive" [ngClass]="{'img-grey': owlAnanFour}">
+          </div>
         </div>
         <div class="annaDiv">
-          <img src="assets/images/dolls/anan.png" alt="" class="anan img-responsive" [ngClass]="{'img-grey': owlAnanFifth}">
+          <div alt="" class="anan ananDivImg img-responsive" [ngClass]="{'img-grey': owlAnanFifth}">
+          </div>
         </div>
-      </div>
+          <!--<img src="assets/images/dolls/anan.png" alt="" class="anan img-responsive" [ngClass]="{'img-grey': owlAnanFifth}">-->
+        </div>
       <div class="col-xs-3">
         <button class="form-control minusBtn" (click)="deleteThisMinus()"><i class="fa fa-minus"></i></button>
         <button class="form-control plusBtn" (click)="createInsuredCard()"><i class="fa fa-plus"></i></button>

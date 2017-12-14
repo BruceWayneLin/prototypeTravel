@@ -102,6 +102,8 @@ export class MemberCreateComponent implements OnInit {
   @ViewChild('lastNameEl') lastNameEl:ElementRef;
   @ViewChild('firstNameEl') firstNameEl:ElementRef;
   @ViewChild('birthdayCityEl') birthdayCityEl:ElementRef;
+  @ViewChild('MobileEl') mobileEl:ElementRef;
+
   constructor(
     private viewContainerRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -112,12 +114,6 @@ export class MemberCreateComponent implements OnInit {
      this.buttonOne = this.shareService.buttonOne;
      this.buttonTwo = this.shareService.buttonTwo;
      this.buttonThree = this.shareService.buttonThree;
-
-     this.owlAnanOne = this.dataService.owlAnanOne;
-     this.owlAnanTwo = this.dataService.owlAnanTwo;
-     this.owlAnanThree = this.dataService.owlAnanThree;
-     this.owlAnanFour = this.dataService.owlAnanFour;
-     this.owlAnanFifth = this.dataService.owlAnanFifth;
   }
 
   checkAloneBd(){
@@ -410,10 +406,18 @@ export class MemberCreateComponent implements OnInit {
   }
 
   ToShowConfirmModal(val:boolean){
+    console.log(this.EmailEl['invalid']);
+    console.log(this.mobileEl['invalid']);
+    console.log(this.firstNameEl['invalid']);
+    console.log(this.lastNameEl['invalid']);
     if(!this.lastName ||
         !this.firstName ||
         !this.email ||
         !this.pid ||
+        this.EmailEl['invalid'] ||
+        this.mobileEl['invalid'] ||
+        this.firstNameEl['invalid'] ||
+        this.lastNameEl['invalid'] ||
         !this.pBirthYear ||
         !this.pBirthMonth ||
         !this.pBirthDay ||
@@ -932,7 +936,6 @@ export class MemberCreateComponent implements OnInit {
             this.hideUpinput = false;
           }
 
-
           this.insuredList.forEach((item, index)=>{
             switch(index){
               case 0:
@@ -1189,6 +1192,11 @@ export class MemberCreateComponent implements OnInit {
         }
       });
     }
+    this.owlAnanOne = this.dataService.owlAnanOne;
+    this.owlAnanTwo = this.dataService.owlAnanTwo;
+    this.owlAnanThree = this.dataService.owlAnanThree;
+    this.owlAnanFour = this.dataService.owlAnanFour;
+    this.owlAnanFifth = this.dataService.owlAnanFifth;
   }
 
   deleteThisOne() {

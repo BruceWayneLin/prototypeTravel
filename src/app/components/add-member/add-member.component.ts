@@ -161,7 +161,7 @@ export class AddMemberComponent implements OnInit {
 
   checkPidByClick(idValue, index){
     let value = idValue.toUpperCase();
-    this.checkDisable();
+    this.checkDisable('');
 
     switch(index){
       case 1:
@@ -325,9 +325,24 @@ export class AddMemberComponent implements OnInit {
     }
   }
 
+  theTopAfterCheckRelate: string;
+  relationShipChecked(value, index){
+    if(!value && index == 3){
+      this.theTopAfterCheckRelate = '44%';
+      this.thirdRelationshipInvalid = true;
+    }else{
+      this.theTopAfterCheckRelate = '56%';
+      this.thirdRelationshipInvalid = false;
+    }
+    // if(!this.fifthCardRelationship && index == 5){
+    //   this.theTopAfterCheckRelate = '44%';
+    // }else{
+    //   this.theTopAfterCheckRelate = '56%';
+    // }
+  }
 
   checkRelationShipRepeat(value, index){
-    this.checkDisable();
+    this.checkDisable('');
     let relationArr = [];
     let returnVal;
     relationArr.push(this.firstCardRelationship);
@@ -430,7 +445,7 @@ export class AddMemberComponent implements OnInit {
         }
         break;
       case 5:
-        var ans = this.relationShip.map((x)=>{
+          var ans = this.relationShip.map((x)=>{
           numberCnt = countInArray(this.kanTrelationShip, x['value']);
           if(numberCnt > x['allowedCnt']){
             this.fifthRelatedRepeat = true;
@@ -513,7 +528,12 @@ export class AddMemberComponent implements OnInit {
   fifthCardLock: any;
   sixthCardLock: any;
 
-  checkDisable(){
+  checkDisable(flagVal){
+    if(flagVal == 'last' && this.firstCardLastName == ''){
+      this.firstLastNameValiFail = true;
+    }else if(flagVal == 'first' && this.firstCardFirstName == ''){
+      this.firstFirstNameValiFail = true;
+    }
     if(
         this.secondCardFirstName &&
         this.secondCardLastName &&
@@ -592,6 +612,9 @@ export class AddMemberComponent implements OnInit {
       this.firstCardDay = this.memberCom.pBirthDay;
       this.checkRatioAmt(1);
       this.countFinalPrice();
+    }else{
+      this.checkRatioAmt(1);
+      this.countFinalPrice();
     }
     if(this.dataService.owlAnanOne){
       this.toInitData(2);
@@ -635,6 +658,7 @@ export class AddMemberComponent implements OnInit {
     } else {
       this.dataService.clearData = true;
       this.lockFirstCard = false;
+      this.firstCardInsuredPriceWord = '0';
       this.Data();
     }
   }
@@ -649,6 +673,15 @@ export class AddMemberComponent implements OnInit {
       this.firstCardYear = this.memberCom.pBirthYear.slice(0, 4);
       this.firstCardMonth = this.memberCom.pBirthMonth;
       this.firstCardDay = this.memberCom.pBirthDay;
+      this.firstRelationshipInvalid = false;
+      this.firstCardValidFail = false;
+      this.firstBdOverAge = false;
+      this.firstPidTypeWrong = false;
+      this.firstCardCheckOk = false;
+      this.firstFirstNameValiFail = false;
+      this.firstLastNameValiFail = false;
+      this.firstBdEmpty = false;
+      this.firstPidEmpty = false;
     }
   }
 
@@ -732,7 +765,7 @@ export class AddMemberComponent implements OnInit {
   }
 
   checkRatioAmt(index){
-    this.checkDisable();
+    this.checkDisable('');
     let currentYear = new Date(this.countBrthDayFromSelectedBtn).getFullYear();
     let currentMonth = new Date(this.countBrthDayFromSelectedBtn).getMonth() + 1;
     let currentDay = new Date(this.countBrthDayFromSelectedBtn).getDate();
@@ -765,7 +798,8 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.firstCardInsuredPrice = this.numberWithCommas(item.rate);
+                this.firstCardInsuredPriceWord = this.numberWithCommas(item.rate);
+                this.firstCardInsuredPrice = item.rate;
                 this.firstCardWarningWord = item.tipText;
                 this.memberCom.finalPrice();
             }
@@ -801,7 +835,8 @@ export class AddMemberComponent implements OnInit {
             console.log('ageMin', item.ageMin);
             console.log('ageMax', item.ageMax);
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.secondCardInsuredPrice = this.numberWithCommas(item.rate);
+              this.secondCardInsuredPriceWord = this.numberWithCommas(item.rate);
+              this.secondCardInsuredPrice = item.rate;
                 this.secondCardWarningWord = item.tipText;
                 this.memberCom.finalPrice();
             }
@@ -832,7 +867,8 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.thirdCardInsuredPrice = this.numberWithCommas(item.rate);
+              this.thirdCardInsuredPriceWord = this.numberWithCommas(item.rate);
+              this.thirdCardInsuredPrice = item.rate;
                 this.thirdCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -863,7 +899,8 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.fourthCardInsuredPrice = this.numberWithCommas(item.rate);
+              this.fourthCardInsuredPriceWord = this.numberWithCommas(item.rate);
+              this.fourthCardInsuredPrice = item.rate;
                 this.fourthCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -894,7 +931,8 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.fifthCardInsuredPrice = this.numberWithCommas(item.rate);
+                this.fifthCardInsuredPriceWord = this.numberWithCommas(item.rate);
+                this.fifthCardInsuredPrice = item.rate;
                 this.fifthCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -925,7 +963,8 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.sixthCardInsuredPrice = this.numberWithCommas(item.rate);
+              this.sixthCardInsuredPriceWord = this.numberWithCommas(item.rate);
+              this.sixthCardInsuredPrice = item.rate;
                 this.sixthCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -1694,6 +1733,7 @@ export class AddMemberComponent implements OnInit {
 
   // many many of dummpy variables starts from here!!
   // first card
+  firstCardInsuredPriceWord:string = '0';
   firstCardInsuredPrice: number = 0;
   firstCardRelationship: any = "本人";
   firstCardLastName: string = '';
@@ -1717,6 +1757,7 @@ export class AddMemberComponent implements OnInit {
   firstCardWarningWord: string;
 
   // second card
+  secondCardInsuredPriceWord:string = '0'
   secondCardInsuredPrice: number = 0;
   secondCardRelationship: any = "";
   secondCardLastName: string = '';
@@ -1740,6 +1781,7 @@ export class AddMemberComponent implements OnInit {
   secondCardWarningWord: string;
 
   // third card
+  thirdCardInsuredPriceWord:string = '0';
   thirdCardInsuredPrice: number = 0;
   thirdCardRelationship: any = "";
   thirdCardLastName: string = '';
@@ -1763,6 +1805,7 @@ export class AddMemberComponent implements OnInit {
   thirdCardWarningWord: string;
 
   // fourth card
+  fourthCardInsuredPriceWord:string = '0';
   fourthCardInsuredPrice: number = 0;
   fourthCardRelationship: any = "";
   fourthCardLastName: string = '';
@@ -1786,6 +1829,7 @@ export class AddMemberComponent implements OnInit {
   fourthCardWarningWord: string;
 
   // fifth card
+  fifthCardInsuredPriceWord:string = '0';
   fifthCardInsuredPrice: number = 0;
   fifthCardRelationship: any = "";
   fifthCardLastName: string = '';
@@ -1809,6 +1853,7 @@ export class AddMemberComponent implements OnInit {
   fifthCardWarningWord: string;
 
   // sixth card
+  sixthCardInsuredPriceWord:string = '0';
   sixthCardInsuredPrice: number = 0;
   sixthCardRelationship: any = "";
   sixthCardLastName: string = '';

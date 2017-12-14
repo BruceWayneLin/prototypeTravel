@@ -85,7 +85,7 @@ footer .col-xs-12, .navbar-brand {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 999!important; /* Sit on top */
+  z-index: 1000!important; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
