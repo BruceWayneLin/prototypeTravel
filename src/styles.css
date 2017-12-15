@@ -826,10 +826,10 @@ div.text {
   }
   #calendarTable td .checkBtn {
     top: -20px;
-    left: 8px;
+    left: 40%!important;
   }
   table .checkBtnTxt {
-    left: -17px!important;
+    left: -23%!important;
   }
   #calendarTable button {
     width: 95% !important;

@@ -253,7 +253,7 @@
   color: #e84466;
   position: relative;
   top: -8px;
-  left: 10px;
+  left: 33%;
   font-weight: normal;
 }
 
@@ -1240,7 +1240,7 @@ header {
     left: 20%;
   }
   #calendarTable .checkBtnTxt {
-    left: -17%;
+    left: -3%;
   }
   #land, #country {
     width: 25%;

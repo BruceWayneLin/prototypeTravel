@@ -303,7 +303,6 @@ export class DataServiceService {
       // let  body = new URLSearchParams();
       setTimeout(() => {
           var i = this.http.post('/CareLineTravel/travel-mbr/journey/saveInsuredData', this.SaveInsuredData).map(res => {
-              console.log('34321482704890', res);
               if(res.text() === 'ok'){
                   return res.text();
               }

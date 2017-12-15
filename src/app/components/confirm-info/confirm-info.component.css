@@ -548,3 +548,9 @@ span.priceSpanNT {
 .dropup .panel-heading {
   border:none;
 }
+
+@media screen and (min-width:768px){
+  .fa-chevron-circle-down {
+    top:37px!important;
+  }
+}

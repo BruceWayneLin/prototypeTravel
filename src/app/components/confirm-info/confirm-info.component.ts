@@ -18,6 +18,7 @@ export class ConfirmInfoComponent implements OnInit {
   applicantAddr: string;
   applicantBth: string;
   applicantEmail: string;
+  inPackageButtonName: string;
 
   insuredDateStart: string;
   insuredDateEnd: string;
@@ -59,6 +60,7 @@ export class ConfirmInfoComponent implements OnInit {
       this.insuredDateEnd = info['odEndDate']['year'] + '-' + info['odEndDate']['month'] + '-' + info['odEndDate']['day'];
       this.insuredLocation = info['odLocation'];
       this.insuredPurpose = info['odPurpose'];
+      this.inPackageButtonName = info['inPackageButtonName'];
       this.insuredList = info['insuredList'];
       this.text4Activity = info['text4Activity'];
       this.odPeriodDays = info['odPeriodDays'];

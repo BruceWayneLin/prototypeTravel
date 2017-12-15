@@ -735,7 +735,7 @@ export class HomePageComponent implements OnInit {
             sendDataBak['product'] = 'Travel';
             sendDataBak['pack'] = this.pakNum;
             sendDataBak['startDate'] = this.startTravelDay;
-            if(!this.pkgCustomGo){
+            if(!this.pkgCustomGo && this.startTravelDay && this.endTravelDay){
               this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
                 console.log(item);
                 this.cusPackageList = item['cusPackageList'];
@@ -758,7 +758,6 @@ export class HomePageComponent implements OnInit {
                 this.fireInTheHole(this.selectedPackage['packageId'] - 1);
                 this.tableList = this.selectedPackage['table'];
                 console.log('table', this.tableList);
-                // document.querySelector('#flagFive').scrollIntoView();
                 this.cusPackageList = item.cusPackageList;
                 this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
                   var objBack = {};
@@ -773,36 +772,14 @@ export class HomePageComponent implements OnInit {
                 });
               });
             }
+
             console.log(this.startTravelDay);
             console.log(this.endTravelDay);
             this.endTravelDay = $event.target.value;
 
             if (this.startTravelDay && this.endTravelDay) {
-              console.log(window.innerWidth);
-              if(window.innerWidth >= 1700){
-                $('html, body').animate({scrollTop: 1700}, 1500, function(){
-                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
-                });
-              }else if(window.innerWidth >= 1366){
-                $('html, body').animate({scrollTop: 1530}, 1500, function(){
-                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
-                });
-              }else if(window.innerWidth <= 1366){
-                $('html, body').animate({scrollTop: 1280}, 1500, function(){
-                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
-                });
-              }else if(window.innerWidth <= 780){
-                $('html, body').animate({scrollTop: 1230}, 1500, function(){
-                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
-                });
-              }else if(window.innerWidth <= 500){
-                $('html, body').animate({scrollTop: 1150}, 1500, function(){
-                  document.querySelector('#flagSix').scrollIntoView({block: 'start', behavior: 'smooth'});
-                });
-              }
 
-
-
+            document.querySelector('#flagFive').scrollIntoView({block: 'start', behavior: 'smooth'});
             this.textOfSelectingDays = '您的旅遊期間';
             this.tableShowHidden = true;
             let oneDay = 24*60*60*1000;

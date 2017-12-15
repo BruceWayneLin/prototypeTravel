@@ -135,7 +135,7 @@
           </div>
           <span class="pull-right"><img  *ngIf="birthdayYEl.touched && !birthdayYEl.valid && birthdayMEl.touched && !birthdayMEl.valid &&  birthdayDEl.touched && !birthdayDEl.valid || personalAgeOver" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
           <div class="inValid" *ngIf="birthdayYEl.touched && !birthdayYEl.valid && birthdayMEl.touched && !birthdayMEl.valid &&  birthdayDEl.touched && !birthdayDEl.valid">生日不正確。</div>
-          <div class="inValid" *ngIf="personalAgeOver">{{'要保人須為'+ applicantAgeMin +'歲(含)以上，'+ applicantAgeMax +'歲(含)以下，被保險人可為'+ insuredAgeMin +'歲~' + insuredAgeMax + '歲(含)以下，有任何問題請來電免費客服專線0800-234-088。'}}</div>
+          <div class="inValid" *ngIf="personalAgeOver">{{'要保人須為'+ applicantAgeMin +'歲~'+ applicantAgeMax +'歲，被保險人可為'+ insuredAgeMin +'歲~' + insuredAgeMax + '歲，有任何問題請來電免費客服專線0800-234-088。'}}</div>
         </div>
       </div>
       <div class="col-xs-12">
@@ -207,7 +207,7 @@
       <div class="col-lg-12 text-center" [hidden]="hideUpinput" style="margin-top:12px;">
         <div class="col-xs-12 col-sm-6"></div>
         <div class="col-xs-12 col-sm-6 text-left" id="aggreeToUpdate">
-          <label for="aggreeToUpdate">
+          <label for="aggreeToUpdate" (click)="aggreeToUpdate = !aggreeToUpdate">
             <div ngClass="{{aggreeToUpdate? 'checkBoxDiv' : 'checkBoxDiv noChecked' }}">
               <input type="checkbox" [hidden]="true" [checked]="aggreeToUpdate" (click)="aggreeToUpdate = !aggreeToUpdate" class="aggreeToUpdate" id="aggreeToUpdate">
               <span class="aggreeToUpdate">更新聯絡資料</span>
@@ -240,7 +240,7 @@
             <div class="col-xs-6">
               <div id="haoma" class="col-xs-12 pull-left">
                 <span class="titleSpan" style="padding-right:0px;white-space: nowrap;">需要為您的同行旅伴加保嗎？</span>
-                <h4 style="color:#e84466;white-space: nowrap;position: relative;top: -22px;">*提醒您，購買保險需有血緣/婚姻關係喔</h4>
+                <h4 style="color:#e84466;white-space: nowrap;position: relative;top: -22px;">*提醒您，購買保險需有直系親屬/婚姻關係喔</h4>
               </div>
             </div>
             <div id="choicesHaoNoHao" class="pull-right">
@@ -371,7 +371,7 @@
               </select>
             </div>
             <span class="pull-right"><img  *ngIf="aloneBdWrong || aloneBdEmpty" class="errImg" src="assets/images/dolls/err.png" alt=""></span>
-            <div class="inValid" *ngIf="aloneBdWrong">{{'本站僅提供滿'+ insuredAgeMax +'歲(含)以上，'+ insuredAgeMin +'歲(含)以下投保服務，有任何問題請來電免費客服專線0800-234-088。'}}</div>
+            <div class="inValid" *ngIf="aloneBdWrong">{{'被保險人須為'+ insuredMinAge +'歲 ~'+ insuredAgeMax +'歲，有任何問題請來電免費客服專線0800-234-088。'}}</div>
             <div class="inValid text-left" *ngIf="aloneBdEmpty">此欄位為必填。</div>
           </div>
         </div>
