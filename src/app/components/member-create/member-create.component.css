@@ -186,23 +186,24 @@ h2.formTitTxt{
 }
 
 .goingCheckInfo:disabled {
-  width: 60%;
+  width: 100%;
   background: #C8C8C8;
   opacity: 0.6;
   cursor: not-allowed;
   color: #000000;
   border: 1px solid #ccc;
-  padding-bottom: 30px;
   cursor: pointer;
   color: #eeeeee;
   line-height:1px;
-  height: 40px;
-  font-size: 22px;
+  /*height: 40px;*/
+  font-size: 18px;
   -webkit-border-radius: 100px;
   -moz-border-radius: 100px;
   border-radius: 100px;
   border-color: #eeeeee;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
+  margin-right: 15px;
+  padding: 0px!important;
 }
 
 .priceHead{

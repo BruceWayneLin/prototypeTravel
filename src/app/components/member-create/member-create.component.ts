@@ -164,6 +164,7 @@ export class MemberCreateComponent implements OnInit {
   }
 
   changedData(year=null, month=null, day=null){
+    this.userPidFail = this.pidCheck(this.pid);
     this.checkBirthday(year, month, day);
     this.dataService.clearData = false;
   }
@@ -375,6 +376,7 @@ export class MemberCreateComponent implements OnInit {
     }
   }
 
+  userPidFail: any;
   pidCheck(userid:string){
     if(userid){
       var tab = 'ABCDEFGHJKLMNPQRSTUVXYWZIO',
@@ -442,6 +444,7 @@ export class MemberCreateComponent implements OnInit {
         this.mobileEl['invalid'] ||
         this.firstNameEl['invalid'] ||
         this.lastNameEl['invalid'] ||
+        this.userPidFail ||
         !this.pBirthYear ||
         !this.pBirthMonth ||
         !this.pBirthDay ||

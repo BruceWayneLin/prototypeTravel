@@ -496,7 +496,7 @@
           <button [routerLink]="['/']" (click)="toGoDownWindow()" id="goingCheckInfoBack" class="form-control goingCheckInfo" style="background-color:white;color:black;">回方案選擇</button>
         </div>
         <div class="col-xs-12 col-sm-6 col-lg-6">
-          <button class="form-control goingCheckInfo" (click)="ToSaveInsured()">下一步</button>
+          <button class="form-control goingCheckInfo" (click)="ToSaveInsured()" [disabled]="!aggreeToUpdateAlreadyRead">下一步</button>
         </div>
       </div>
     </div>

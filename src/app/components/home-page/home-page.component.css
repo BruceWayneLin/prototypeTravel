@@ -934,6 +934,10 @@ header {
   color: #e84466;
 }
 
+#detailTabletbl td{
+
+}
+
 @media screen and (max-width: 500px){
   #mobileCusPkg {
     display: initial;

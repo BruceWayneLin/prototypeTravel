@@ -301,7 +301,7 @@
 
       <ng-container *ngIf="showPkgDestail">
         <table id="detailTabletbl" class='table-striped' style="width: 100%; text-align: left;">
-          <tr><th>項目</th><th>險種細項</th><th>理賠額度</th></tr>
+          <tr><th style="width:25%">項目</th><th style="width:50%;">險種細項</th><th style="width:25%;">理賠額度</th></tr>
           <tr *ngFor="let item of tableList['rowList']; let i = index;">
             <td>{{item['itemName']}}</td>
             <td>{{item['detailName']}}</td>
