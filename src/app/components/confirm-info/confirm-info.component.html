@@ -118,7 +118,7 @@
       <accordion>
         <ng-container *ngFor="let item of insuredList; let i = index;">
           <i class="fa fa-chevron-circle-down" aria-hidden="true" style="pointer-events: none;" (click)="toTriggerCloseA()"></i>
-          <accordion-group class="clickAccordion" heading="{{' '+item['inLastName']+item['inFirstName']+' '+item['inPackageButtonName']+' '+item['inPackageName']+' NT$'+item['inRate']}}">
+          <accordion-group class="clickAccordion" heading="{{' '+item['inLastName']+item['inFirstName']+' '+(item['inPackageButtonName'] == null? '' : item['inPackageButtonName'])+' '+item['inPackageName']+' NT$'+item['inRate']}}">
             <div class="row packageInfo">
               <div id="specialDropUpIdDiv" class="col-xs-12 text-right" style="z-index:999;left: -8%;top:-41px;">
                 <i class="fa fa-chevron-circle-up" aria-hidden="true" (click)="doSomethingOnClose()"></i>

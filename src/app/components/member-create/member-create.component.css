@@ -206,6 +206,10 @@ h2.formTitTxt{
   padding: 0px!important;
 }
 
+.goingCheckInfo:disabled:hover {
+  background: #dddddd;
+}
+
 .priceHead{
   text-align: right;
   display: inline;
@@ -1369,4 +1373,8 @@ button.form-control.btn-sm span{
   #rule1 {
     padding-left: 0px!important;
   }
+}
+
+.form-control.goingCheckInfo.specilAlreadiRead:hover {
+  background: #767676!important;
 }
