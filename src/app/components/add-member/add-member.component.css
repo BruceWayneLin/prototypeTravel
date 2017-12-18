@@ -669,7 +669,7 @@ div.row.memberTitle {
     }
     .bdMobile .bthInValid {
         position: relative;
-        top: -14px;
+        top: 0px;
         padding-left: 15px;
     }
     .insuredPriceDivH4 {

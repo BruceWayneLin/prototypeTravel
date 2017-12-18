@@ -1398,11 +1398,24 @@ header {
 }
 
 @media screen and (max-width:1040px) and (min-width:1000px) {
+  #calendarTable button {
+    font-size: 35px;
+    padding-right: 45px;
+  }
   #btnOfPackages .col-xs-4:nth-child(3) .specialPkgLabel span {
     left:24%!important;
   }
   #btnOfPackages .col-xs-4:nth-child(1) .specialPkgLabel span {
     left:27%!important;
+  }
+  label.purposeLabel span {
+    left: 19%!important;
+  }
+  #calendarTable  td .checkBtn {
+    left:5px!important;
+  }
+  #calendarTable .checkBtnTxt {
+    left: -15%!important;
   }
 }
 

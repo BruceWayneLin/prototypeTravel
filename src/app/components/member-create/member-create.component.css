@@ -908,7 +908,14 @@ div.row.memberTitle {
   .checkBoxDiv {
     margin-top: 30px;
   }
+
+  #haoma h4 {
+    font-size: 18px!important;
+  }
 }
+
+
+
 @media screen and (max-width: 500px) and (min-width: 375px) {
   .checkBoxDiv, .noChecked {
    margin-top: 0px;

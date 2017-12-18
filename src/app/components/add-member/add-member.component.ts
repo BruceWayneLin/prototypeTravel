@@ -1547,7 +1547,7 @@ export class AddMemberComponent implements OnInit {
           var modal = document.getElementById('myModal');
           modal.style.display = "block";
           this.dataService.AlertTXT = [];
-          this.dataService.AlertTXT.push('請正確填寫要保人資訊');
+          this.dataService.AlertTXT.push('請正確填寫被保險人資訊');
         }
       }
     }
@@ -1568,7 +1568,7 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
 
     if(
@@ -1587,7 +1587,7 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
 
     if(
@@ -1606,7 +1606,7 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
 
     if(
@@ -1625,7 +1625,7 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
 
     if(
@@ -1644,7 +1644,7 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
   }
 
