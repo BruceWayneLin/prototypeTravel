@@ -187,7 +187,7 @@ button.form-control {
 
 .formContainer {
   background-color: white;
-  margin-top: 130px;
+  margin-top: 70px;
 }
 
 .formContainer ul {
@@ -467,6 +467,12 @@ span.priceSpanNT {
     text-decoration: underline;
     margin-top: 10px;
   }
+  .row.packageInfo {
+    top:-50px!important;
+  }
+  #specialDropUpIdDiv {
+    top:0!important;
+  }
 }
 
 .lastSubMit {
@@ -524,7 +530,7 @@ span.priceSpanNT {
   font-size: 30px!important;
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 500px) {
   .imageCla span {
     white-space: normal!important;
     display: block;
@@ -534,7 +540,23 @@ span.priceSpanNT {
   }
 }
 
+@media screen and (max-width: 500px) and (min-width: 375px) {
+  #accordionDiv .fa.fa-chevron-circle-down {
+    top: 35px!important;
+  }
+}
+
 #flagInsuredPPlFlag {
   position:relative;
   top: -85px;
+}
+
+.dropup .panel-heading {
+  border:none;
+}
+
+@media screen and (min-width:768px){
+  .fa-chevron-circle-down {
+    top:37px!important;
+  }
 }

@@ -303,34 +303,73 @@ export class DataServiceService {
       // let  body = new URLSearchParams();
       setTimeout(() => {
           var i = this.http.post('/CareLineTravel/travel-mbr/journey/saveInsuredData', this.SaveInsuredData).map(res => {
-              return res.text();
+              if(res.text() === 'ok'){
+                  return res.text();
+              }
+              if (res.json().isEx) {
+                  if(res.json().kickout){
+                      this.route.navigate(['/']);
+                      this.loading = false;
+                  }else{
+                      if (res.json().data) {
+                          // Server 回傳錯誤
+                          if (res.json().data && res.json().data.errorFlagName) {
+                              var flagName = res.json().data.errorFlagName;
+                              this.idToGoFlow = flagName;
+                          }
+                      }
+                      this.loading = false;
+                      var msgs = res.json().msgs;
+                      var modal = document.getElementById('myModal');
+                      modal.style.display = "block";
+                      this.AlertTXT = msgs;
+                      document.querySelector('#myModal').scrollIntoView();
+                  }
+                  return false;
+              } else{
+                  return res.text();
+              }
           });
           i.subscribe((item)=>{
              if(item == 'ok'){
                  this.route.navigate(['/confirmPage']);
                  this.loading = false;
              } else {
-                 this.loading = false;
-                 let replyObj = JSON.parse(item);
-                 if(replyObj.isEx){
-                     if(replyObj.kickout){
-                         this.route.navigate(['/']);
-                     }else{
-                         if (replyObj.json().data) {
-                             // Server 回傳錯誤
-                             if (replyObj.json().data && replyObj.json().data.errorFlagName) {
-                                 var flagName = replyObj.json().data.errorFlagName;
-                                 this.idToGoFlow = flagName;
-                             }
-                         }
-                         this.loading = false;
-                         var msgs = replyObj.msgs;
-                         var modal = document.getElementById('myModal');
-                         modal.style.display = "block";
-                         this.AlertTXT = msgs;
-                         document.querySelector('#myModal').scrollIntoView();
-                     }
-                 }
+                 // this.loading = false;
+                 // let replyObj = JSON.parse(item);
+                 // if(replyObj.isEx){
+                 //     if(replyObj.kickout){
+                 //         this.route.navigate(['/']);
+                 //     }else{
+                 //         if (replyObj.json().data) {
+                 //             // Server 回傳錯誤
+                 //             if (replyObj.data && replyObj.json().data.errorFlagName) {
+                 //                 var flagName = replyObj.json().data.errorFlagName;
+                 //                 this.idToGoFlow = flagName;
+                 //             }
+                 //         }
+                 //         this.loading = false;
+                 //         var msgs = replyObj.msgs;
+                 //         var modal = document.getElementById('myModal');
+                 //         modal.style.display = "block";
+                 //         this.AlertTXT = msgs;
+                 //         document.querySelector('#myModal').scrollIntoView();
+                 //     }
+                 // }else{
+                 //     if (replyObj.data) {
+                 //         // Server 回傳錯誤
+                 //         if (replyObj.json().data && replyObj.json().data.errorFlagName) {
+                 //             var flagName = replyObj.json().data.errorFlagName;
+                 //             this.idToGoFlow = flagName;
+                 //         }
+                 //     }
+                 //     this.loading = false;
+                 //     var msgs = replyObj.msgs;
+                 //     var modal = document.getElementById('myModal');
+                 //     modal.style.display = "block";
+                 //     this.AlertTXT = msgs;
+                 //     document.querySelector('#myModal').scrollIntoView();
+                 // }
              }
           });
       }, 400);
@@ -368,10 +407,10 @@ export class DataServiceService {
                   if(replyObj.kickout){
                       this.route.navigate(['/']);
                   }else{
-                      if (replyObj.json().data) {
+                      if (replyObj.data) {
                           // Server 回傳錯誤
-                          if (replyObj.json().data && replyObj.json().data.errorFlagName) {
-                              var flagName = replyObj.json().data.errorFlagName;
+                          if (replyObj.data && replyObj.data.errorFlagName) {
+                              var flagName = replyObj.data.errorFlagName;
                               this.idToGoFlow = flagName;
                           }
                       }
@@ -382,6 +421,20 @@ export class DataServiceService {
                       this.AlertTXT = msgs;
                       document.querySelector('#myModal').scrollIntoView();
                   }
+              }else{
+                  if (replyObj.data) {
+                      // Server 回傳錯誤
+                      if (replyObj.data && replyObj.data.errorFlagName) {
+                          var flagName = replyObj.data.errorFlagName;
+                          this.idToGoFlow = flagName;
+                      }
+                  }
+                  this.loading = false;
+                  var msgs = replyObj.msgs;
+                  var modal = document.getElementById('myModal');
+                  modal.style.display = "block";
+                  this.AlertTXT = msgs;
+                  document.querySelector('#myModal').scrollIntoView();
               }
           }
       });

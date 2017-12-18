@@ -117,6 +117,7 @@ export class HomePageComponent implements OnInit {
     }
     return parms;
   };
+
   ngOnInit() {
     this.toCompatibilityUse();
     this.CusDetailContent = true;
@@ -165,6 +166,7 @@ export class HomePageComponent implements OnInit {
           );
           this.selectedPackageName = this.selectedPackage['packageName'];
           this.secondaryItems = this.selectedPackage['secondaryItems'];
+          this.toGetImgUrl(this.secondaryItems);
           this.pkgPrimary = this.selectedPackage['primaryItems'];
           this.featureDesc = this.selectedPackage['featureDesc'];
           this.toGetLogo(this.selectedPackage['companyCode']);
@@ -184,13 +186,13 @@ export class HomePageComponent implements OnInit {
               }
             });
           });
-          document.querySelector('#flagSix').scrollIntoView();
+
+          this.toGetImgUrl(this.defaultCustomerPkg['secondaryItems']);
           if(this.pkgCustomGo == false){
             this.getPriceServiceData();
           } else {
             this.toGetCusPkgPrice();
           }
-          document.querySelector('#flagSix').scrollIntoView();
         });
 
         this.diffDays = item['datePeriod'];
@@ -248,6 +250,8 @@ export class HomePageComponent implements OnInit {
 
         this.selectedPackageName = this.selectedPackage['packageName'];
         this.secondaryItems = this.selectedPackage['secondaryItems'];
+        this.toGetImgUrl(this.secondaryItems);
+
         this.pkgPrimary = this.selectedPackage['primaryItems'];
         this.featureDesc = this.selectedPackage['featureDesc'];
         this.toGetLogo(this.selectedPackage['companyCode']);
@@ -268,6 +272,17 @@ export class HomePageComponent implements OnInit {
             }
           });
         });
+        this.toGetImgUrl(this.defaultCustomerPkg['secondaryItems']);
+        try {
+          var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
+          if(goDownFlag || this.dataService.toGoDown){
+            setTimeout(function(){
+              document.querySelector('#flagSix').scrollIntoView();
+            }, 1000);
+            // sessionStorage.removeItem('bak');
+          }
+        } catch (e) {
+        }
       }
 
       var d = new Date();
@@ -298,8 +313,9 @@ export class HomePageComponent implements OnInit {
       try {
         var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
         if(goDownFlag || this.dataService.toGoDown){
-          document.querySelector('#flagSix').scrollIntoView();
-          sessionStorage.removeItem('bak');
+          setTimeout(function(){
+            document.querySelector('#flagSix').scrollIntoView();
+          }, 1000);
         }
       } catch (e) {
       }
@@ -307,8 +323,21 @@ export class HomePageComponent implements OnInit {
     this.changeCountries('');
   }
 
-  toCompatibilityUse(){
+  ngAfterViewInit(){
+    // alert('hi')
+    try {
+      var goDownFlag = JSON.parse(sessionStorage.getItem('bak'));
+      if(goDownFlag || this.dataService.toGoDown){
+        setTimeout(function(){
+          document.querySelector('#flagSix').scrollIntoView();
+        }, 100);
+        sessionStorage.removeItem('bak');
+      }
+    } catch (e) {
+    }
+  }
 
+  toCompatibilityUse(){
   }
 
   toGetCusPkgPrice() {
@@ -569,6 +598,7 @@ export class HomePageComponent implements OnInit {
         );
         this.selectedPackageName = this.selectedPackage['packageName'];
         this.secondaryItems = this.selectedPackage['secondaryItems'];
+        this.toGetImgUrl(this.secondaryItems);
         this.pkgPrimary = this.selectedPackage['primaryItems'];
         this.featureDesc = this.selectedPackage['featureDesc'];
         this.toGetLogo(this.selectedPackage['companyCode']);
@@ -607,7 +637,7 @@ export class HomePageComponent implements OnInit {
       this.getDayFromBkend = this.travelPeriodLimit;
       this.selectTravelDayIsDone = false;
       this.toShowMoreDays = false;
-      this.textOfOverDays = '超過' + this.travelPeriodLimit + '天後出發？';
+      this.textOfOverDays = '出國超過' + this.travelPeriodLimit + '天？';
     }else{
       let testDayAddOneMonth = new Date(new Date().getFullYear(), new Date().getMonth()+this.theTimeClicked, 0);
       let day = 1000*60*60*24;
@@ -638,7 +668,7 @@ export class HomePageComponent implements OnInit {
     this.startTravelDay = '';
     this.endTravelDay = '';
     this.theTimeClicked = 2;
-    this.toShowMoreDays = !this.toShowMoreDays;
+    this.toShowMoreDays = false;
     this.getDayFromBkend = this.startDayLimit;
     this.theDayBeginingNeedToRun = this.getDayFromBkend + 10;
 
@@ -668,11 +698,11 @@ export class HomePageComponent implements OnInit {
     if(this.selectTravelDayIsDone === false && !this.startTravelDay){
         this.textOfSelectingDays = '請點選旅程出發日與返回日';
         this.startTravelDay = $event.target.value;
+        this.firstMon = new Date(this.startTravelDay);
         // this.testDay = this.startTravelDay;
         // let testDayAddOneMonth = new Date(new Date().getFullYear(), new Date().getMonth()+2, 0);
         // let day = 1000*60*60*24;
-      this.firstMon = new Date(this.startTravelDay);
-      this.theDayBeginingNeedToRun = this.travelPeriodLimit + this.getDayFromBkend + 10;
+        this.theDayBeginingNeedToRun = this.travelPeriodLimit + this.getDayFromBkend + 10;
 
         this.totalTimesTimes = Math.round(this.travelPeriodLimit/30);
         // this.getDayFromBkend = diffDays;
@@ -687,7 +717,6 @@ export class HomePageComponent implements OnInit {
             }
           });
         }, 100);
-
         document.querySelector('#flagFour').scrollIntoView();
       } else {
       if(this.startTravelDay) {
@@ -703,7 +732,7 @@ export class HomePageComponent implements OnInit {
             sendDataBak['product'] = 'Travel';
             sendDataBak['pack'] = this.pakNum;
             sendDataBak['startDate'] = this.startTravelDay;
-            if(!this.pkgCustomGo){
+            if(!this.pkgCustomGo && this.startTravelDay && this.endTravelDay){
               this.dataService.ifOnlyStartDayOnly(sendDataBak).subscribe((item) => {
                 console.log(item);
                 this.cusPackageList = item['cusPackageList'];
@@ -718,13 +747,14 @@ export class HomePageComponent implements OnInit {
 
                 this.selectedPackageName = this.selectedPackage['packageName'];
                 this.secondaryItems = this.selectedPackage['secondaryItems'];
+                this.toGetImgUrl(this.secondaryItems);
+
                 this.pkgPrimary = this.selectedPackage['primaryItems'];
                 this.featureDesc = this.selectedPackage['featureDesc'];
                 this.toGetLogo(this.selectedPackage['companyCode']);
                 this.fireInTheHole(this.selectedPackage['packageId'] - 1);
                 this.tableList = this.selectedPackage['table'];
                 console.log('table', this.tableList);
-
                 this.cusPackageList = item.cusPackageList;
                 this.defaultCustomerPkg['secondaryItems'].forEach((item) => {
                   var objBack = {};
@@ -739,14 +769,14 @@ export class HomePageComponent implements OnInit {
                 });
               });
             }
+
             console.log(this.startTravelDay);
             console.log(this.endTravelDay);
             this.endTravelDay = $event.target.value;
 
             if (this.startTravelDay && this.endTravelDay) {
-                console.log(this.endTravelDay);
 
-                document.querySelector('#flagFive').scrollIntoView();
+            document.querySelector('#flagFive').scrollIntoView({block: 'start', behavior: 'smooth'});
             this.textOfSelectingDays = '您的旅遊期間';
             this.tableShowHidden = true;
             let oneDay = 24*60*60*1000;
@@ -804,8 +834,29 @@ export class HomePageComponent implements OnInit {
     $('#mainLongDetailDiv').slideToggle('fast');
   }
 
+  toGetImgUrl(val:any){
+    val.forEach((item) => {
+      item['pictureCode'] = item['insItemCode'];
+      if(item['pictureCode'] == 'ITEM_MEDICAL_DAY' ||
+          item['pictureCode'] == 'TAK005' ||
+          item['pictureCode'] == 'C_ITEM_MEDICAL'
+      ){
+        item['pictureCode'] = 'ITEM_MEDICAL_BILL'
+      }
+      if(item['pictureCode'] == 'ITEM_INCONVENIENT'){
+        item['pictureCode'] == 'TAK002'
+      }
+      if(item['pictureCode'] == 'ITEM_SUDDEN_SICK'){
+        item['pictureCode'] == 'TAK006'
+      }
+      if(item['pictureCode'] == 'C_DETAIL_RESCUE'){
+        item['pictureCode'] == 'TAK009'
+      }
+    })
+  }
+
   toGetCustomPackageContent(val) {
-    console.log(JSON.stringify(val));
+    // console.log(JSON.stringify(val));
     this.defaultCustomerPkg = val;
     if(val.length == 1){
       this.cusPackageList.forEach((item)=>{
@@ -826,6 +877,7 @@ export class HomePageComponent implements OnInit {
           });
           this.toGetCusPkgPrice();
           this.cusSecondItemNa = this.selectedCustomePkg['secondaryItems'];
+          this.toGetImgUrl(this.cusSecondItemNa);
           this.cusPrimaryItem = this.selectedCustomePkg['primaryItems'];
           if(this.pkgCustomGo){
             this.selectedPackageName = this.selectedCustomePkg['packageName'];
@@ -854,6 +906,7 @@ export class HomePageComponent implements OnInit {
 
       this.selectedCustomePkg = val;
       this.cusSecondItemNa = this.selectedCustomePkg['secondaryItems'];
+      this.toGetImgUrl(this.cusSecondItemNa);
       this.cusPrimaryItem = this.selectedCustomePkg['primaryItems'];
       if(this.pkgCustomGo){
         this.selectedPackageName = this.selectedCustomePkg['packageName'];
@@ -990,6 +1043,7 @@ export class HomePageComponent implements OnInit {
       this.selectedPackage = val;
       this.selectedPackageName = val.packageName;
       this.secondaryItems = this.selectedPackage['secondaryItems'];
+      this.toGetImgUrl(this.secondaryItems);
       this.toGetLogo(this.selectedPackage['companyCode']);
       this.pkgPrimary = this.selectedPackage['primaryItems'];
       this.tableList = this.selectedPackage['table'];
@@ -1162,7 +1216,33 @@ export class HomePageComponent implements OnInit {
       }
     }else{
       var todayPlusStartDayLimitAndDisaster = new Date().setDate(new Date().getDate() + this.startDayLimit);
-      if(new Date(todayPlusStartDayLimitAndDisaster).getDay() == 6 && new Date(value) >= new Date(todayPlusStartDayLimitAndDisaster)){
+      var lastPlustStartDayLimited = new Date().setDate(new Date().getDate() + this.startDayLimit);
+      var lastDayNeedToHide;
+      switch (new Date(lastPlustStartDayLimited).getDay()){
+        case 0:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 6);
+          break;
+        case 1:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 5);
+          break;
+        case 2:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 4);
+          break;
+        case 3:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 3);
+          break;
+        case 4:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 2);
+          break;
+        case 5:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 1);
+          break;
+        case 6:
+          lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 0);
+          break;
+        default:
+      }
+      if(new Date(todayPlusStartDayLimitAndDisaster).getDay() == 6 && new Date(value) >= new Date(todayPlusStartDayLimitAndDisaster) || new Date(value) > new Date(lastDayNeedToHide)){
         return true;
       }
     }
@@ -1177,33 +1257,8 @@ export class HomePageComponent implements OnInit {
     //   }
 
     // else{
-    //   var yesterday = new Date().setDate(new Date(this.getMonday(new Date())).getDate()-1);
-    //   var lastPlustStartDayLimited = new Date().setDate(new Date().getDate() + this.startDayLimit);
-    //   var lastDayNeedToHide;
-    //   switch (new Date(lastPlustStartDayLimited).getDay()){
-    //     case 0:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 6);
-    //       break;
-    //     case 1:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 5);
-    //       break;
-    //     case 2:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 4);
-    //       break;
-    //     case 3:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 3);
-    //       break;
-    //     case 4:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 2);
-    //       break;
-    //     case 5:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 1);
-    //       break;
-    //     case 6:
-    //       lastDayNeedToHide = new Date(lastPlustStartDayLimited).setDate(new Date(lastPlustStartDayLimited).getDate() + 0);
-    //       break;
-    //     default:
-    //   }
+      var yesterday = new Date().setDate(new Date(this.getMonday(new Date())).getDate()-1);
+
     //   let yes = new Date(new Date().setDate(new Date().getDate()-1));
     //   if(new Date().getDate() == 1){
     //    if(new Date(value) < new Date(yes)){

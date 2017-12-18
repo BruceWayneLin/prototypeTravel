@@ -14,17 +14,17 @@ import { SuiSelectModule } from 'ng2-semantic-ui';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ConfirmInfoComponent } from './components/confirm-info/confirm-info.component';
-import { OwlCarouselModule } from 'cl-layout/src/app/shared/tools/owl-carousel/owl-carousel.module';
-// import * as $ from 'jquery';
 
-// import 'rxjs/add/operator/do';
-// import 'rxjs/add/operator/filter';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/distinctUntilChanged';
-// import 'rxjs/add/observable/of';
-// import 'rxjs/add/operator/catch';
-// import 'rxjs/add/operator/debounceTime';
-// import 'rxjs/add/operator/switchMap';
+import * as $ from 'jquery';
+
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/switchMap';
 
 // import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMockDbService } from './mock-packageList';
@@ -109,7 +109,6 @@ export const routes : Routes = [
     LayoutModule.forRoot({
       carelineProjectType : CarelineProjectType.travel
     }),
-    OwlCarouselModule,
     // BreadcrumbsModule,
     ReactiveFormsModule,
     LoadingModule,

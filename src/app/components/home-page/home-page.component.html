@@ -7,7 +7,7 @@
 </div>
 </cl-owl-carousel-progress>
 
-<div id="flagOne" style="position:relative; top: -75px;"></div>
+<div id="flagOne" style="position:relative; top: -25px;"></div>
 
 <!-- where'd like to go -->
 <div class="row" id="animateFlag">
@@ -18,7 +18,7 @@
       </div>
       <h2 style="margin-bottom:20px;margin-top:15px;cursor:pointer;" (click)="clickWannaInsuredBtn('', '')">
         <a class="immediateH2" href="#" onclick="return false;" style="color:#e84466;text-decoration: underline;">
-        這次旅行去哪呢 ?(什麼去哪？你來錯網站測試了！！我是ＱＡＴ)
+          點我試算保費
         </a>
         <div style="cursor:pointer;width:20px;display:inline-block;">
         <i class="fa fa-chevron-circle-down" style="color:#dddddd"></i>
@@ -114,8 +114,8 @@
         <div class="col-xs-12 col-sm-2"></div>
         <div class="col-xs-12 col-sm-8">
           <div class="col-xs-3 purposeLabelCol3 text-center" *ngFor="let purpose of purposeList; let i = index;">
-            <input type="radio" id="purposePurLabel" [(ngModel)]="purposeGo" name="purposePurLabel" class="form-control purposeBtn{{+ i}}" (click)="toTogglePurposeBtn('purposeBtn'+i, purpose)" value="{{purpose.name}}"  />
             <label class="purposeLabel text-center">
+              <input type="radio" id="purposePurLabel" [(ngModel)]="purposeGo" name="purposePurLabel" class="form-control purposeBtn{{+ i}}" (click)="toTogglePurposeBtn('purposeBtn'+i, purpose)" value="{{purpose.name}}"  />
               <span><i class="checkBtn fa fa-check" aria-hidden="true"></i> {{purpose.name}}</span>
             </label>
           </div>
@@ -159,7 +159,7 @@
       </div>
     </div>
   </ng-container>
-  <div id="flagFive" style="position:relative; top: 123px;"></div>
+  <div id="flagFive" style="position:relative; top: 150px;"></div>
   <div id="calendarFlagAnimate"></div>
   <div *ngIf="!tableShowHidden">
     <div class="row">
@@ -194,11 +194,11 @@
                 </td>
               </ng-container>
               <td class="text-center" [ngClass]="toHiddenDate(btnStartDay.value) ? 'calDayNone' : ''">
-                <button [hidden]="toHiddenDate(btnStartDay.value)" #btnStartDay [disabled]="buttonToDisabled(btnStartDay.value) || buttonToDisabledTwo(btnStartDay.value)" id="{{'calendarDayButton'+i}}" (click)="onClickMe($event, 'calendarDayButton'+ i, i)" value="{{firstMon | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'}}">
-                  <h4><i class="checkBtn fa fa-check hidden" aria-hidden="true"></i></h4>
+                <button style="z-index:999;" [hidden]="toHiddenDate(btnStartDay.value)" #btnStartDay [disabled]="buttonToDisabled(btnStartDay.value) || buttonToDisabledTwo(btnStartDay.value)" id="{{'calendarDayButton'+i}}" (click)="onClickMe($event, 'calendarDayButton'+ i, i)" value="{{firstMon | amAdd:i : 'days' | amDateFormat: 'YYYY-MM-DD'}}">
+                  <h4><i class="checkBtn fa fa-check hidden" aria-hidden="true" style="pointer-events: none;"></i></h4>
                   {{firstMon | amLocal | amAdd:i : 'days' | amDateFormat: 'DD'}}
-                  <h4><span class="checkBtnTxt hidden">出發日期</span></h4>
-                  <h4 *ngIf="buttonToDisabledTwo(btnStartDay.value)"><span class="typhoonDay">颱風日</span></h4>
+                  <h4><span class="checkBtnTxt hidden" style="pointer-events: none;">出發日</span></h4>
+                  <h4 *ngIf="buttonToDisabledTwo(btnStartDay.value)"><span class="typhoonDay" style="pointer-events: none;">颱風日</span></h4>
                 </button>
               </td>
           </ng-container>
@@ -221,7 +221,7 @@
 </div>
 
 <!-- end of calendar -->
-<div id="flagSix" style="position:relative; top: -60px;"></div>
+<div id="flagSix" style="position:relative; top: -40px;"></div>
 <div class="row" >
   <div class="container oneCon" style="padding-bottom: 50px;">
   </div>
@@ -286,7 +286,7 @@
       <ng-container *ngIf="!showPkgDestail">
         <div class="secondaryPackageCon col-xs-12">
           <div id="secondCol2" class="col-xs-2 text-center" *ngFor="let item of secondaryItems; let i = index;">
-            <img src="{{'assets/images/pkg/pkimg/' + item['insItemCode'] + '.png'}}" alt="" class="img-responsive img-center">
+            <img src="{{'assets/images/pkg/pkimg/' + item['pictureCode'] + '.png'}}" alt="" class="img-responsive img-center">
             <h3 class="imgSrcH3Item">
               {{item['insItemName']}}
             </h3>
@@ -301,7 +301,7 @@
 
       <ng-container *ngIf="showPkgDestail">
         <table id="detailTabletbl" class='table-striped' style="width: 100%; text-align: left;">
-          <tr><th>項目</th><th>險種細項</th><th>理賠額度</th></tr>
+          <tr><th style="width:25%">項目</th><th style="width:50%;">險種細項</th><th style="width:25%;">理賠額度</th></tr>
           <tr *ngFor="let item of tableList['rowList']; let i = index;">
             <td>{{item['itemName']}}</td>
             <td>{{item['detailName']}}</td>
@@ -318,7 +318,7 @@
           <div id="paddingSpe" class="row">
             <div class="col-xs-12 text-center">
               <div class="form-group">
-                <label style="font-size:18px;">死亡殘廢</label>
+                <label style="font-size:18px;">身故殘廢</label>
                 <a (click)="toShowCusDetailContent('changefa')"><span class="shanshiContent">詳細內容</span></a>
                 <i (click)="toShowCusDetailContent('changefa')" id="changefa" ngClass="{{toggleClazForAngle == false ? 'fa fa-angle-down': 'fa fa-angle-up'}}"></i>
                 <i class="fa fa-angle-down dropDown" style="font-size:36px;top:42px!important;z-index:999;"></i>
@@ -404,7 +404,7 @@
               <img src="assets/images/pkg/dead.png" alt="" class="img-responsive img-center">
             </div>
             <div class="col-xs-2" id="paddingSpe" style="padding-right:0px;" #getUpClz>
-              <h2>死亡殘廢</h2>
+              <h2>身故殘廢</h2>
               <a (click)="toShowCusDetailContent()"><span class="shanshiContent">詳細內容</span></a>
               <i (click)="toShowCusDetailContent()" class="fa fa-angle-down"></i>
             </div>
@@ -433,7 +433,7 @@
           <ng-container *ngFor="let seconItem of cusSecondItemNa; let x = index;" #arrowUp>
             <div class="{{'row rowOfBtn'+x}}" id="rowOfBtn">
               <div class="col-xs-2">
-                <img src="{{'assets/images/pkg/pkimg/' + seconItem['insItemCode'] + '.png'}}" alt="" class="img-responsive img-center">
+                <img src="{{'assets/images/pkg/pkimg/' + seconItem['pictureCode'] + '.png'}}" alt="" class="img-responsive img-center">
               </div>
               <div class="col-xs-2 text-center" id="paddingSpe" style="padding-right:0px;">
                 <h2>{{seconItem['insItemName']}}</h2>

@@ -578,9 +578,45 @@ button:active {
 
 #accordionDiv div.panel.panel-default {
   background-color: white!important;
-  border: none!important;
+  border: none;
   padding-left: 50px;
   box-shadow: none!important;
+}
+
+#accordionDiv .panel-heading:hover {
+  background: #fafafa!important;
+}
+
+#accordionDiv .panel-heading {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5)!important;
+}
+
+#accordionDiv .clickAccordion div.panel.panel-default.dropup .panel-heading {
+  box-shadow: none!important;
+}
+
+#accordionDiv .clickAccordion div.panel.panel-default.dropup {
+  border: 1px solid #eee;
+  background: #fafafa!important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5)!important;
+}
+
+#accordionDiv .clickAccordion div.panel.panel-default.dropup .panel-heading{
+  border: none;
+  background: #fafafa!important;
+}
+
+#accordionDiv .clickAccordion div.panel.panel-default.dropup {
+  margin-left: 4%;
+}
+
+@media screen and (max-width: 500px) {
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 7%;
+    margin-right: 10%;
+    max-width: 465px;
+    width: 118%;
+  }
 }
 
 #accordionDiv .panel-heading {
@@ -590,7 +626,7 @@ button:active {
   text-align: left;
   cursor:pointer;
   font-weight: 200;
-  margin: auto 5%;
+  /*margin: auto 5%;*/
   padding-left: 3%;
 }
 
@@ -668,7 +704,6 @@ header {
   right: 3%;
   position: absolute;
   background-size: cover;
-  background-repeat: repeat;
   display: block;
   width: 60px;
   height: 104px;
@@ -682,7 +717,6 @@ header {
   left: 3%;
   position: absolute;
   background-size: cover;
-  background-repeat: repeat;
   display: block;
   width: 60px;
   height: 104px;
@@ -792,28 +826,30 @@ div.text {
   }
   #calendarTable td .checkBtn {
     top: -20px;
-    left: 8px;
+    left: 40%!important;
   }
   table .checkBtnTxt {
-    left: -17px!important;
+    left: -23%!important;
   }
   #calendarTable button {
     width: 95% !important;
   }
   #accordionDiv div.panel.panel-default {
     padding: 0px;
-    width: 132%;
+    width: 116%;
     position: relative;
-    left: -17%;
+    left: -10%;
   }
   #accordionDiv {
     margin: 0px!important;
   }
-
+  #accordionDiv .panel-heading {
+    padding-right: 5%;
+  }
 }
 
 .spinner-three-bounce {
-  background: url('/assets/images/dolls/loading.gif') 0px 0px !important;
+  background: url('/assets/images/dolls/loading.gif?v=1') 0px 0px !important;
   width: 150px!important;
   height: 150px!important;
   background-repeat: no-repeat!important;
@@ -846,6 +882,34 @@ html,body
   margin: 0px!important;
   padding: 0px!important;
   overflow-x: hidden!important;
+}
+
+input[type="radio"]:checked + label span {
+  color: #e84466!important;
+  font-weight: normal!important;
+}
+/*input[type="radio"]:checked + label span {*/
+/*color: #e84466!important;*/
+/*font-weight: normal!important;*/
+/*}*/
+
+
+.fa-chevron-circle-down, .fa-chevron-circle-up {
+  cursor:pointer;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+.form-control:focus {
+  outline: none!important;
+  border-color:#cccccc!important;
+}
+.insItemUl {
+  margin-left: 0px!important;
 }
 
 html, body, h1, h2, h3, h4, h5, h6, span, p {
@@ -881,10 +945,21 @@ input, input:before, input:after {
 }
 
 @media screen and (max-width: 500px){
+  .dropup h4.panel-title {
+    top: -15px!important;
+    position: relative!important;
+  }
+  #specialDropUpIdDiv .fa-chevron-circle-up {
+    position: relative;
+    top: -10px;
+  }
   .panel-group .fa-chevron-circle-down{
     font-size: 25px!important;
     top: 35px!important;
     z-index:999!important;
+  }
+  .panel.panel-default.dropup {
+    z-index: 1000;
   }
   .owl-theme .owl-nav .owl-prev, .owl-theme .owl-nav .owl-next {
     z-index:999!important;
@@ -936,6 +1011,16 @@ input, input:before, input:after {
 .weekDayText, td {
   border-top: none!important;
   padding: 0px!important;
+}
+@media screen and (max-width:1024px){
+  .dropup .panel-title a {
+    padding-right: 5%;
+  }
+}
+@media screen and (min-width:1024px){
+  .dropup .panel-title a {
+    padding-right: 10%;
+  }
 }
 
 #closebtn {
@@ -1013,12 +1098,34 @@ input, input:before, input:after {
   width: 220px;
 }
 
+.dropup .panel-title a {
+  position: relative;
+  left: -40px;
+}
+
+@media screen and (max-width: 457px) {
+  calendarTable td button {
+    padding-left: 10px !important;
+  }
+  #calendarTable td h4{
+    left: 32%;
+  }
+}
+
 @media screen and (max-width: 500px) {
   #detailDivShift button {
     margin-left: 45%;
   }
 }
+
+/* firefox */
 @-moz-document url-prefix() {
+
+  @media screen and (max-width: 570px) {
+    #calendarTable td button {
+      font-size: 18px!important;
+    }
+  }
   input[type=radio]{
     visibility: hidden;
   }
@@ -1037,12 +1144,209 @@ input, input:before, input:after {
   }
   html :checked + span {
     color: #e84466 !important;
-    left: 25% !important;
+    left: 25%;
   }
 
   #rowOfBtn .col-xs-2, #rowOfBtn .col-xs-1 {
       width: 15%!important;
       min-width: 125px;
+  }
+
+  #rowOfBtn .col-xs-7 {
+    padding: 0px;
+  }
+  #cutAmtBtn.col-xs-7 {
+    left: 389px!important;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft {
+    left: 145px !important;
+  }
+
+  #cutAmtBtn.col-xs-7 .col-xs-3 {
+    width: 18%;
+    min-width: 125px;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft .col-xs-3{
+    left: 125px !important;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft .col-xs-3:first-child {
+    padding-left: 10px!important;
+  }
+  #rowOfBtn .col-xs-2 {
+
+  }
+  #calendarTable td {
+    width:12%!important;
+    margin-left:3px;
+  }
+  #calendarTable #emptyTd {
+    margin-left:6px!important;
+  }
+  .longTri {
+    top:63px!important;
+  }
+  table {
+    width: 110%;
+    max-width: 110%;
+  }
+  #choicesHaoNoHao span{
+    top:15%!important;
+  }
+  .changeColor {
+    border: 1px solid #e84466;
+  }
+  #rowOfBtn .col-xs-2:nth-child(3) {
+    padding-right: 20px !important;
+    padding-left: 15px !important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(4) {
+    padding-left: 12px!important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(6) {
+    left: -48px!important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(5) {
+    left: -35px!important;
+  }
+  #cusAmtBtn .amtName {
+    left: 10px!important;
+  }
+  input[type=radio]:checked ~ label + span {
+    border: 1px solid #e84466!important;
+    color: #e84466!important;
+  }
+  input[type=radio] + span {
+    top: 70px;
+  }
+  label[for="aggreeToUpdate"] {
+    border:none!important;
+  }
+  /*input[type=radio] + label {*/
+    /*color: #ccc!important;*/
+  /*}*/
+  select {
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+  }
+  label > input[type=radio]:checked {
+    border: 1px solid #e84466!important;
+  }
+  .shanshiContent {
+    padding-left:10%;
+  }
+  @media screen and (max-width: 1200px) {
+    #rowOfBtn .col-xs-2 {
+      width: 10%!important;
+    }
+  }
+  @media screen and (max-width: 375px) {
+    #aggreeToUpdate .checkBoxDiv,.noChecked {
+      top: 25px!important;
+    }
+  }
+  @media screen and (max-width: 570px) {
+    #rule1 {
+      padding-left: 0%!important;
+    }
+    .modal-content {
+      top: 40px!important;
+    }
+    #topSpeArrow {
+      top:12px
+    }
+  }
+  .aggreeToUpdate {
+    margin-left: 20px;
+  }
+  #aggreeToUpdate {
+    top: 4px!important;
+  }
+  .widthFdsSpanOne.inputRadioCheckedTxt, .widthFdsSpanTwo.inputRadioCheckedTxt {
+    left: 0px;
+  }
+  #topSpeArrow {
+    top:12px
+  }
+  @media screen and (max-width: 414px) {
+    #calendarTable td {
+      width:12%!important;
+    }
+    #btnOfPackages .col-xs-4 {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+
+  @media screen and (min-width: 414px) and (max-width: 570px){
+    #haoma span {
+      left: 70%!important;
+    }
+    #haoma h4 {
+      left: 110%!important;
+    }
+  }
+  #mobileCusPkg label {
+    border: none;
+    height: auto;
+  }
+
+  @media screen and (max-width: 320px) {
+    #haoma span {
+      left: -100px!important;
+    }
+    #haoma h4 {
+      left: -120px!important;
+      font-size: 17px !important;
+    }
+    #choicesHaoNoHao {
+      width: 170%!important;
+      left: 35%!important;
+    }
+  }
+
+  @media screen and (min-width: 360px) and (max-width: 357px) {
+    #haoma span {
+      left: -250%!important;
+    }
+    #haoma h4 {
+      left: -337%!important;
+    }
+  }
+
+  @media screen and (max-width: 457px) {
+    .specialPkgLabel span {
+      left: -7px;
+    }
+  }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  input[type=radio]{
+    visibility: hidden;
+  }
+  label {
+    width: 100%;
+    top: 33px;
+    font-weight: normal;
+    background-color: white;
+    border: 1px solid #ddd;
+    background-color: white;
+    height: 60px;
+    border-radius: 50px;
+  }
+  input[type="radio"]:checked+label{
+    border: 1px solid #e84466!important;
+  }
+  html :checked + span {
+    color: #e84466 !important;
+    left: 25%;
+  }
+
+  #rowOfBtn .col-xs-2, #rowOfBtn .col-xs-1 {
+    width: 15%!important;
+    min-width: 125px;
   }
 
   #rowOfBtn .col-xs-7 {
@@ -1082,9 +1386,181 @@ input, input:before, input:after {
     width: 110%;
     max-width: 110%;
   }
-  #choiceOne, #choiceTwo {
-    height: 50px!important;
-    top: 0px!important;
+  #choicesHaoNoHao span{
+    top:15%!important;
+  }
+  .changeColor {
+    border: 1px solid #e84466;
+  }
+  #rowOfBtn .col-xs-2:nth-child(3) {
+    padding-right: 20px !important;
+    padding-left: 15px !important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(4) {
+    padding-left: 12px!important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(6) {
+    left: -48px!important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(5) {
+    left: -35px!important;
+  }
+  #cusAmtBtn .amtName {
+    left: 10px!important;
+  }
+  input[type=radio]:checked ~ label + span {
+    border: 1px solid #e84466!important;
+    color: #e84466!important;
+  }
+  input[type=radio] + span {
+    top: 70px;
+  }
+  label[for="aggreeToUpdate"] {
+    border:none!important;
+  }
+  /*input[type=radio] + label {*/
+  /*color: #ccc!important;*/
+  /*}*/
+  select {
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+  }
+  label > input[type=radio]:checked {
+    border: 1px solid #e84466!important;
+  }
+  @media screen and (max-width: 1200px) {
+    #rowOfBtn .col-xs-2 {
+      width: 10%!important;
+    }
+  }
+  @media screen and (max-width: 375px) {
+    #aggreeToUpdate .checkBoxDiv,.noChecked {
+      top: 25px!important;
+    }
+  }
+  @media screen and (max-width: 570px) {
+    #rule1 {
+      padding-left: 0%!important;
+    }
+    .modal-content {
+      top: 40px!important;
+    }
+    #topSpeArrow {
+      top:12px
+    }
+  }
+  .aggreeToUpdate {
+    margin-left: 20px;
+  }
+  #aggreeToUpdate {
+    top: 4px!important;
+  }
+  .widthFdsSpanOne.inputRadioCheckedTxt, .widthFdsSpanTwo.inputRadioCheckedTxt {
+    left: 0px;
+  }
+  #topSpeArrow {
+    top:22px
+  }
+  @media screen and (max-width: 414px) {
+    #calendarTable td {
+      width:12%!important;
+    }
+  }
+  .shanshiContent {
+    padding-left:10%;
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  #calendarTable td {
+    width:13%!important;
+  }
+  select::-ms-expand {
+    display: none;
+  }
+}
+
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  select::-ms-expand {
+    display: none!important;
+  }
+  .col-xs-7.NoPaddingLeft#cutAmtBtn .specialPkgLabel.toCusBtn span {
+    left: 16%!important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(4) span{
+    left:21%!important;
+  }
+  #rowOfBtn .col-xs-2:nth-child(6) span{
+    left:15%!important;
+  }
+}
+
+@supports (-ms-accelerator:true) {
+  /* IE Edge 12+ CSS styles go here */
+  input[type=radio]{
+    visibility: hidden;
+  }
+  label {
+    width: 100%;
+    top: 33px;
+    font-weight: normal;
+    background-color: white;
+    border: 1px solid #ddd;
+    background-color: white;
+    height: 60px;
+    border-radius: 50px;
+  }
+  input[type="radio"]:checked+label{
+    border: 1px solid #e84466!important;
+  }
+  html :checked + span {
+    color: #e84466 !important;
+    left: 25%;
+  }
+
+  #rowOfBtn .col-xs-2, #rowOfBtn .col-xs-1 {
+    width: 15%!important;
+    min-width: 125px;
+  }
+
+  #rowOfBtn .col-xs-7 {
+    padding: 0px;
+  }
+  #cutAmtBtn.col-xs-7 {
+    left: 389px!important;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft {
+    left: 145px !important;
+  }
+
+  #cutAmtBtn.col-xs-7 .col-xs-3 {
+    width: 18%;
+    min-width: 125px;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft .col-xs-3{
+    left: 125px !important;
+  }
+  #cutAmtBtn.col-xs-7.NoPaddingLeft .col-xs-3:first-child {
+    padding-left: 10px!important;
+  }
+  #rowOfBtn .col-xs-2 {
+
+  }
+  #calendarTable td {
+    width:13%!important;
+    margin-left:3px;
+  }
+  #calendarTable #emptyTd {
+    margin-left:6px!important;
+  }
+  .longTri {
+    top:63px!important;
+  }
+  table {
+    width: 110%;
+    max-width: 110%;
   }
   #choicesHaoNoHao span{
     top:15%!important;
@@ -1115,29 +1591,168 @@ input, input:before, input:after {
   input[type=radio] + span {
     top: 70px;
   }
+  label[for="aggreeToUpdate"] {
+    border:none!important;
+  }
+  /*input[type=radio] + label {*/
+  /*color: #ccc!important;*/
+  /*}*/
+  select {
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+  }
+  label > input[type=radio]:checked {
+    border: 1px solid #e84466!important;
+  }
+  @media screen and (max-width: 1200px) {
+    #rowOfBtn .col-xs-2 {
+      width: 10%!important;
+    }
+  }
+  @media screen and (max-width: 375px) {
+    #aggreeToUpdate .checkBoxDiv,.noChecked {
+      top: 25px!important;
+    }
+  }
+  @media screen and (max-width: 570px) {
+    #rule1 {
+      padding-left: 0%!important;
+    }
+    .modal-content {
+      top: 40px!important;
+    }
+    #topSpeArrow {
+      top:12px
+    }
+  }
+  .aggreeToUpdate {
+    margin-left: 20px;
+  }
+  #aggreeToUpdate {
+    top: 4px!important;
+  }
+  .widthFdsSpanOne.inputRadioCheckedTxt, .widthFdsSpanTwo.inputRadioCheckedTxt {
+    left: 0px;
+  }
+  #topSpeArrow {
+    top:13px
+  }
+  #rowOfBtn .col-xs-2:nth-child(6) span {
+    left: 13%!important;
+  }
+  #deskCusPkg .col-xs-2:nth-child(4) span {
+    left: 20%!important;
+  }
+  @media screen and (max-width: 414px) {
+    #calendarTable td {
+      width:12%!important;
+    }
+    #btnOfPackages .col-xs-4 {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+  .shanshiContent {
+    padding-left:10%;
+  }
 }
 
-input[type="radio"]:checked + label span {
-  color: #e84466!important;
-  font-weight: normal!important;
-}
-/*input[type="radio"]:checked + label span {*/
-  /*color: #e84466!important;*/
-  /*font-weight: normal!important;*/
-/*}*/
-
-
-.fa-chevron-circle-down, .fa-chevron-circle-up {
-  cursor:pointer;
+#rowOfBtn .col-xs-2:nth-child(6) {
+  width:16%!important;
 }
 
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-  outline: none;
+.col-xs-7.NoPaddingLeft#cutAmtBtn .specialPkgLabel.toCusBtn span {
+  left: 16%!important;
 }
-.form-control:focus {
-  outline: none!important;
-  border-color:#cccccc!important;
+
+@media screen and (max-width: 500px) {
+  #topSpeArrow {
+    top:20px!important;
+  }
+  #choicesHaoNoHao {
+    width: 150%!important;
+  }
+  #customerLogo {
+    margin-left: -10%!important;
+  }
+  .insuredTit {
+    padding-left: 15px!important;
+    padding-right: 15px!important;
+  }
+}
+/* ie  */
+@supports (-ms-ime-align:auto) {
+  .img-grey {
+
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  #specialDropUpIdDiv {
+    left: -60px!important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 5%!important;
+  }
+}
+
+@media screen and (max-width: 993px) {
+  #specialDropUpIdDiv {
+    left: -60px!important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 7%!important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup i {
+    margin-top: 0px!important;
+    margin-right: -21px!important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #specialDropUpIdDiv {
+    left: -60px !important;
+  }
+
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 0% !important;
+    padding-top: 10px;
+    width: 375px;
+  }
+
+  .dropup .panel-title a {
+    left: -10px;
+    top: 4px;
+  }
+
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup i {
+    margin-top: 0px !important;
+    margin-right: -66px !important;
+  }
+
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup .panel-title{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup i {
+    margin-right: -68px !important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    width: 116%!important;
+  }
+  #accordionDiv .clickAccordion div.panel.panel-default.dropup {
+    margin-left: 0px!important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #specialDropUpIdDiv .fa-chevron-circle-up {
+    position: relative;
+    top: -25px;
+  }
+
 }

@@ -161,7 +161,8 @@ export class AddMemberComponent implements OnInit {
 
   checkPidByClick(idValue, index){
     let value = idValue.toUpperCase();
-    this.checkDisable();
+    this.checkDisable('');
+
     switch(index){
       case 1:
         if(this.pidCheck(value)){
@@ -181,6 +182,11 @@ export class AddMemberComponent implements OnInit {
             this.firstPidEmpty = false;
           }else{
             this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -201,7 +207,12 @@ export class AddMemberComponent implements OnInit {
             this.secondPidWrongWords = '身份證不可重複。';
             this.secondPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
             this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -222,7 +233,12 @@ export class AddMemberComponent implements OnInit {
             this.thirdPidWrongWords = '身份證不可重複。';
             this.thirdPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
             this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -243,7 +259,12 @@ export class AddMemberComponent implements OnInit {
             this.fourthPidWrongWords = '身份證不可重複。';
             this.fourthPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
             this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -264,7 +285,12 @@ export class AddMemberComponent implements OnInit {
             this.fifthPidWrongWords = '身份證不可重複。';
             this.fifthPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
             this.fifthPidTypeWrong = false;
+            this.sixthPidTypeWrong = false;
           }
         }
         break;
@@ -285,6 +311,11 @@ export class AddMemberComponent implements OnInit {
             this.sixthPidWrongWords = '身份證不可重複。';
             this.sixthPidEmpty = false;
           }else{
+            this.firstPidTypeWrong = false;
+            this.secondPidTypeWrong = false;
+            this.thirdPidTypeWrong = false;
+            this.fourthPidTypeWrong = false;
+            this.fifthPidTypeWrong = false;
             this.sixthPidTypeWrong = false;
           }
         }
@@ -294,9 +325,24 @@ export class AddMemberComponent implements OnInit {
     }
   }
 
+  theTopAfterCheckRelate: string;
+  relationShipChecked(value, index){
+    if(!value && index == 3){
+      this.theTopAfterCheckRelate = '44%';
+      this.thirdRelationshipInvalid = true;
+    }else{
+      this.theTopAfterCheckRelate = '56%';
+      this.thirdRelationshipInvalid = false;
+    }
+    // if(!this.fifthCardRelationship && index == 5){
+    //   this.theTopAfterCheckRelate = '44%';
+    // }else{
+    //   this.theTopAfterCheckRelate = '56%';
+    // }
+  }
 
   checkRelationShipRepeat(value, index){
-    this.checkDisable();
+    this.checkDisable('');
     let relationArr = [];
     let returnVal;
     relationArr.push(this.firstCardRelationship);
@@ -399,7 +445,7 @@ export class AddMemberComponent implements OnInit {
         }
         break;
       case 5:
-        var ans = this.relationShip.map((x)=>{
+          var ans = this.relationShip.map((x)=>{
           numberCnt = countInArray(this.kanTrelationShip, x['value']);
           if(numberCnt > x['allowedCnt']){
             this.fifthRelatedRepeat = true;
@@ -482,7 +528,12 @@ export class AddMemberComponent implements OnInit {
   fifthCardLock: any;
   sixthCardLock: any;
 
-  checkDisable(){
+  checkDisable(flagVal){
+    if(flagVal == 'last' && this.firstCardLastName == ''){
+      this.firstLastNameValiFail = true;
+    }else if(flagVal == 'first' && this.firstCardFirstName == ''){
+      this.firstFirstNameValiFail = true;
+    }
     if(
         this.secondCardFirstName &&
         this.secondCardLastName &&
@@ -561,6 +612,9 @@ export class AddMemberComponent implements OnInit {
       this.firstCardDay = this.memberCom.pBirthDay;
       this.checkRatioAmt(1);
       this.countFinalPrice();
+    }else{
+      this.checkRatioAmt(1);
+      this.countFinalPrice();
     }
     if(this.dataService.owlAnanOne){
       this.toInitData(2);
@@ -604,6 +658,7 @@ export class AddMemberComponent implements OnInit {
     } else {
       this.dataService.clearData = true;
       this.lockFirstCard = false;
+      this.firstCardInsuredPriceWord = '0';
       this.Data();
     }
   }
@@ -618,6 +673,15 @@ export class AddMemberComponent implements OnInit {
       this.firstCardYear = this.memberCom.pBirthYear.slice(0, 4);
       this.firstCardMonth = this.memberCom.pBirthMonth;
       this.firstCardDay = this.memberCom.pBirthDay;
+      this.firstRelationshipInvalid = false;
+      this.firstCardValidFail = false;
+      this.firstBdOverAge = false;
+      this.firstPidTypeWrong = false;
+      this.firstCardCheckOk = false;
+      this.firstFirstNameValiFail = false;
+      this.firstLastNameValiFail = false;
+      this.firstBdEmpty = false;
+      this.firstPidEmpty = false;
     }
   }
 
@@ -701,7 +765,7 @@ export class AddMemberComponent implements OnInit {
   }
 
   checkRatioAmt(index){
-    this.checkDisable();
+    this.checkDisable('');
     let currentYear = new Date(this.countBrthDayFromSelectedBtn).getFullYear();
     let currentMonth = new Date(this.countBrthDayFromSelectedBtn).getMonth() + 1;
     let currentDay = new Date(this.countBrthDayFromSelectedBtn).getDate();
@@ -734,6 +798,7 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
+                this.firstCardInsuredPriceWord = this.numberWithCommas(item.rate);
                 this.firstCardInsuredPrice = item.rate;
                 this.firstCardWarningWord = item.tipText;
                 this.memberCom.finalPrice();
@@ -770,7 +835,8 @@ export class AddMemberComponent implements OnInit {
             console.log('ageMin', item.ageMin);
             console.log('ageMax', item.ageMax);
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.secondCardInsuredPrice = item.rate;
+              this.secondCardInsuredPriceWord = this.numberWithCommas(item.rate);
+              this.secondCardInsuredPrice = item.rate;
                 this.secondCardWarningWord = item.tipText;
                 this.memberCom.finalPrice();
             }
@@ -801,7 +867,8 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.thirdCardInsuredPrice = item.rate;
+              this.thirdCardInsuredPriceWord = this.numberWithCommas(item.rate);
+              this.thirdCardInsuredPrice = item.rate;
                 this.thirdCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -832,7 +899,8 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.fourthCardInsuredPrice = item.rate;
+              this.fourthCardInsuredPriceWord = this.numberWithCommas(item.rate);
+              this.fourthCardInsuredPrice = item.rate;
                 this.fourthCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -863,6 +931,7 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
+                this.fifthCardInsuredPriceWord = this.numberWithCommas(item.rate);
                 this.fifthCardInsuredPrice = item.rate;
                 this.fifthCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
@@ -894,7 +963,8 @@ export class AddMemberComponent implements OnInit {
 
           this.rateInfoList.forEach((item) => {
             if((userAge >= item.ageMin) && (userAge <= item.ageMax)){
-                this.sixthCardInsuredPrice = item.rate;
+              this.sixthCardInsuredPriceWord = this.numberWithCommas(item.rate);
+              this.sixthCardInsuredPrice = item.rate;
                 this.sixthCardWarningWord = item.tipText;
               this.memberCom.finalPrice();
             }
@@ -1477,7 +1547,7 @@ export class AddMemberComponent implements OnInit {
           var modal = document.getElementById('myModal');
           modal.style.display = "block";
           this.dataService.AlertTXT = [];
-          this.dataService.AlertTXT.push('請正確填寫要保人資訊');
+          this.dataService.AlertTXT.push('請正確填寫被保險人資訊');
         }
       }
     }
@@ -1498,7 +1568,7 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
 
     if(
@@ -1517,7 +1587,7 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
 
     if(
@@ -1536,7 +1606,7 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
 
     if(
@@ -1555,7 +1625,7 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
 
     if(
@@ -1574,20 +1644,24 @@ export class AddMemberComponent implements OnInit {
         var modal = document.getElementById('myModal');
         modal.style.display = "block";
         this.dataService.AlertTXT = [];
-        this.dataService.AlertTXT.push('請正確填寫要保人資訊');      }
+        this.dataService.AlertTXT.push('請正確填寫被保險人資訊');      }
     }
   }
 
+  numberWithCommas = (x) => {
+    let Xn = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return Xn
+  }
 
-  finalPrice: number;
+  finalPrice: any;
   countFinalPrice() {
-    let price  = (this.firstCardInsuredPrice +
+    let price  = this.firstCardInsuredPrice +
     this.secondCardInsuredPrice +
     this.thirdCardInsuredPrice +
     this.fourthCardInsuredPrice +
     this.fifthCardInsuredPrice +
-    this.sixthCardInsuredPrice);
-    this.finalPrice = price;
+    this.sixthCardInsuredPrice;
+    this.finalPrice = this.numberWithCommas(price);
   }
 
   toInitData(index) {
@@ -1659,6 +1733,7 @@ export class AddMemberComponent implements OnInit {
 
   // many many of dummpy variables starts from here!!
   // first card
+  firstCardInsuredPriceWord:string = '0';
   firstCardInsuredPrice: number = 0;
   firstCardRelationship: any = "本人";
   firstCardLastName: string = '';
@@ -1682,6 +1757,7 @@ export class AddMemberComponent implements OnInit {
   firstCardWarningWord: string;
 
   // second card
+  secondCardInsuredPriceWord:string = '0'
   secondCardInsuredPrice: number = 0;
   secondCardRelationship: any = "";
   secondCardLastName: string = '';
@@ -1705,6 +1781,7 @@ export class AddMemberComponent implements OnInit {
   secondCardWarningWord: string;
 
   // third card
+  thirdCardInsuredPriceWord:string = '0';
   thirdCardInsuredPrice: number = 0;
   thirdCardRelationship: any = "";
   thirdCardLastName: string = '';
@@ -1728,6 +1805,7 @@ export class AddMemberComponent implements OnInit {
   thirdCardWarningWord: string;
 
   // fourth card
+  fourthCardInsuredPriceWord:string = '0';
   fourthCardInsuredPrice: number = 0;
   fourthCardRelationship: any = "";
   fourthCardLastName: string = '';
@@ -1751,6 +1829,7 @@ export class AddMemberComponent implements OnInit {
   fourthCardWarningWord: string;
 
   // fifth card
+  fifthCardInsuredPriceWord:string = '0';
   fifthCardInsuredPrice: number = 0;
   fifthCardRelationship: any = "";
   fifthCardLastName: string = '';
@@ -1774,6 +1853,7 @@ export class AddMemberComponent implements OnInit {
   fifthCardWarningWord: string;
 
   // sixth card
+  sixthCardInsuredPriceWord:string = '0';
   sixthCardInsuredPrice: number = 0;
   sixthCardRelationship: any = "";
   sixthCardLastName: string = '';

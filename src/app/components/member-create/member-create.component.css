@@ -186,23 +186,28 @@ h2.formTitTxt{
 }
 
 .goingCheckInfo:disabled {
-  width: 60%;
+  width: 100%;
   background: #C8C8C8;
   opacity: 0.6;
   cursor: not-allowed;
   color: #000000;
   border: 1px solid #ccc;
-  padding-bottom: 30px;
   cursor: pointer;
   color: #eeeeee;
   line-height:1px;
-  height: 40px;
-  font-size: 22px;
+  /*height: 40px;*/
+  font-size: 18px;
   -webkit-border-radius: 100px;
   -moz-border-radius: 100px;
   border-radius: 100px;
   border-color: #eeeeee;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
+  margin-right: 15px;
+  padding: 0px!important;
+}
+
+.goingCheckInfo:disabled:hover {
+  background: #dddddd;
 }
 
 .priceHead{
@@ -423,6 +428,10 @@ span.formSubTxt {
   }
 }
 
+.insuredBtnArea input {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 500px) {
   .insuredPersonalInfo {
     margin-top: 60px;
@@ -493,7 +502,6 @@ span.formSubTxt {
 
 .insuredBtnArea label {
   font-family: "segoe ui", "microsoft jhenghei", "microsoft mhei", stheititc, sans-serif;
-  cursor: pointer;
   width: 100px;
   position: relative;
   top: 0px;
@@ -580,8 +588,15 @@ div.row.memberTitle {
 }
 
 .img-grey {
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
+  /*-webkit-filter: grayscale(100%); !* Safari 6.0 - 9.0 *!*/
+  /*-moz-filter: grayscale(100%);*/
+  /*-ms-filter: grayscale(100%);*/
+  /*-o-filter: grayscale(100%);*/
+  /*filter: gray; !* IE6-9 *!*/
+  /*-webkit-filter: grayscale(1); !* Google Chrome, Safari 6+ & Opera 15+ *!*/
+  /*filter: grayscale(1);*/
+  background: url('../../../assets/images/dolls/ananGrey.png') no-repeat center!important;
+  background-size: contain!important;
 }
 
 @media screen and (max-width:1266px) {
@@ -702,7 +717,7 @@ div.row.memberTitle {
   }
 
   #choicesHaoNoHao {
-    display: none;
+    /*display: none;*/
   }
 
   #MobileChoicesHaoNoHao label {
@@ -884,7 +899,6 @@ div.row.memberTitle {
 
 @media screen and (max-width: 768px) {
   #choicesHaoNoHao {
-    margin-top: 45%;
   }
 
   .insuredBtnArea {
@@ -894,7 +908,14 @@ div.row.memberTitle {
   .checkBoxDiv {
     margin-top: 30px;
   }
+
+  #haoma h4 {
+    font-size: 18px!important;
+  }
 }
+
+
+
 @media screen and (max-width: 500px) and (min-width: 375px) {
   .checkBoxDiv, .noChecked {
    margin-top: 0px;
@@ -908,20 +929,22 @@ div.row.memberTitle {
     top: -28px;
   }
   .agreement {
-    top: -40px;
+    top: -21px;
   }
   .checkBoxDiv, .noChecked {
     position: relative !important;
     top: 45px !important;
   }
-  .titleForm h2{
+  .titleForm h2 {
     margin-top: 20px;
   }
 }
 
 
-@media screen and (max-width: 375px) {
-
+@media screen and (max-width: 1100px) {
+  #choicesHaoNoHao {
+    width: 40%;
+  }
 }
 
 @media screen and (max-width: 1025px) and (min-width: 768px) {
@@ -1005,6 +1028,12 @@ div.row.memberTitle {
     padding:0px;
     width: 40%;
   }
+  .insuredBoxAlone {
+    margin-top:8%!important;
+  }
+  .dropDown {
+    margin-right: 3%;
+  }
 }
 
 /*#choicesHaoNoHao input[type=radio]:checked {*/
@@ -1029,23 +1058,47 @@ div.row.memberTitle {
   color: black;
 }
 
-#choicesHaoNoHao {
-  margin-top: 45px;
+@media screen and (min-width:1100px) {
+  #choicesHaoNoHao {
+    width: 50%;
+  }
 }
 
+@media screen and (max-width:767px) {
+  #choicesHaoNoHao {
+    width: 100%;
+  }
+  #haoma span, #haoma h4 {
+    left:20%;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  #choicesHaoNoHao {
+    width: 139%;
+    position: relative;
+    left: 16%;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 990px) {
+  #choicesHaoNoHao{
+    width: 80%;
+    position: relative;
+    top: -84px;
+    right: -53%;
+  }
+  #haoma span, #haoma h4 {
+    left:-115%;
+  }
+}
 
 #choiceOne {
-  position: absolute;
-  left: 64%;
-  top: 70%;
-  height: 200px;
+
 }
 
 #choiceTwo {
-  position: absolute;
-  left: 82%;
-  top: 70%;
-  height: 200px;
+
 }
 
 #choiceMobileOne{
@@ -1092,7 +1145,7 @@ div.row.memberTitle {
 
 @media screen and (max-width:414px) {
   .modal-content {
-    top: 40%!important;
+    top: 40%;
   }
 }
 
@@ -1134,6 +1187,7 @@ div.row.memberTitle {
 
 .inputRadioChecked {
   background-color: #e84466!important;
+  color: white;
 }
 .inputRadioCheckedTxt {
   color:white!important;
@@ -1151,7 +1205,6 @@ div.row.memberTitle {
   }
   #choicesHaoNoHao {
     width: 100%;
-    margin-top: 100px;
   }
   #choiceOne {
     left: 0%;
@@ -1222,7 +1275,7 @@ div.row.memberTitle {
 .dropDown {
   position: absolute;
   top: 13px;
-  left: 66%;
+  left: 75%;
   color: #ddd;
   pointer-events:none!important;
 }
@@ -1259,11 +1312,76 @@ button.form-control.btn-sm span{
   }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 375px) and (min-width: 360px){
   #haoma span {
-    left: -190%;
+    left: -250%;
   }
   #haoma h4 {
-    left: -265%;
+    left: -285%;
   }
+}
+
+@-moz-document url-prefix() {
+  .col-xs-12 {
+    /*padding-left: 0px!important;*/
+    /*padding-right: 0px!important;*/
+  }
+}
+
+#addInsuredAdd button {
+  min-width: 90px!important;
+}
+
+@media screen and (min-width: 320px) and (max-width: 360px) {
+  #haoma span {
+    left: -250%!important;
+  }
+  #haoma h4 {
+    left: -337%!important;
+  }
+}
+
+.ananDivImg {
+  background: url('../../../assets/images/dolls/anan.png') no-repeat center;
+  background-repeat: no-repeat;
+  height: 65px;
+  width: 45px;
+  background-position-x: 0px;
+  background-size: contain;
+  position: relative;
+  top: -5px;
+}
+
+.annaDiv {
+  max-width: 50px;
+  display: inline-block;
+  width: 100%;
+}
+
+@media screen and (max-width: 375px) {
+  #rule1 {
+    padding-left: 0px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .errImg {
+    display:none;
+  }
+}
+
+@media screen and (max-width: 420px) and (min-width:410px) {
+  #haoma h4 {
+    left: -183%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #rule1 {
+    padding-left: 0px!important;
+  }
+}
+
+.form-control.goingCheckInfo.specilAlreadiRead:hover {
+  background: #767676!important;
 }

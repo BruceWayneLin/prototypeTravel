@@ -102,6 +102,9 @@ export class MemberCreateComponent implements OnInit {
   @ViewChild('lastNameEl') lastNameEl:ElementRef;
   @ViewChild('firstNameEl') firstNameEl:ElementRef;
   @ViewChild('birthdayCityEl') birthdayCityEl:ElementRef;
+  @ViewChild('MobileEl') mobileEl:ElementRef;
+  @ViewChild('birthdayYAM') birthdayYAM:ElementRef;
+
   constructor(
     private viewContainerRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -112,12 +115,6 @@ export class MemberCreateComponent implements OnInit {
      this.buttonOne = this.shareService.buttonOne;
      this.buttonTwo = this.shareService.buttonTwo;
      this.buttonThree = this.shareService.buttonThree;
-
-     this.owlAnanOne = this.dataService.owlAnanOne;
-     this.owlAnanTwo = this.dataService.owlAnanTwo;
-     this.owlAnanThree = this.dataService.owlAnanThree;
-     this.owlAnanFour = this.dataService.owlAnanFour;
-     this.owlAnanFifth = this.dataService.owlAnanFifth;
   }
 
   checkAloneBd(){
@@ -129,6 +126,7 @@ export class MemberCreateComponent implements OnInit {
       this.aloneBirthdayDays =  this.birthDays(this.applicantAloneBirthYear, this.applicantAloneBirthMonth);
     }
     if(this.applicantAloneBirthYear && this.applicantAloneBirthMonth && this.applicantAloneBirthDay){
+      this.aloneBdEmpty = false;
       let userAge = currentYear - this.applicantAloneBirthYear;
       if((currentMonth >= this.applicantAloneBirthMonth) && (currentDay >= this.applicantAloneBirthDay)){
         //生日過今天 保留原本選擇年紀
@@ -158,6 +156,7 @@ export class MemberCreateComponent implements OnInit {
 
       }
     } else if (!this.applicantAloneBirthYear && !this.applicantAloneBirthMonth && !this.applicantAloneBirthDay) {
+      this.aloneBdEmpty = true;
     }
   }
 
@@ -165,6 +164,7 @@ export class MemberCreateComponent implements OnInit {
   }
 
   changedData(year=null, month=null, day=null){
+    this.userPidFail = this.pidCheck(this.pid);
     this.checkBirthday(year, month, day);
     this.dataService.clearData = false;
   }
@@ -191,6 +191,14 @@ export class MemberCreateComponent implements OnInit {
           return true;
         }
       }
+    }else{
+      // if(id == 'last'){
+      //   this.aloneLastNameEmpty = true;
+      //   this.aloneNameLastChinese = false;
+      // }else{
+      //   this.aloneFirstNameEmpty = true;
+      //   this.aloneNameFirstChinese = false;
+      // }
     }
   }
 
@@ -241,7 +249,7 @@ export class MemberCreateComponent implements OnInit {
 
   personalSelectChange(){
     if(this.personalInfoSelect !== '本人') {
-      this.checkVal();
+      // this.checkVal();
       this.applicantAloneLockInput = false;
       this.applicantAloneLastName = '';
       this.applicantAloneFirstName = '';
@@ -249,8 +257,6 @@ export class MemberCreateComponent implements OnInit {
       this.applicantAloneBirthYear = '';
       this.applicantAloneBirthMonth = '';
       this.applicantAloneBirthDay = '';
-    } else {
-      this.checkVal();
       this.aloneLastNameEmpty = false;
       this.aloneFirstNameEmpty = false;
       this.alonePidEmpty = false;
@@ -258,7 +264,11 @@ export class MemberCreateComponent implements OnInit {
       this.aloneBdEmpty = false;
       this.alonePidWrong = false;
       this.alonePidTypeWrong = false;
-
+      this.aloneBdWrong = false;
+      this.aloneNameFirstChinese = false;
+      this.aloneNameLastChinese = false;
+    } else {
+      // this.checkVal();
       this.applicantAloneLockInput = true;
       this.applicantAloneLastName = this.lastName;
       this.applicantAloneFirstName = this.firstName;
@@ -266,6 +276,17 @@ export class MemberCreateComponent implements OnInit {
       this.applicantAloneBirthYear = this.pBirthYear;
       this.applicantAloneBirthMonth = this.pBirthMonth;
       this.applicantAloneBirthDay = this.pBirthDay;
+
+      this.aloneLastNameEmpty = false;
+      this.aloneFirstNameEmpty = false;
+      this.alonePidEmpty = false;
+      this.alonePidTypeWrong = false;
+      this.aloneBdEmpty = false;
+      this.alonePidWrong = false;
+      this.alonePidTypeWrong = false;
+      this.aloneBdWrong = false;
+      this.aloneNameFirstChinese = false;
+      this.aloneNameLastChinese = false;
     }
   }
 
@@ -355,6 +376,7 @@ export class MemberCreateComponent implements OnInit {
     }
   }
 
+  userPidFail: any;
   pidCheck(userid:string){
     if(userid){
       var tab = 'ABCDEFGHJKLMNPQRSTUVXYWZIO',
@@ -410,10 +432,19 @@ export class MemberCreateComponent implements OnInit {
   }
 
   ToShowConfirmModal(val:boolean){
+    console.log(this.EmailEl['invalid']);
+    console.log(this.mobileEl['invalid']);
+    console.log(this.firstNameEl['invalid']);
+    console.log(this.lastNameEl['invalid']);
     if(!this.lastName ||
         !this.firstName ||
         !this.email ||
         !this.pid ||
+        this.EmailEl['invalid'] ||
+        this.mobileEl['invalid'] ||
+        this.firstNameEl['invalid'] ||
+        this.lastNameEl['invalid'] ||
+        this.userPidFail ||
         !this.pBirthYear ||
         !this.pBirthMonth ||
         !this.pBirthDay ||
@@ -828,6 +859,7 @@ export class MemberCreateComponent implements OnInit {
   ngOnInit() {
     if(this.dataService.backFromConfirm && this.dataService.noGoWithYourFdsFlag !== undefined){
       this.hiddenAtBegining = false;
+      this.firstTimeClickHaoA = true;
       this.noGoWithYourFds = this.dataService.noGoWithYourFdsFlag;
       if(!this.noGoWithYourFds){
         this.dataService.toGetBakInfo().subscribe((item) => {
@@ -932,7 +964,6 @@ export class MemberCreateComponent implements OnInit {
             this.hideUpinput = false;
           }
 
-
           this.insuredList.forEach((item, index)=>{
             switch(index){
               case 0:
@@ -951,6 +982,16 @@ export class MemberCreateComponent implements OnInit {
                 this.applicantAloneBirthYear = item['birthday'].slice(0, 4);
                 this.applicantAloneBirthMonth = item['birthday'].slice(5,6) == 0? item['birthday'].slice(6,7): item['birthday'].slice(5,7);
                 this.applicantAloneBirthDay =  item['birthday'].slice(8,9) == 0? item['birthday'].slice(9,10): item['birthday'].slice(8,10);
+                this.aloneLastNameEmpty = false;
+                this.aloneFirstNameEmpty = false;
+                this.alonePidEmpty = false;
+                this.alonePidTypeWrong = false;
+                this.aloneBdEmpty = false;
+                this.alonePidWrong = false;
+                this.alonePidTypeWrong = false;
+                this.aloneBdWrong = false;
+                this.aloneNameFirstChinese = false;
+                this.aloneNameLastChinese = false;
                 break;
               default:
             }
@@ -1189,6 +1230,11 @@ export class MemberCreateComponent implements OnInit {
         }
       });
     }
+    this.owlAnanOne = this.dataService.owlAnanOne;
+    this.owlAnanTwo = this.dataService.owlAnanTwo;
+    this.owlAnanThree = this.dataService.owlAnanThree;
+    this.owlAnanFour = this.dataService.owlAnanFour;
+    this.owlAnanFifth = this.dataService.owlAnanFifth;
   }
 
   deleteThisOne() {
@@ -1426,8 +1472,7 @@ export class MemberCreateComponent implements OnInit {
         this.dataService.AlertTXT = [];
         this.dataService.AlertTXT.push('請正確填入要保人資料');
         var body = $("html, body");
-        body.stop().animate({scrollTop:1520}, 200, 'swing', function() {
-        });
+        this.dataService.idToGoFlow = 'addInsuredAdd';
       }else{
 
         this.dataService.SaveInsuredData['insuredList'] = [];
