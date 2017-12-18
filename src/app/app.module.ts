@@ -37,6 +37,7 @@ import { LoadingModule } from 'ngx-loading';
 import { LayoutModule } from 'cl-layout/src/app/shared/layout/layout.module';
 import 'cl-layout/thirdparty-library';
 import { CarelineProjectType } from 'cl-layout/src/app/shared/layout/careline-layout-config';
+import { OwlCarouselModule } from 'cl-layout/src/app/shared/tools/owl-carousel/owl-carousel.module';
 
 export const routes : Routes = [
   {
@@ -110,6 +111,7 @@ export const routes : Routes = [
       carelineProjectType : CarelineProjectType.travel
     }),
     // BreadcrumbsModule,
+    OwlCarouselModule,
     ReactiveFormsModule,
     LoadingModule,
     RouterModule.forRoot(routes),
